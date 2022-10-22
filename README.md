@@ -1,4 +1,4 @@
-# my-app
+# GCF MS Front
 
 ## Project setup
 ```
