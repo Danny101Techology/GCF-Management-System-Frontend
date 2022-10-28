@@ -1,5 +1,5 @@
 <template>
-  <div class="rooms">
+  <div class="q-pa-md">
     <q-table
       ref="tableRef"
       title="Rooms"
@@ -31,6 +31,7 @@
               @click="props.expand = !props.expand"
               :icon="props.expand ? 'remove' : 'add'"
             />
+            <q-btn size="sm" color="green" round dense @click="dialog = true" icon="event"/>
           </q-td>
           <q-td v-for="col in props.cols" :key="col.name" :props="props">
             {{ col.value }}
@@ -41,6 +42,39 @@
             <div class="text-left">
               This is expand slot for row above: {{ props.row.name }}.
               <div class="q-pa-md">
+                <q-carousel
+                  animated
+                  v-model="slide"
+                  navigation
+                  infinite
+                  :autoplay="autoplay"
+                  arrows
+                  transition-prev="slide-right"
+                  transition-next="slide-left"
+                  @mouseenter="autoplay = false"
+                  @mouseleave="autoplay = true"
+                >
+                  <q-carousel-slide
+                    :name="1"
+                    img-src="https://cdn.quasar.dev/img/mountains.jpg"
+                  />
+                  <q-carousel-slide
+                    :name="2"
+                    img-src="https://cdn.quasar.dev/img/parallax1.jpg"
+                  />
+                  <q-carousel-slide
+                    :name="3"
+                    img-src="https://cdn.quasar.dev/img/parallax2.jpg"
+                  />
+                  <q-carousel-slide
+                    :name="4"
+                    img-src="https://cdn.quasar.dev/img/quasar.jpg"
+                  />
+                </q-carousel>
+              </div>
+
+
+              <div class="q-pa-md">
                 <q-btn color="teal" label="Reserve" @click="dialog = true" />
 
                 <q-dialog v-model="dialog">
@@ -50,14 +84,14 @@
                     style="height: 500px"
                     class="bg-grey-3"
                   >
+                    <!--RESERVATION TAB-->
                     <q-page-container>
-                      <q-page class="q-pa-md">
-                        <p v-for="n in 15" :key="n">
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit
-                          nihil praesentium molestias a adipisci, dolore vitae odit,
-                          quidem consequatur optio voluptates asperiores pariatur eos
-                          numquam rerum delectus commodi perferendis voluptate?
-                        </p>
+                      <q-page class="pa-md">
+                        <q-tabs v-model="tab" class="bg-teal text-yellow">
+                          <q-route-tab to="/calendar" icon="event" exact />
+                          <q-route-tab name="alarms" icon="alarm" exact />
+                          <q-route-tab name="movies" icon="movie" exact />
+                        </q-tabs>
                       </q-page>
 
                       <q-page-scroller position="bottom">
@@ -66,6 +100,7 @@
                     </q-page-container>
                   </q-layout>
                 </q-dialog>
+
               </div>
             </div>
           </q-td>
@@ -77,491 +112,321 @@
 
 <script>
 import { ref, onMounted } from "vue";
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faHatWizard } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import axios from "axios";
 
-import HeaderWow from "@/components/HeaderWow.vue";
+import Calendar from '@/components/Calendar.vue'
 
 const columns = [
   {
     name: "desc",
     required: true,
-    label: "Dessert (100g serving)",
+    label: "Sort A-Z",
     align: "left",
     field: (row) => row.name,
     format: (val) => `${val}`,
     sortable: true,
   },
   {
-    name: "calories",
-    align: "center",
-    label: "Calories",
-    field: "calories",
+    name: "Area",
+    align: "left",
+    label: "Site",
+    field: "RoomCode",
     sortable: true,
   },
-  { name: "fat", label: "Fat (g)", field: "fat", sortable: true },
-  { name: "carbs", label: "Carbs (g)", field: "carbs", sortable: true },
-  { name: "protein", label: "Protein (g)", field: "protein", sortable: true },
-  { name: "sodium", label: "Sodium (mg)", field: "sodium", sortable: true },
-  {
-    name: "calcium",
-    label: "Calcium (%)",
-    field: "calcium",
-    sortable: true,
-    sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),
-  },
-  {
-    name: "iron",
-    label: "Iron (%)",
-    field: "iron",
-    sortable: true,
-    sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),
-  },
+  { name: "Room Code List", align:"left", label: "Code", field: "RoomName", sortable: true },
+  { name: "Room Name List", align:"left",  label: "Name", field: "Capacity", sortable: true },
+  { name: "Size", align:"left", label: "Capacity", field: "Size", sortable: true },
+
+  
 ];
+
 const originalRows = [
   {
     id: 1,
-    name: "Frozen Yogurt",
-    calories: 159,
-    fat: 6.0,
-    carbs: 24,
-    protein: 4.0,
-    sodium: 87,
-    calcium: "14%",
-    iron: "1%",
+    name: "Basement 1",
+    RoomCode: "BB1-01",
+    RoomName: "Car Parking",
+    Size: "30 Cars",
   },
   {
     id: 2,
-    name: "Ice cream sandwich",
-    calories: 237,
-    fat: 9.0,
-    carbs: 37,
-    protein: 4.3,
-    sodium: 129,
-    calcium: "8%",
-    iron: "1%",
+    name: "Basement 2",
+    RoomCode: "BB2-01",
+    RoomName: "Car Parking",
+    Size: "40 Cars",
   },
   {
     id: 3,
-    name: "Eclair",
-    calories: 262,
-    fat: 16.0,
-    carbs: 23,
-    protein: 6.0,
-    sodium: 337,
-    calcium: "6%",
-    iron: "7%",
+    name: "Ground Floor A",
+    RoomCode: "A102",
+    RoomName: "Fellowship Hall 1",
+    Size: 40,
   },
   {
     id: 4,
-    name: "Cupcake",
-    calories: 305,
-    fat: 3.7,
-    carbs: 67,
-    protein: 4.3,
-    sodium: 413,
-    calcium: "3%",
-    iron: "8%",
+    name: "Ground Floor A",
+    RoomCode: "A107a",
+    RoomName: "Fellowship Hall 6",
+    Size: 50,
   },
   {
     id: 5,
-    name: "Gingerbread",
-    calories: 356,
-    fat: 16.0,
-    carbs: 49,
-    protein: 3.9,
-    sodium: 327,
-    calcium: "7%",
-    iron: "16%",
+    name: "Ground Floor A",
+    RoomCode: "A103",
+    RoomName: "Fellowship Hall 2",
+    Size: 40,
   },
   {
     id: 6,
-    name: "Jelly bean",
-    calories: 375,
-    fat: 0.0,
-    carbs: 94,
-    protein: 0.0,
-    sodium: 50,
-    calcium: "0%",
-    iron: "0%",
+    name: "Ground Floor A",
+    RoomCode: "A104a",
+    RoomName: "Fellowship Hall 3",
+    Size: 35,
   },
   {
     id: 7,
-    name: "Lollipop",
-    calories: 392,
-    fat: 0.2,
-    carbs: 98,
-    protein: 0,
-    sodium: 38,
-    calcium: "0%",
-    iron: "2%",
+    name: "Second Floor A",
+    RoomCode: "A209",
+    RoomName: "Auditorium A",
+    Size: 650,
   },
   {
     id: 8,
-    name: "Honeycomb",
-    calories: 408,
-    fat: 3.2,
-    carbs: 87,
-    protein: 6.5,
-    sodium: 562,
-    calcium: "0%",
-    iron: "45%",
+    name: "Second Floor A",
+    RoomCode: "A201",
+    RoomName: "Production Room 2",
+    Size: 35,
   },
   {
     id: 9,
-    name: "Donut",
-    calories: 452,
-    fat: 25.0,
-    carbs: 51,
-    protein: 4.9,
-    sodium: 326,
-    calcium: "2%",
-    iron: "22%",
+    name: "Second Floor A",
+    RoomCode: "A201a",
+    RoomName: "Recording Booth",
+    Size: 10,
   },
   {
     id: 10,
-    name: "KitKat",
-    calories: 518,
-    fat: 26.0,
-    carbs: 65,
-    protein: 7,
-    sodium: 54,
-    calcium: "12%",
-    iron: "6%",
+    name: "Second Floor A",
+    RoomCode: "A208",
+    RoomName: "Production Room 3",
+    Size: 30,
   },
   {
     id: 11,
-    name: "Frozen Yogurt-1",
-    calories: 159,
-    fat: 6.0,
-    carbs: 24,
-    protein: 4.0,
-    sodium: 87,
-    calcium: "14%",
-    iron: "1%",
+    name: "Second Floor A",
+    RoomCode: "A300",
+    RoomName: "Auditorium A Balcony",
+    Size: 325,
   },
   {
     id: 12,
-    name: "Ice cream sandwich-1",
-    calories: 237,
-    fat: 9.0,
-    carbs: 37,
-    protein: 4.3,
-    sodium: 129,
-    calcium: "8%",
-    iron: "1%",
+    name: "Third Floor A",
+    RoomCode: "A312",
+    RoomName: "AHU Room",
+    Size: 20,
   },
   {
     id: 13,
-    name: "Eclair-1",
-    calories: 262,
-    fat: 16.0,
-    carbs: 23,
-    protein: 6.0,
-    sodium: 337,
-    calcium: "6%",
-    iron: "7%",
+    name: "Third Floor A",
+    RoomCode: "A311",
+    RoomName: "Discipleship Room 6",
+    Size: 20,
   },
   {
     id: 14,
-    name: "Cupcake-1",
-    calories: 305,
-    fat: 3.7,
-    carbs: 67,
-    protein: 4.3,
-    sodium: 413,
-    calcium: "3%",
-    iron: "8%",
+    name: "Third Floor A",
+    RoomCode: "A306",
+    RoomName: "Discipleship Room 3",
+    Size: 12,
   },
   {
     id: 15,
-    name: "Gingerbread-1",
-    calories: 356,
-    fat: 16.0,
-    carbs: 49,
-    protein: 3.9,
-    sodium: 327,
-    calcium: "7%",
-    iron: "16%",
+    name: "Third Floor A",
+    RoomCode: "A304",
+    RoomName: "Discipleship Room 1",
+    Size: 15,
   },
   {
     id: 16,
-    name: "Jelly bean-1",
-    calories: 375,
-    fat: 0.0,
-    carbs: 94,
-    protein: 0.0,
-    sodium: 50,
-    calcium: "0%",
-    iron: "0%",
+    name: "Third Floor A",
+    RoomCode: "A303",
+    RoomName: "Discipleship Center",
+    Size: 30,
   },
   {
     id: 17,
-    name: "Lollipop-1",
-    calories: 392,
-    fat: 0.2,
-    carbs: 98,
-    protein: 0,
-    sodium: 38,
-    calcium: "0%",
-    iron: "2%",
+    name: "Second Floor B",
+    RoomCode: "B201",
+    RoomName: "Auditorium B",
+    Size: 940,
   },
   {
     id: 18,
-    name: "Honeycomb-1",
-    calories: 408,
-    fat: 3.2,
-    carbs: 87,
-    protein: 6.5,
-    sodium: 562,
-    calcium: "0%",
-    iron: "45%",
+    name: "Second Floor B",
+    RoomCode: "B202",
+    RoomName: "Nursing Mothers & Toddler's Room",
+    Size: 30,
   },
   {
     id: 19,
-    name: "Donut-1",
-    calories: 452,
-    fat: 25.0,
-    carbs: 51,
-    protein: 4.9,
-    sodium: 326,
-    calcium: "2%",
-    iron: "22%",
+    name: "Balcony",
+    RoomCode: "B2B01",
+    RoomName: "Auditorium B Balcony",
+    Size: 450,
   },
   {
     id: 20,
-    name: "KitKat-1",
-    calories: 518,
-    fat: 26.0,
-    carbs: 65,
-    protein: 7,
-    sodium: 54,
-    calcium: "12%",
-    iron: "6%",
+    name: "Ground Floor B",
+    RoomCode: "B100",
+    RoomName: "Main Lobby",
+    Size: 350,
   },
   {
     id: 21,
-    name: "Frozen Yogurt-2",
-    calories: 159,
-    fat: 6.0,
-    carbs: 24,
-    protein: 4.0,
-    sodium: 87,
-    calcium: "14%",
-    iron: "1%",
+    name: "Ground Floor B",
+    RoomCode: "B123",
+    RoomName: "Women's Center",
+    Size: 20,
   },
   {
     id: 22,
-    name: "Ice cream sandwich-2",
-    calories: 237,
-    fat: 9.0,
-    carbs: 37,
-    protein: 4.3,
-    sodium: 129,
-    calcium: "8%",
-    iron: "1%",
+    name: "Ground Floor B",
+    RoomCode: "B122",
+    RoomName: "Single's Room",
+    Size: 20,
   },
   {
     id: 23,
-    name: "Eclair-2",
-    calories: 262,
-    fat: 16.0,
-    carbs: 23,
-    protein: 6.0,
-    sodium: 337,
-    calcium: "6%",
-    iron: "7%",
+    name: "Ground Floor B",
+    RoomCode: "B121",
+    RoomName: "Senior's Room",
+    Size: 20,
   },
   {
     id: 24,
-    name: "Cupcake-2",
-    calories: 305,
-    fat: 3.7,
-    carbs: 67,
-    protein: 4.3,
-    sodium: 413,
-    calcium: "3%",
-    iron: "8%",
+    name: "Ground Floor B",
+    RoomCode: "B119",
+    RoomName: "Prayer Chapel",
+    Size: 120,
   },
   {
     id: 25,
-    name: "Gingerbread-2",
-    calories: 356,
-    fat: 16.0,
-    carbs: 49,
-    protein: 3.9,
-    sodium: 327,
-    calcium: "7%",
-    iron: "16%",
+    name: "Mezzanine",
+    RoomCode: "BM08",
+    RoomName: "Meeting Room 5",
+    Size: 40,
   },
   {
     id: 26,
-    name: "Jelly bean-2",
-    calories: 375,
-    fat: 0.0,
-    carbs: 94,
-    protein: 0.0,
-    sodium: 50,
-    calcium: "0%",
-    iron: "0%",
+    name: "Mezzanine",
+    RoomCode: "BM09",
+    RoomName: "Clinic",
+    Size: 3,
   },
   {
     id: 27,
-    name: "Lollipop-2",
-    calories: 392,
-    fat: 0.2,
-    carbs: 98,
-    protein: 0,
-    sodium: 38,
-    calcium: "0%",
-    iron: "2%",
+    name: "Mezzanine",
+    RoomCode: "BM06",
+    RoomName: "Production Room 1",
+    Size: 70,
   },
   {
     id: 28,
-    name: "Honeycomb-2",
-    calories: 408,
-    fat: 3.2,
-    carbs: 87,
-    protein: 6.5,
-    sodium: 562,
-    calcium: "0%",
-    iron: "45%",
+    name: "Mezzanine",
+    RoomCode: "BM07",
+    RoomName: "Meeting Room 4",
+    Size: 50,
   },
   {
     id: 29,
-    name: "Donut-2",
-    calories: 452,
-    fat: 25.0,
-    carbs: 51,
-    protein: 4.9,
-    sodium: 326,
-    calcium: "2%",
-    iron: "22%",
+    name: "Mezzanine",
+    RoomCode: "BM04",
+    RoomName: "Meeting Room 3",
+    Size: 18,
   },
   {
     id: 30,
-    name: "KitKat-2",
-    calories: 518,
-    fat: 26.0,
-    carbs: 65,
-    protein: 7,
-    sodium: 54,
-    calcium: "12%",
-    iron: "6%",
+    name: "Mezzanine",
+    RoomCode: "BM03",
+    RoomName: "Meeting Room 2",
+    Size: 18,
   },
   {
     id: 31,
-    name: "Frozen Yogurt-3",
-    calories: 159,
-    fat: 6.0,
-    carbs: 24,
-    protein: 4.0,
-    sodium: 87,
-    calcium: "14%",
-    iron: "1%",
+    name: "Mezzanine",
+    RoomCode: "BM02",
+    RoomName: "Meeting Room 1",
+    Size: 18,
   },
   {
     id: 32,
-    name: "Ice cream sandwich-3",
-    calories: 237,
-    fat: 9.0,
-    carbs: 37,
-    protein: 4.3,
-    sodium: 129,
-    calcium: "8%",
-    iron: "1%",
+    name: "Sixth Floor",
+    RoomCode: "B601",
+    RoomName: "Youth Center Hall",
+    Size: 50,
   },
   {
     id: 33,
-    name: "Eclair-3",
-    calories: 262,
-    fat: 16.0,
-    carbs: 23,
-    protein: 6.0,
-    sodium: 337,
-    calcium: "6%",
-    iron: "7%",
+    name: "Sixth Floor",
+    RoomCode: "B601d",
+    RoomName: "Youth Center Discipleship Room",
+    Size: 12,
   },
   {
     id: 34,
-    name: "Cupcake-3",
-    calories: 305,
-    fat: 3.7,
-    carbs: 67,
-    protein: 4.3,
-    sodium: 413,
-    calcium: "3%",
-    iron: "8%",
+    name: "Sixth Floor",
+    RoomCode: "B601c",
+    RoomName: "Youth Center Meeting Room",
+    Size: 20,
   },
   {
     id: 35,
     name: "Gingerbread-3",
-    calories: 356,
-    fat: 16.0,
-    carbs: 49,
-    protein: 3.9,
-    sodium: 327,
-    calcium: "7%",
-    iron: "16%",
+    RoomCode: "B2B01",
+    RoomName: "Auditorium B Balcony",
+    Size: 24,
   },
   {
     id: 36,
     name: "Jelly bean-3",
-    calories: 375,
-    fat: 0.0,
-    carbs: 94,
-    protein: 0.0,
-    sodium: 50,
-    calcium: "0%",
-    iron: "0%",
+    RoomCode: "B2B01",
+    RoomName: "Auditorium B Balcony",
+    Size: 24,
   },
   {
     id: 37,
     name: "Lollipop-3",
-    calories: 392,
-    fat: 0.2,
-    carbs: 98,
-    protein: 0,
-    sodium: 38,
-    calcium: "0%",
-    iron: "2%",
+    RoomCode: "B2B01",
+    RoomName: "Auditorium B Balcony",
+    Size: 24,
   },
   {
     id: 38,
     name: "Honeycomb-3",
-    calories: 408,
-    fat: 3.2,
-    carbs: 87,
-    protein: 6.5,
-    sodium: 562,
-    calcium: "0%",
-    iron: "45%",
+    RoomCode: "B2B01",
+    RoomName: "Auditorium B Balcony",
+    Size: 24,
   },
   {
     id: 39,
     name: "Donut-3",
-    calories: 452,
-    fat: 25.0,
-    carbs: 51,
-    protein: 4.9,
-    sodium: 326,
-    calcium: "2%",
-    iron: "22%",
+    RoomCode: "B2B01",
+    RoomName: "Auditorium B Balcony",
+    Size: 24,
   },
   {
     id: 40,
     name: "KitKat-3",
-    calories: 518,
-    fat: 26.0,
-    carbs: 65,
-    protein: 7,
-    sodium: 54,
-    calcium: "12%",
-    iron: "6%",
+    RoomCode: "B2B01",
+    RoomName: "Auditorium B Balcony",
+    Size: 24,
   },
 ];
 export default {
-  components: { HeaderWow },
-
+  components: {Calendar},
   setup() {
     const tableRef = ref();
     const rows = ref([]);
@@ -650,6 +515,12 @@ export default {
       dialog: ref(false),
       drawerLeft: ref(false),
       drawerRight: ref(true),
+      //Reserve tabs
+      tab: ref("mails"),
+      //Carousel
+      slide: ref(1),
+      autoplay: ref(true),
+
       onRequest,
     };
   },
