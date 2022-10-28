@@ -13,7 +13,13 @@
       @request="onRequest"
     >
       <template v-slot:top-right>
-        <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+        <q-input
+          borderless
+          dense
+          debounce="300"
+          v-model="filter"
+          placeholder="Search"
+        >
           <template v-slot:append>
             <q-icon name="search" />
           </template>
@@ -31,7 +37,14 @@
               @click="props.expand = !props.expand"
               :icon="props.expand ? 'remove' : 'add'"
             />
-            <q-btn size="sm" color="green" round dense @click="dialog = true" icon="event"/>
+            <q-btn
+              size="sm"
+              color="green"
+              round
+              dense
+              @click="dialog = true"
+              icon="event"
+            />
           </q-td>
           <q-td v-for="col in props.cols" :key="col.name" :props="props">
             {{ col.value }}
@@ -73,35 +86,165 @@
                 </q-carousel>
               </div>
 
+              <template>
+                <div class="q-pa-md">
+                  <q-btn color="teal" label="Reserve" @click="dialog = true" />
 
-              <div class="q-pa-md">
-                <q-btn color="teal" label="Reserve" @click="dialog = true" />
+                  <q-dialog v-model="dialog" full-width>
+                    <q-layout
+                      view="lhh LpR lff"
+                      container
+                      style="height: 900px"
+                      class="bg-grey-3"
+                    >
+                      <!--RESERVATION TAB-->
+                      <q-page-container>
+                        <q-page class="pa-md">
+                          <!--Calendar-->
+                          <div class="q-pa-md">
+                            <div class="q-gutter-md row items-start">
+                              <q-date v-model="date" />
+                            </div>
+                          </div>
 
-                <q-dialog v-model="dialog">
-                  <q-layout
-                    view="lhh LpR lff"
-                    container
-                    style="height: 500px"
-                    class="bg-grey-3"
-                  >
-                    <!--RESERVATION TAB-->
-                    <q-page-container>
-                      <q-page class="pa-md">
-                        <q-tabs v-model="tab" class="bg-teal text-yellow">
-                          <q-route-tab to="/calendar" icon="event" exact />
-                          <q-route-tab name="alarms" icon="alarm" exact />
-                          <q-route-tab name="movies" icon="movie" exact />
-                        </q-tabs>
-                      </q-page>
+                          <!--Time pickers-->
+                          <div class="q-pa-md">
+                            <div class="q-gutter-sm row">
+                              <q-input
+                                filled
+                                v-model="time"
+                                mask="time"
+                                :rules="['time']"
+                              >
+                                <template v-slot:append>
+                                  <q-icon
+                                    name="access_time"
+                                    class="cursor-pointer"
+                                  >
+                                    <q-popup-proxy
+                                      cover
+                                      transition-show="scale"
+                                      transition-hide="scale"
+                                    >
+                                      <q-time v-model="time">
+                                        <div
+                                          class="row items-center justify-end"
+                                        >
+                                          <q-btn
+                                            v-close-popup
+                                            label="Close"
+                                            color="primary"
+                                            flat
+                                          />
+                                        </div>
+                                      </q-time>
+                                    </q-popup-proxy>
+                                  </q-icon>
+                                </template>
+                              </q-input>
 
-                      <q-page-scroller position="bottom">
-                        <q-btn fab icon="keyboard_arrow_up" color="red" />
-                      </q-page-scroller>
-                    </q-page-container>
-                  </q-layout>
-                </q-dialog>
+                              <q-input
+                                filled
+                                v-model="timeWithSeconds"
+                                mask="fulltime"
+                                :rules="['fulltime']"
+                              >
+                                <template v-slot:append>
+                                  <q-icon
+                                    name="access_time"
+                                    class="cursor-pointer"
+                                  >
+                                    <q-popup-proxy
+                                      cover
+                                      transition-show="scale"
+                                      transition-hide="scale"
+                                    >
+                                      <q-time
+                                        v-model="timeWithSeconds"
+                                        with-seconds
+                                        format24h
+                                      >
+                                        <div
+                                          class="row items-center justify-end"
+                                        >
+                                          <q-btn
+                                            v-close-popup
+                                            label="Close"
+                                            color="primary"
+                                            flat
+                                          />
+                                        </div>
+                                      </q-time>
+                                    </q-popup-proxy>
+                                  </q-icon>
+                                </template>
+                              </q-input>
+                            </div>
+                          </div>
 
-              </div>
+                          <!--Event-->
+                          <div class="q-pa-md">
+                            <div
+                              class="q-gutter-y-md column"
+                              style="max-width: 300px"
+                            >
+                              <q-select
+                                color="purple-12"
+                                v-model="model"
+                                :options="options"
+                                label="Type of Event"
+                              >
+                                <template v-slot:prepend>
+                                  <q-icon name="event" />
+                                </template>
+                              </q-select>
+                            </div>
+                          </div>
+
+                          <!--Reserved for-->
+                          <div class="q-pa-md">
+                            <div
+                              class="q-gutter-y-md column"
+                              style="max-width: 300px"
+                            >
+                              <q-select
+                                color="purple-12"
+                                v-model="model"
+                                :options="options"
+                                label="Reserved for"
+                              >
+                                <template v-slot:prepend>
+                                  <q-icon name="event" />
+                                </template>
+                              </q-select>
+                            </div>
+                          </div>
+                        </q-page>
+
+                        <q-page-scroller position="bottom">
+                          <q-btn fab icon="keyboard_arrow_up" color="red" />
+                        </q-page-scroller>
+                      </q-page-container>
+                      <q-separator />
+
+                      <q-card-actions align="right">
+                        <q-btn
+                          flat
+                          label="Cancel"
+                          color="primary"
+                          v-close-popup
+                        />
+                        <q-btn
+                          flat
+                          label="Reserve"
+                          color="primary"
+                          v-close-popup
+                        />
+                      </q-card-actions>
+                    </q-layout>
+                  </q-dialog>
+                </div>
+              </template>
             </div>
           </q-td>
         </q-tr>
@@ -112,12 +255,13 @@
 
 <script>
 import { ref, onMounted } from "vue";
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faHatWizard } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faHatWizard } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import axios from "axios";
 
-import Calendar from '@/components/Calendar.vue'
+import Reserve from "@/components/Reserve.vue";
+import Calendar from "@/components/Calendar.vue";
 
 const columns = [
   {
@@ -136,11 +280,27 @@ const columns = [
     field: "RoomCode",
     sortable: true,
   },
-  { name: "Room Code List", align:"left", label: "Code", field: "RoomName", sortable: true },
-  { name: "Room Name List", align:"left",  label: "Name", field: "Capacity", sortable: true },
-  { name: "Size", align:"left", label: "Capacity", field: "Size", sortable: true },
-
-  
+  {
+    name: "Room Code List",
+    align: "left",
+    label: "Code",
+    field: "RoomName",
+    sortable: true,
+  },
+  {
+    name: "Room Name List",
+    align: "left",
+    label: "Name",
+    field: "Capacity",
+    sortable: true,
+  },
+  {
+    name: "Size",
+    align: "left",
+    label: "Capacity",
+    field: "Size",
+    sortable: true,
+  },
 ];
 
 const originalRows = [
@@ -424,9 +584,23 @@ const originalRows = [
     RoomName: "Auditorium B Balcony",
     Size: 24,
   },
+  {
+    id: 41,
+    attributes: {
+      available: null,
+      createdAt: "",
+      publishedAt: "",
+      rate_per_hour: null,
+      room_code: "",
+      room_name: "",
+      site: "",
+      updatedAt: "",
+    },
+  },
 ];
 export default {
-  components: {Calendar},
+  components: { Calendar },
+  components: { Reserve },
   setup() {
     const tableRef = ref();
     const rows = ref([]);
@@ -440,6 +614,10 @@ export default {
       rowsNumber: 10,
     });
     function fetchFromServer(startRow, count, filter, sortBy, descending) {
+      axios.get("http://localhost:1337/api/rooms").then((response) => {
+        console.log(response.data.data);
+      });
+
       const data = filter
         ? originalRows.filter((row) => row.name.includes(filter))
         : originalRows.slice();
@@ -479,7 +657,8 @@ export default {
         // update rowsCount with appropriate value
         pagination.value.rowsNumber = getRowsNumberCount(filter);
         // get all rows if "All" (0) is selected
-        const fetchCount = rowsPerPage === 0 ? pagination.value.rowsNumber : rowsPerPage;
+        const fetchCount =
+          rowsPerPage === 0 ? pagination.value.rowsNumber : rowsPerPage;
         // calculate starting row of data
         const startRow = (page - 1) * rowsPerPage;
         // fetch data from "server"
@@ -515,11 +694,19 @@ export default {
       dialog: ref(false),
       drawerLeft: ref(false),
       drawerRight: ref(true),
-      //Reserve tabs
-      tab: ref("mails"),
+      //Calendar
+      date: ref("2019/02/01"),
       //Carousel
       slide: ref(1),
       autoplay: ref(true),
+
+      //event
+      model: ref(null),
+      options: ["Google", "Facebook", "Twitter", "Apple", "Oracle"],
+
+      //time
+      time: ref("10:56"),
+      timeWithSeconds: ref("10:56:00"),
 
       onRequest,
     };

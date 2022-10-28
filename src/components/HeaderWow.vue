@@ -10,7 +10,7 @@
     </q-toolbar>
 
     <q-tabs align="left">
-      <q-route-tab to="/rooms" label="Rooms" exact />
+      <q-route-tab to="{name: '/rooms}" label="Rooms" exact />
       <q-route-tab to="/equipments" label="Equipments" exact />
     </q-tabs>
   </q-header>
