@@ -13,13 +13,7 @@
       @request="onRequest"
     >
       <template v-slot:top-right>
-        <q-input
-          borderless
-          dense
-          debounce="300"
-          v-model="filter"
-          placeholder="Search"
-        >
+        <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
           <template v-slot:append>
             <q-icon name="search" />
           </template>
@@ -103,7 +97,7 @@
                           <!--Calendar-->
                           <div class="q-pa-md">
                             <div class="q-gutter-md row items-start">
-                              <q-date v-model="date" />
+                              <q-date v-model="date" range />
                             </div>
                           </div>
 
@@ -117,19 +111,14 @@
                                 :rules="['time']"
                               >
                                 <template v-slot:append>
-                                  <q-icon
-                                    name="access_time"
-                                    class="cursor-pointer"
-                                  >
+                                  <q-icon name="access_time" class="cursor-pointer">
                                     <q-popup-proxy
                                       cover
                                       transition-show="scale"
                                       transition-hide="scale"
                                     >
                                       <q-time v-model="time">
-                                        <div
-                                          class="row items-center justify-end"
-                                        >
+                                        <div class="row items-center justify-end">
                                           <q-btn
                                             v-close-popup
                                             label="Close"
@@ -150,10 +139,7 @@
                                 :rules="['fulltime']"
                               >
                                 <template v-slot:append>
-                                  <q-icon
-                                    name="access_time"
-                                    class="cursor-pointer"
-                                  >
+                                  <q-icon name="access_time" class="cursor-pointer">
                                     <q-popup-proxy
                                       cover
                                       transition-show="scale"
@@ -164,9 +150,7 @@
                                         with-seconds
                                         format24h
                                       >
-                                        <div
-                                          class="row items-center justify-end"
-                                        >
+                                        <div class="row items-center justify-end">
                                           <q-btn
                                             v-close-popup
                                             label="Close"
@@ -184,10 +168,7 @@
 
                           <!--Event-->
                           <div class="q-pa-md">
-                            <div
-                              class="q-gutter-y-md column"
-                              style="max-width: 300px"
-                            >
+                            <div class="q-gutter-y-md column" style="max-width: 300px">
                               <q-select
                                 color="purple-12"
                                 v-model="model"
@@ -203,10 +184,7 @@
 
                           <!--Reserved for-->
                           <div class="q-pa-md">
-                            <div
-                              class="q-gutter-y-md column"
-                              style="max-width: 300px"
-                            >
+                            <div class="q-gutter-y-md column" style="max-width: 300px">
                               <q-select
                                 color="purple-12"
                                 v-model="model"
@@ -228,20 +206,37 @@
                       <q-separator />
 
                       <q-card-actions align="right">
-                        <q-btn
-                          flat
-                          label="Cancel"
-                          color="primary"
-                          v-close-popup
-                        />
+                        <q-btn flat label="Cancel" color="primary" v-close-popup />
                         <q-btn
                           flat
                           label="Reserve"
                           color="primary"
-                          v-close-popup
+                          @click="secondDialog = true"
                         />
                       </q-card-actions>
                     </q-layout>
+                  </q-dialog>
+
+                  <q-dialog
+                    v-model="secondDialog"
+                    persistent
+                    transition-show="scale"
+                    transition-hide="scale"
+                  >
+                    <q-card class="bg-teal text-white" style="width: 300px">
+                      <q-card-section>
+                        <div class="text-h6">Confirm Reservation</div>
+                      </q-card-section>
+
+                      <q-card-section class="q-pt-none">
+                        {{ date }}
+                        {{ time }}
+                      </q-card-section>
+
+                      <q-card-actions align="right" class="bg-white text-teal">
+                        <q-btn flat label="OK" v-close-popup />
+                      </q-card-actions>
+                    </q-card>
                   </q-dialog>
                 </div>
               </template>
@@ -613,6 +608,14 @@ export default {
       rowsPerPage: 3,
       rowsNumber: 10,
     });
+    axios({
+      method: "post",
+      url: "http://localhost:1337/api/reservation",
+      data: {
+        firstName: "Fred",
+        lastName: "Flintstone",
+      },
+    });
     function fetchFromServer(startRow, count, filter, sortBy, descending) {
       axios.get("http://localhost:1337/api/rooms").then((response) => {
         console.log(response.data.data);
@@ -657,8 +660,7 @@ export default {
         // update rowsCount with appropriate value
         pagination.value.rowsNumber = getRowsNumberCount(filter);
         // get all rows if "All" (0) is selected
-        const fetchCount =
-          rowsPerPage === 0 ? pagination.value.rowsNumber : rowsPerPage;
+        const fetchCount = rowsPerPage === 0 ? pagination.value.rowsNumber : rowsPerPage;
         // calculate starting row of data
         const startRow = (page - 1) * rowsPerPage;
         // fetch data from "server"
@@ -695,7 +697,7 @@ export default {
       drawerLeft: ref(false),
       drawerRight: ref(true),
       //Calendar
-      date: ref("2019/02/01"),
+      date: ref({ from: "2020/07/08", to: "2020/07/17" }),
       //Carousel
       slide: ref(1),
       autoplay: ref(true),
@@ -705,9 +707,11 @@ export default {
       options: ["Google", "Facebook", "Twitter", "Apple", "Oracle"],
 
       //time
-      time: ref("10:56"),
-      timeWithSeconds: ref("10:56:00"),
+      time: ref("10:00"),
+      timeWithSeconds: ref("10:00:00"),
 
+      //Confirm Reserve
+      secondDialog: ref(false),
       onRequest,
     };
   },

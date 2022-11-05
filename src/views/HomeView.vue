@@ -1,18 +1,32 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
-</template>
-
-<script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
-export default {
-  name: 'HomeView',
-  components: {
-    HelloWorld
-  }
-}
-</script>
+  <q-layout view="hHh lpR fFf">
+     <HeaderWow />
+ 
+     <q-page-container>
+       <router-view></router-view>
+     </q-page-container>
+  </q-layout>
+ </template>
+ 
+ <script>
+ import { ref, onMounted } from "vue";
+ import { PanoViewer, SpinViewer } from "@egjs/vue3-view360";
+ import axios from "axios";
+ import { library } from '@fortawesome/fontawesome-svg-core'
+ import { faHatWizard } from '@fortawesome/free-solid-svg-icons'
+ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+ import HeaderWow from "@/components/HeaderWow.vue";
+ 
+ 
+ export default {
+   components: { HeaderWow }
+ 
+ 
+ 
+     
+ 
+ 
+   }
+ 
+ </script>
+ 
