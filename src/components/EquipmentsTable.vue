@@ -1,5 +1,11 @@
 <template>
-  <q-table title="Rooms" :rows="rows" :columns="columns" :filter="filter" row-key="id">
+  <q-table
+    title="Equipments"
+    :rows="rows"
+    :columns="columns"
+    :filter="filter"
+    row-key="id"
+  >
     <template v-slot:top-right>
       <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
         <template v-slot:append>
@@ -18,8 +24,8 @@
             @click="props.expand = !props.expand"
             :icon="props.expand ? 'remove' : 'add'"
           />
+          <q-btn size="sm" color="green" round dense icon="event" />
         </q-td>
-        <q-td><q-btn size="sm" color="green" round dense icon="event" /></q-td>
       </q-tr>
     </template>
   </q-table>
@@ -29,13 +35,19 @@
 import { ref, computed, onMounted } from "vue";
 
 const props = defineProps({
-  rooms: Array,
+  equipments: Array,
 });
 const filter = ref("");
 const columns = [
   {
-    name: "schedule",
+    name: "expand",
     align: "",
+    label: "",
+    field: "expand",
+  },
+  {
+    name: "schedule",
+    align: "left",
     label: "",
     field: "schedule",
   },
@@ -44,27 +56,6 @@ const columns = [
     align: "left",
     label: "Site",
     field: "site",
-    sortable: true,
-  },
-  {
-    name: "RoomCode",
-    align: "left",
-    label: "Room Code",
-    field: "room_code",
-    sortable: true,
-  },
-  {
-    name: "Capacity",
-    align: "left",
-    label: "Capacity",
-    field: "capacity",
-    sortable: true,
-  },
-  {
-    name: "Available",
-    align: "left",
-    label: "Available",
-    field: "available",
     sortable: true,
   },
 ];
