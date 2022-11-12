@@ -40,34 +40,34 @@ const props = defineProps({
 const filter = ref("");
 const columns = [
   {
-    name: "expand",
-    align: "",
-    label: "",
-    field: "expand",
+    name: "Equipment",
+    align: "left",
+    label: "Equipments",
+    field: "equipments",
+    sortable: true,
   },
   {
-    name: "schedule",
+    name: "EquipmentSubType",
     align: "left",
-    label: "",
-    field: "schedule",
+    label: "Equipment SubType",
+    field: "equipment_subtype",
+    sortable: true,
   },
   {
-    name: "site",
+    name: "EquipmentType",
     align: "left",
-    label: "Site",
-    field: "site",
+    label: "Equipment Type",
+    field: "equipment_type",
     sortable: true,
   },
 ];
 
 const rows = computed(() => {
-  let data = props.rooms.map((room) => {
+  let data = props.equipments.map((equipment) => {
     return {
-      id: room.id,
-      room_code: room.attributes.room_code,
-      available: room.attributes.available,
-      capacity: room.attributes.capacity,
-      site: room.attributes.site,
+      equipments: equipment.attributes.equipments,
+      equipment_type: equipment.attributes.equipment_type,
+      equipment_subtype: equipment.attributes.equipment_subtype,
     };
   });
   console.log(data);
@@ -76,6 +76,6 @@ const rows = computed(() => {
 
 onMounted(() => {
   console.log("Rooms.vue have been mounted!");
-  console.log(props.rooms);
+  console.log(props.equipments);
 });
 </script>

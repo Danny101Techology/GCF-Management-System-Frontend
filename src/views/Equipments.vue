@@ -18,7 +18,7 @@ function retrieveFromAPI() {
     "Authorization"
   ] = `Bearer ${process.env.VUE_APP_API_TOKEN}`;
   axios
-    .get(`equipments`)
+    .get(`equipment`)
     .then((response) => {
       equipments.value = response.data.data;
     })
@@ -28,7 +28,7 @@ function retrieveFromAPI() {
 }
 
 onMounted(() => {
-  console.log("Rooms.vue have been mounted!");
+  console.log("Equipments.vue have been mounted!");
   retrieveFromAPI();
 });
 //
