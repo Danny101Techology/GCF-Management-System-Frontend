@@ -90,7 +90,7 @@
                 <div class="q-pa-md">
                   <q-btn color="teal" label="Reserve" @click="dialog = true" />
 
-                  <q-dialog v-model="dialog" full-width>
+                  <q-dialog v-model="dialog">
                     <q-layout
                       view="lhh LpR lff"
                       container
@@ -101,7 +101,7 @@
                       <q-page-container>
                         <q-page class="pa-md">
                           <!--Calendar-->
-                          <div class="q-pa-md">
+                          <div class="q-ma-xl" >
                             <div class="q-gutter-md row items-start">
                               <q-date v-model="date" range />
                             </div>
@@ -169,6 +169,11 @@
                                   </q-icon>
                                 </template>
                               </q-input>
+
+
+
+
+                              
                             </div>
                           </div>
 
@@ -223,7 +228,30 @@
                     </q-layout>
                   </q-dialog>
 
-                  <ReserveDialog time=time date=date />
+                  <q-dialog
+                    v-model="secondDialog"
+                    persistent
+                    transition-show="scale"
+                    transition-hide="scale"
+                  >
+                    <q-card class="bg-teal text-white" style="width: 300px">
+                      <q-card-section>
+                        <div class="text-h6">Confirm Reservation</div>
+                      </q-card-section>
+
+                      <q-card-section class="q-pt-none">
+                        {{ props.date }}
+                        {{ props.time }}
+                        {{ props.row.name }}
+                        {{ props.row.RoomCode }}
+                        {{ props.row.RoomName }}
+                      </q-card-section>
+
+                      <q-card-actions align="right" class="bg-white text-teal">
+                        <q-btn flat label="OK" v-close-popup />
+                      </q-card-actions>
+                    </q-card>
+                  </q-dialog>
                 </div>
               </template>
             </div>
@@ -245,15 +273,6 @@ import ReserveDialog from "@/components/ReserveDialog.vue";
 import Calendar from "@/components/Calendar.vue";
 
 const columns = [
-  {
-    name: "desc",
-    required: true,
-    label: "Sort A-Z",
-    align: "left",
-    field: (row) => row.name,
-    format: (val) => `${val}`,
-    sortable: true,
-  },
   {
     name: "Area",
     align: "left",

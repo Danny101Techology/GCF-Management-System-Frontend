@@ -19,7 +19,10 @@
             :icon="props.expand ? 'remove' : 'add'"
           />
         </q-td>
-        <q-td><q-btn size="sm" color="green" round dense icon="event" /></q-td>
+        <q-td><q-btn size="sm" color="green" round dense icon="event" @click="dialog=true"/>
+        <ReserveRooms: dialog.sync="dialog" />
+        </q-td>
+
       </q-tr>
     </template>
   </q-table>
@@ -27,6 +30,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
+
 
 const props = defineProps({
   rooms: Array,

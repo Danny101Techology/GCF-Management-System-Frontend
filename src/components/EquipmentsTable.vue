@@ -75,7 +75,7 @@ const rows = computed(() => {
 });
 
 onMounted(() => {
-  console.log("Rooms.vue have been mounted!");
+  console.log("Equipments.vue have been mounted!");
   console.log(props.equipments);
 });
 </script>
