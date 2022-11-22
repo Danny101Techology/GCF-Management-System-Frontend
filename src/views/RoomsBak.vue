@@ -13,7 +13,13 @@
       @request="onRequest"
     >
       <template v-slot:top-right>
-        <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+        <q-input
+          borderless
+          dense
+          debounce="300"
+          v-model="filter"
+          placeholder="Search"
+        >
           <template v-slot:append>
             <q-icon name="search" />
           </template>
@@ -117,14 +123,19 @@
                                 :rules="['time']"
                               >
                                 <template v-slot:append>
-                                  <q-icon name="access_time" class="cursor-pointer">
+                                  <q-icon
+                                    name="access_time"
+                                    class="cursor-pointer"
+                                  >
                                     <q-popup-proxy
                                       cover
                                       transition-show="scale"
                                       transition-hide="scale"
                                     >
                                       <q-time v-model="time">
-                                        <div class="row items-center justify-end">
+                                        <div
+                                          class="row items-center justify-end"
+                                        >
                                           <q-btn
                                             v-close-popup
                                             label="Close"
@@ -145,7 +156,10 @@
                                 :rules="['fulltime']"
                               >
                                 <template v-slot:append>
-                                  <q-icon name="access_time" class="cursor-pointer">
+                                  <q-icon
+                                    name="access_time"
+                                    class="cursor-pointer"
+                                  >
                                     <q-popup-proxy
                                       cover
                                       transition-show="scale"
@@ -156,7 +170,9 @@
                                         with-seconds
                                         format24h
                                       >
-                                        <div class="row items-center justify-end">
+                                        <div
+                                          class="row items-center justify-end"
+                                        >
                                           <q-btn
                                             v-close-popup
                                             label="Close"
@@ -174,7 +190,10 @@
 
                           <!--Event-->
                           <div class="q-pa-md">
-                            <div class="q-gutter-y-md column" style="max-width: 300px">
+                            <div
+                              class="q-gutter-y-md column"
+                              style="max-width: 300px"
+                            >
                               <q-select
                                 color="purple-12"
                                 v-model="model"
@@ -190,7 +209,10 @@
 
                           <!--Reserved for-->
                           <div class="q-pa-md">
-                            <div class="q-gutter-y-md column" style="max-width: 300px">
+                            <div
+                              class="q-gutter-y-md column"
+                              style="max-width: 300px"
+                            >
                               <q-select
                                 color="purple-12"
                                 v-model="model"
@@ -212,7 +234,12 @@
                       <q-separator />
 
                       <q-card-actions align="right">
-                        <q-btn flat label="Cancel" color="primary" v-close-popup />
+                        <q-btn
+                          flat
+                          label="Cancel"
+                          color="primary"
+                          v-close-popup
+                        />
                         <q-btn
                           flat
                           label="Reserve"
@@ -223,7 +250,7 @@
                     </q-layout>
                   </q-dialog>
 
-                  <ReserveDialog time=time date=date />
+                  <ReserveDialog time="time" date="date" />
                 </div>
               </template>
             </div>
@@ -646,7 +673,8 @@ export default {
         // update rowsCount with appropriate value
         pagination.value.rowsNumber = getRowsNumberCount(filter);
         // get all rows if "All" (0) is selected
-        const fetchCount = rowsPerPage === 0 ? pagination.value.rowsNumber : rowsPerPage;
+        const fetchCount =
+          rowsPerPage === 0 ? pagination.value.rowsNumber : rowsPerPage;
         // calculate starting row of data
         const startRow = (page - 1) * rowsPerPage;
         // fetch data from "server"

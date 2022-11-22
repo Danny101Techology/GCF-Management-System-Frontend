@@ -1,15 +1,27 @@
 <template>
-  <q-table title="Rooms" :rows="rows" :columns="columns" :filter="filter" row-key="id">
+  <q-table
+    title="Rooms"
+    :rows="rows"
+    :columns="columns"
+    :filter="filter"
+    row-key="id"
+  >
     <template v-slot:top-right>
-      <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+      <q-input
+        borderless
+        dense
+        debounce="300"
+        v-model="filter"
+        placeholder="Search"
+      >
         <template v-slot:append>
           <q-icon name="search" />
         </template>
       </q-input>
     </template>
-    <template v-slot:body-cell-schedule dense>
-      <q-tr>
-        <q-td>
+
+    <!-- <template v-slot:body-cell-schedule="props" dense>
+        <q-td :props="props">
           <q-btn
             size="sm"
             color="green"
@@ -19,9 +31,7 @@
             :icon="props.expand ? 'remove' : 'add'"
           />
         </q-td>
-        <q-td><q-btn size="sm" color="green" round dense icon="event" /></q-td>
-      </q-tr>
-    </template>
+    </template> -->
   </q-table>
 </template>
 
@@ -33,12 +43,12 @@ const props = defineProps({
 });
 const filter = ref("");
 const columns = [
-  {
-    name: "schedule",
-    align: "",
-    label: "",
-    field: "schedule",
-  },
+  // {
+  //   name: "schedule",
+  //   align: "",
+  //   label: "",
+  //   field: "schedule",
+  // },
   {
     name: "site",
     align: "left",

@@ -21,6 +21,17 @@ const routes = [
     // ]
   },
   {
+    path: '/rooms/:room',
+    component:  ()=>import('@/views/RoomView.vue')
+    // children: [
+    //   {
+    //     path: '/Reserve',
+    //     name: 'Reserve',
+    //     component: Reserve,
+    //   }
+    // ]
+  },
+  {
     path: '/equipments',
     name: 'equipments',
     component: Equipments

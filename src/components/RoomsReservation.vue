@@ -1,24 +1,35 @@
 <template>
   <div class="q-pa-md">
-    <q-btn color="teal" label="Reserve" @click="dialog = true" />
+    <q-card class="my-card" flat bordered>
+      <q-item>
+        <q-item-section avatar>
+          <q-avatar>
+            <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+          </q-avatar>
+        </q-item-section>
 
-    <q-dialog v-model="dialog">
-      <q-layout view="lhh LpR lff" container style="height: 500px" class="bg-grey-3">
-        <q-page-container>
-          <q-page class="q-pa-md">
-            <p v-for="n in 15" :key="n">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil
-              praesentium molestias a adipisci, dolore vitae odit, quidem consequatur
-              optio voluptates asperiores pariatur eos numquam rerum delectus commodi
-              perferendis voluptate?
-            </p>
-          </q-page>
+        <q-item-section>
+          <q-item-label>Title</q-item-label>
+          <q-item-label caption> Subhead </q-item-label>
+        </q-item-section>
+      </q-item>
 
-          <q-page-scroller position="bottom">
-            <q-btn fab icon="keyboard_arrow_up" color="red" />
-          </q-page-scroller>
-        </q-page-container>
-      </q-layout>
-    </q-dialog>
+      <q-separator />
+
+      <q-card-section horizontal>
+        <q-card-section> test </q-card-section>
+
+        <q-separator vertical />
+
+        <q-card-section class="col-4">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        </q-card-section>
+      </q-card-section>
+    </q-card>
   </div>
 </template>
+<style lang="sass" scoped>
+.my-card
+  width: 100%
+  max-width: 350px
+</style>
