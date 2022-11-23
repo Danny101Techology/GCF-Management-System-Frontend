@@ -33,7 +33,6 @@
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
-
 const props = defineProps({
   equipments: Array,
 });
@@ -61,7 +60,6 @@ const columns = [
     sortable: true,
   },
 ];
-
 const rows = computed(() => {
   let data = props.equipments.map((equipment) => {
     return {
@@ -73,7 +71,6 @@ const rows = computed(() => {
   console.log(data);
   return data;
 });
-
 onMounted(() => {
   console.log("Equipments.vue have been mounted!");
   console.log(props.equipments);

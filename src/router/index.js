@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import Equipments from '@/views/Equipments.vue'
+import Equipments from '@/views/EquipmentsBruh.vue.vue'
 //import Rooms from '@/views/Rooms.vue'
 
 const routes = [
@@ -12,6 +12,17 @@ const routes = [
   {
     path: '/rooms/',
     component:  ()=>import('@/views/Rooms.vue')
+    // children: [
+    //   {
+    //     path: '/Reserve',
+    //     name: 'Reserve',
+    //     component: Reserve,
+    //   }
+    // ]
+  },
+  {
+    path: '/rooms/:room',
+    component:  ()=>import('@/views/RoomView.vue')
     // children: [
     //   {
     //     path: '/Reserve',
