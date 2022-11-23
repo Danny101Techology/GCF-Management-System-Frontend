@@ -18,7 +18,11 @@ function retrieveFromAPI() {
     "Authorization"
   ] = `Bearer ${process.env.VUE_APP_API_TOKEN}`;
   axios
+<<<<<<< HEAD
     .get(`api/equipments`)
+=======
+    .get(`equipments`)
+>>>>>>> 76bdf4be165245a6dc707dfe7b2823f68ad95c2c
     .then((response) => {
       equipments.value = response.data.data;
     })
