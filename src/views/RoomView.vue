@@ -131,7 +131,6 @@
 import axios from "axios";
 import { ref, onMounted } from "vue";
 import { useRoute } from 'vue-router';
-<<<<<<< HEAD
 
 import RoomsInfo from "@/components/RoomsInfo.vue";
 
@@ -139,12 +138,6 @@ const room = ref([]);
 const route = useRoute();
 const room_id = route.params.room;
 
-=======
-import RoomsInfo from "@/components/RoomsInfo.vue";
-const room = ref([]);
-const route = useRoute();
-const room_id = route.params.room;
->>>>>>> 76bdf4be165245a6dc707dfe7b2823f68ad95c2c
 function retrieveFromAPI() {
   axios.defaults.baseURL = process.env.VUE_APP_API_URI;
   axios.defaults.headers.common[
@@ -157,10 +150,7 @@ function retrieveFromAPI() {
       let id = response.data.data.id;
       let attributes = response.data.data.attributes;
       let images = response.data.data.attributes.images.data.map((img) => `${process.env.VUE_APP_API_URI}${img.attributes.url}`);
-<<<<<<< HEAD
 
-=======
->>>>>>> 76bdf4be165245a6dc707dfe7b2823f68ad95c2c
       room.value = {
         id: id,
         code: attributes.room_code,
@@ -175,16 +165,9 @@ function retrieveFromAPI() {
       console.log(error);
     });
 }
-<<<<<<< HEAD
 
 onMounted(() => {
   retrieveFromAPI();
 });
 
 </script>
-=======
-onMounted(() => {
-  retrieveFromAPI();
-});
-</script>
->>>>>>> 76bdf4be165245a6dc707dfe7b2823f68ad95c2c
