@@ -19,6 +19,12 @@ import HeaderWow from "@/components/HeaderWow.vue";
 
 
 export default {
+  setup () {
+    return {
+      slide: ref(1),
+      autoplay: ref(true)
+    }
+  },
   components: { HeaderWow }
 
 

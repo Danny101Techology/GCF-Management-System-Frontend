@@ -1,35 +1,84 @@
 <template>
-  <div class="q-pa-md">
-    <q-card class="my-card" flat bordered>
-      <q-item>
-        <q-item-section avatar>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
-          </q-avatar>
-        </q-item-section>
+  <div class="col-9">
+    <div class="q-pa-md">
+      <div class="q-gutter-md row items-start">
+        <q-date v-model="date" range />
+      </div>
+    </div>
 
-        <q-item-section>
-          <q-item-label>Title</q-item-label>
-          <q-item-label caption> Subhead </q-item-label>
-        </q-item-section>
-      </q-item>
+    <div class="q-pa-md">
+      <div class="q-gutter-sm row">
+        <q-input filled v-model="time" mask="time" :rules="['time']">
+          <template v-slot:append>
+            <q-icon name="access_time" class="cursor-pointer">
+              <q-popup-proxy
+                cover
+                transition-show="scale"
+                transition-hide="scale"
+              >
+                <q-time v-model="time">
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="Close" color="primary" flat />
+                  </div>
+                </q-time>
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
 
-      <q-separator />
+        <q-input
+          filled
+          v-model="timeWithSeconds"
+          mask="fulltime"
+          :rules="['fulltime']"
+        >
+          <template v-slot:append>
+            <q-icon name="access_time" class="cursor-pointer">
+              <q-popup-proxy
+                cover
+                transition-show="scale"
+                transition-hide="scale"
+              >
+                <q-time v-model="timeWithSeconds" with-seconds format24h>
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="Close" color="primary" flat />
+                  </div>
+                </q-time>
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
+      </div>
+    </div>
 
-      <q-card-section horizontal>
-        <q-card-section> test </q-card-section>
+    <div class="q-pa-md">
+      <div class="q-gutter-y-md column" style="max-width: 300px">
+        <q-select
+          color="purple-12"
+          v-model="model"
+          :options="options"
+          label="Type of Event"
+        >
+          <template v-slot:prepend>
+            <q-icon name="event" />
+          </template>
+        </q-select>
+      </div>
+    </div>
 
-        <q-separator vertical />
-
-        <q-card-section class="col-4">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        </q-card-section>
-      </q-card-section>
-    </q-card>
+    <div class="q-pa-md">
+      <div class="q-gutter-y-md column" style="max-width: 300px">
+        <q-select
+          color="purple-12"
+          v-model="model"
+          :options="options"
+          label="Reserved for"
+        >
+          <template v-slot:prepend>
+            <q-icon name="event" />
+          </template>
+        </q-select>
+      </div>
+    </div>
   </div>
 </template>
-<style lang="sass" scoped>
-.my-card
-  width: 100%
-  max-width: 350px
-</style>
