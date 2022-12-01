@@ -32,4 +32,5 @@ onMounted(() => {
   retrieveFromAPI();
 });
 
+  
 </script>

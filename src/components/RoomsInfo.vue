@@ -1,36 +1,32 @@
 <template>
   <div class="q-pa-md">
-    <div class="row items-start q-gutter-md">
-      <q-responsive :ratio="1" class="my-card">
-        <q-card class="my-card" flat bordered>
-          <q-item>
-            <q-item-section>
-              <q-item-label>{{ site }} > {{ name }}</q-item-label>
-              <q-item-label caption>Capacity: {{ capacity }} pax</q-item-label>
-            </q-item-section>
-          </q-item>
+    <q-responsive :ratio="16 / 9" class="col">
+      <q-card class="my-card" flat bordered>
+        <q-item>
+          <q-item-section>
+            <q-item-label>{{ site }} > {{ name }}</q-item-label>
+            <q-item-label caption>Capacity: {{ capacity }} pax</q-item-label>
+          </q-item-section>
+        </q-item>
 
-          <q-separator />
+        <q-separator />
 
-          <q-responsive :ratio="16 / 8">
-            <q-card-section vertical>
-              <q-card-section>
-                <!-- replace this part with carousel -->
-                <template v-for="img in images">
-                  <img:src="img" width="200" />
-                </template>
-                <!-- replace this part with carousel -->
-              </q-card-section>
+        <q-card-section vertical>
+          <q-card-section>
+            <!-- replace this part with carousel -->
+            <template v-for="img in images">
+              <img :src="img" width="200" />
+            </template>
+            <!-- replace this part with carousel -->
+          </q-card-section>
 
-              <q-card-actions>
-                <q-btn flat round icon="event" />
-                <q-btn flat color="primary"> Reserve </q-btn>
-              </q-card-actions>
-            </q-card-section>
-          </q-responsive>
-        </q-card>
-      </q-responsive>
-    </div>
+          <q-card-actions>
+            <q-btn flat round icon="event" />
+            <q-btn flat color="primary"> Reserve </q-btn>
+          </q-card-actions>
+        </q-card-section>
+      </q-card>
+    </q-responsive>
   </div>
 </template>
 

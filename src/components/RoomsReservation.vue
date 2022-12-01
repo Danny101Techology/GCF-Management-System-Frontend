@@ -56,7 +56,7 @@
         <q-select
           color="purple-12"
           v-model="model"
-          :options="options"
+          :options="eventTypeNames"
           label="Type of Event"
         >
           <template v-slot:prepend>
@@ -81,4 +81,68 @@
       </div>
     </div>
   </div>
+  
 </template>
+
+
+<script setup>
+import axios from "axios";
+import { ref, computed, onMounted } from "vue";
+
+const props = defineProps({
+  room: Object,
+});
+
+const name = computed(() => props.room.name);
+const capacity = computed(() => props.room.capacity);
+const site = computed(() => props.room.site);
+const available = computed(() => props.room.available);
+const images = computed(() => props.room.images);
+
+const date = ref();
+const time = ref();
+const timeWithSeconds = ref();
+const model = ref();
+
+function createPayload() {
+  let payload = {};
+
+  payload.date = date.value;
+  payload.time = time.value;
+  payload.timeWithSeconds = timeWithSeconds.value;
+  payload.model = model.value;
+  
+  return payload;
+}
+
+const eventTypes = ref([]);
+const eventTypeNames = computed(() => eventTypes.value.map((eventType) => eventType.name));
+const eventTypeIds = computed(() => eventTypes.value.map((eventType) => eventType.id));
+
+
+function retrieveEventTypesFromAPI() {
+  axios.defaults.baseURL = process.env.VUE_APP_API_URI;
+  axios.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${process.env.VUE_APP_API_TOKEN}`;
+  axios
+    .get(`api/event-types`)
+    .then((response) => {
+      eventTypes.value = response.data.data.map(eventType => {
+        return {
+          id: eventType.id,
+          name: eventType.attributes.name
+        }
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+onMounted(() => {
+  console.log("RoomsDialog.vue have been mounted!");
+  console.log(props.room);
+  retrieveEventTypesFromAPI();
+});
+</script>

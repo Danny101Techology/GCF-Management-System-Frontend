@@ -93,6 +93,7 @@ const rows = computed(() => {
   return data;
 });
 
+
 onMounted(() => {
   console.log("Rooms.vue have been mounted!");
   console.log(props.rooms);
