@@ -1,14 +1,16 @@
 <template>
-  <div class="col-9">
+  <!--Date-->
+  <div class="">
     <div class="q-pa-md">
       <div class="q-gutter-md row items-start">
         <q-date v-model="date" range />
       </div>
     </div>
 
+    <!--Time-->>
     <div class="q-pa-md">
       <div class="q-gutter-sm row">
-        <q-input filled v-model="time" mask="time" :rules="['time']">
+        <q-input filled v-model="timefrom" mask="time" :rules="['time']">
           <template v-slot:append>
             <q-icon name="access_time" class="cursor-pointer">
               <q-popup-proxy
@@ -16,7 +18,7 @@
                 transition-show="scale"
                 transition-hide="scale"
               >
-                <q-time v-model="time">
+                <q-time v-model="timefrom">
                   <div class="row items-center justify-end">
                     <q-btn v-close-popup label="Close" color="primary" flat />
                   </div>
@@ -26,12 +28,7 @@
           </template>
         </q-input>
 
-        <q-input
-          filled
-          v-model="timeWithSeconds"
-          mask="fulltime"
-          :rules="['fulltime']"
-        >
+        <q-input filled v-model="timeto" mask="time" :rules="['time']">
           <template v-slot:append>
             <q-icon name="access_time" class="cursor-pointer">
               <q-popup-proxy
@@ -39,7 +36,7 @@
                 transition-show="scale"
                 transition-hide="scale"
               >
-                <q-time v-model="timeWithSeconds" with-seconds format24h>
+                <q-time v-model="timeto">
                   <div class="row items-center justify-end">
                     <q-btn v-close-popup label="Close" color="primary" flat />
                   </div>
@@ -51,6 +48,8 @@
       </div>
     </div>
 
+
+    <!--Event-->
     <div class="q-pa-md">
       <div class="q-gutter-y-md column" style="max-width: 300px">
         <q-select
@@ -71,7 +70,7 @@
         <q-select
           color="purple-12"
           v-model="model"
-          :options="options"
+          :options="eventTypeReserveds"
           label="Reserved for"
         >
           <template v-slot:prepend>
@@ -80,10 +79,12 @@
         </q-select>
       </div>
     </div>
-  </div>
-  
-</template>
 
+
+
+  
+  </div>
+</template>
 
 <script setup>
 import axios from "axios";
@@ -100,25 +101,28 @@ const available = computed(() => props.room.available);
 const images = computed(() => props.room.images);
 
 const date = ref();
-const time = ref();
-const timeWithSeconds = ref();
+const timefrom = ref();
+const timeto = ref();
 const model = ref();
 
 function createPayload() {
   let payload = {};
 
   payload.date = date.value;
-  payload.time = time.value;
+  payload.time = timefrom.value;
   payload.timeWithSeconds = timeWithSeconds.value;
   payload.model = model.value;
-  
+
   return payload;
 }
 
 const eventTypes = ref([]);
-const eventTypeNames = computed(() => eventTypes.value.map((eventType) => eventType.name));
-const eventTypeIds = computed(() => eventTypes.value.map((eventType) => eventType.id));
-
+const eventTypeIds = computed(() =>
+  eventTypes.value.map((eventType) => eventType.id)
+);
+const eventTypeReserveds = computed(() =>
+  eventTypes.value.map((eventType) => eventType.reserved)
+);
 
 function retrieveEventTypesFromAPI() {
   axios.defaults.baseURL = process.env.VUE_APP_API_URI;
@@ -128,11 +132,12 @@ function retrieveEventTypesFromAPI() {
   axios
     .get(`api/event-types`)
     .then((response) => {
-      eventTypes.value = response.data.data.map(eventType => {
+      eventTypes.value = response.data.data.map((eventType) => {
         return {
           id: eventType.id,
-          name: eventType.attributes.name
-        }
+          name: eventType.attributes.name,
+          reserved: eventType.attributes.reserved,
+        };
       });
     })
     .catch((error) => {

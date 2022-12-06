@@ -1,18 +1,18 @@
 <template>
   <div class="row">
-    <div class="col-3">
+    <div class="col-11">
       <RoomsInfo :room="room" />
     </div>
-    <RoomsReservation />
-
+    <div class="col-3">
+      <RoomsReservation />
+    </div>
   </div>
-
 </template>
 
 <script setup>
 import axios from "axios";
 import { ref, onMounted } from "vue";
-import { useRoute } from 'vue-router';
+import { useRoute } from "vue-router";
 
 import RoomsReservation from "@/components/RoomsReservation.vue";
 import RoomsInfo from "@/components/RoomsInfo.vue";
@@ -29,10 +29,12 @@ function retrieveFromAPI() {
   axios
     .get(`api/rooms/${room_id}?populate=images`)
     .then((response) => {
-      console.log(response.data.data.attributes)
+      console.log(response.data.data.attributes);
       let id = response.data.data.id;
       let attributes = response.data.data.attributes;
-      let images = response.data.data.attributes.images.data.map((img) => `${process.env.VUE_APP_API_URI}${img.attributes.url}`);
+      let images = response.data.data.attributes.images.data.map(
+        (img) => `${process.env.VUE_APP_API_URI}${img.attributes.url}`
+      );
 
       room.value = {
         id: id,
@@ -41,8 +43,8 @@ function retrieveFromAPI() {
         site: attributes.site,
         capacity: attributes.capacity,
         available: attributes.available,
-        images: images
-      }
+        images: images,
+      };
     })
     .catch((error) => {
       console.log(error);
@@ -52,5 +54,4 @@ function retrieveFromAPI() {
 onMounted(() => {
   retrieveFromAPI();
 });
-
 </script>
