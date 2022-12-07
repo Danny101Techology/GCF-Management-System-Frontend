@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-11">
+    <div class="col-9">
       <RoomsInfo :room="room" />
     </div>
     <div class="col-3">

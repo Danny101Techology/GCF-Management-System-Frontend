@@ -61,7 +61,11 @@
   </div>
 </template>
 
-
+<style lang="sass" scoped>
+.my-card
+  width: 100%
+  max-width: 950px
+</style>
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
