@@ -1,9 +1,9 @@
 <template>
-  <div class="row">
-    <div class="col-9">
+  <div class="fit row wrap items-start content-start">
+    <div class="col-9" style="overflow: auto;">
       <RoomsInfo :room="room" />
     </div>
-    <div class="col-3">
+    <div class="col-3" style="overflow: auto;">
       <RoomsReservation />
     </div>
   </div>

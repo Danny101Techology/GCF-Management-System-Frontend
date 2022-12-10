@@ -1,13 +1,13 @@
 <template>
   <!--Date-->
-  <div class="">
-    <div class="q-pa-md">
+  <div class="q-pa-md">
+    
       <div class="q-gutter-md row items-start">
         <q-date v-model="date" range />
       </div>
-    </div>
+    
 
-    <!--Time-->>
+    <!--Time-->
     <div class="q-pa-md">
       <div class="q-gutter-sm row">
         <q-input filled v-model="timefrom" mask="time" :rules="['time']">
@@ -109,8 +109,8 @@ function createPayload() {
   let payload = {};
 
   payload.date = date.value;
-  payload.time = timefrom.value;
-  payload.timeWithSeconds = timeWithSeconds.value;
+  payload.timefrom = timefrom.value;
+  payload.timeto = timeto.value;
   payload.model = model.value;
 
   return payload;
