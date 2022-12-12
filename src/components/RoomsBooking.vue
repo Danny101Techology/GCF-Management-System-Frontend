@@ -3,7 +3,22 @@
     <div class="title">Create booking</div>
 
     <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
-      <q-input v-model="date_start" label="Starting Date" filled>
+
+      <!-- Input textfields -->
+      <q-input color="primary" v-model="fullName" label="Full name">
+        <template v-slot:prepend>
+          <q-icon name="person" />
+        </template>
+      </q-input>
+
+      <q-input color="primary" v-model="email" label="Email">
+        <template v-slot:prepend>
+          <q-icon name="mail" />
+        </template>
+      </q-input>
+
+      <!-- Date pickers -->
+      <q-input v-model="dateStart" label="Starting Date" filled>
         <template v-slot:prepend>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy
@@ -11,7 +26,7 @@
               transition-show="scale"
               transition-hide="scale"
             >
-              <q-date v-model="date_start" mask="YYYY-MM-DD HH:mm">
+              <q-date v-model="dateStart" mask="YYYY-MM-DD HH:mm">
                 <div class="row items-center justify-end">
                   <q-btn v-close-popup label="Close" color="primary" flat />
                 </div>
@@ -37,7 +52,7 @@
         </template>
       </q-input>
 
-      <q-input v-model="date_end" label="Ending Date" filled>
+      <q-input v-model="dateEnd" label="Ending Date" filled>
         <template v-slot:prepend>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy
@@ -45,7 +60,7 @@
               transition-show="scale"
               transition-hide="scale"
             >
-              <q-date v-model="date_end" mask="YYYY-MM-DD HH:mm">
+              <q-date v-model="dateEnd" mask="YYYY-MM-DD HH:mm">
                 <div class="row items-center justify-end">
                   <q-btn v-close-popup label="Close" color="primary" flat />
                 </div>
@@ -71,8 +86,11 @@
         </template>
       </q-input>
 
+
+
+      <!-- Select types -->
       <q-select
-        color="green-12"
+        color="primary"
         v-model="eventType"
         :options="eventTypeNames"
         label="Type of Event"
@@ -83,13 +101,13 @@
       </q-select>
 
       <q-select
-        color="green-12"
+        color="primary"
         v-model="reservedFor"
         :options="reservedForNames"
         label="Reserved for"
       >
         <template v-slot:prepend>
-          <q-icon name="event" />
+          <q-icon name="group" />
         </template>
       </q-select>
     </q-form>
@@ -97,12 +115,12 @@
 
   <div class="q-pa-md">
     <div class="q-pa-md">
-      <q-btn label="Click me" color="primary" @click="reserve = true" />
+      <q-btn label="Reserve" color="primary" @click="reserve = true" />
 
       <q-dialog v-model="reserve">
         <q-card>
           <q-card-section>
-            <div class="text-h6">Inception</div>
+            <div class="text-h6">Confirm your reservation</div>
           </q-card-section>
 
           <q-card-section class="q-pt-none">
@@ -127,8 +145,11 @@
 import axios from "axios";
 import { ref, computed, onMounted } from "vue";
 
-const date_start = ref();
-const date_end = ref();
+
+const fullName = ref();
+const email = ref();
+const dateStart = ref();
+const dateEnd = ref();
 const eventType = ref();
 const reservedFor = ref();
 
@@ -136,8 +157,10 @@ const reserve = ref(false);
 
 const payload = computed(() => {
   return {
-    date_start: date_start.value,
-    date_end: date_end.value,
+    fullName: fullName.value,
+    email: email.value,
+    dateStart: dateStart.value,
+    dateEnd: dateEnd.value,
     eventType: eventType.value,
     reservedFor: reservedFor.value,
   };

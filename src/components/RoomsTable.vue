@@ -20,18 +20,17 @@
       </q-input>
     </template>
 
-    <!-- <template v-slot:body-cell-schedule="props" dense>
+    <template v-slot:body-cell-schedule="props" dense>
         <q-td :props="props">
           <q-btn
             size="sm"
             color="green"
             round
             dense
-            @click="props.expand = !props.expand"
-            :icon="props.expand ? 'remove' : 'add'"
+            @click=""
           />
         </q-td>
-    </template> -->
+    </template>
   </q-table>
 </template>
 
@@ -43,12 +42,6 @@ const props = defineProps({
 });
 const filter = ref("");
 const columns = [
-  // {
-  //   name: "schedule",
-  //   align: "",
-  //   label: "",
-  //   field: "schedule",
-  // },
   {
     name: "site",
     align: "left",
@@ -77,6 +70,12 @@ const columns = [
     field: "available",
     sortable: true,
   },
+  {
+    name: "schedule",
+    align: "",
+    label: "",
+    field: "schedule",
+  },
 ];
 
 const rows = computed(() => {
@@ -92,7 +91,6 @@ const rows = computed(() => {
   console.log(data);
   return data;
 });
-
 
 onMounted(() => {
   console.log("Rooms.vue have been mounted!");
