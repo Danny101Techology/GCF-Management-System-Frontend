@@ -2,20 +2,15 @@
   <div class="q-pa-md">
     <div class="title">Create booking</div>
 
-    <q-form
-      @submit="onSubmit"
-      @reset="onReset"
-      class="q-gutter-md"
-    >
-
-      <q-input 
-        v-model="date_start"
-        label="Starting Date"
-        filled
-      >
+    <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+      <q-input v-model="date_start" label="Starting Date" filled>
         <template v-slot:prepend>
           <q-icon name="event" class="cursor-pointer">
-            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+            <q-popup-proxy
+              cover
+              transition-show="scale"
+              transition-hide="scale"
+            >
               <q-date v-model="date_start" mask="YYYY-MM-DD HH:mm">
                 <div class="row items-center justify-end">
                   <q-btn v-close-popup label="Close" color="primary" flat />
@@ -27,7 +22,11 @@
 
         <template v-slot:append>
           <q-icon name="access_time" class="cursor-pointer">
-            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+            <q-popup-proxy
+              cover
+              transition-show="scale"
+              transition-hide="scale"
+            >
               <q-time v-model="date" mask="YYYY-MM-DD HH:mm" format24h>
                 <div class="row items-center justify-end">
                   <q-btn v-close-popup label="Close" color="primary" flat />
@@ -38,14 +37,14 @@
         </template>
       </q-input>
 
-      <q-input 
-        v-model="date_end"
-        label="Ending Date"
-        filled
-      >
+      <q-input v-model="date_end" label="Ending Date" filled>
         <template v-slot:prepend>
           <q-icon name="event" class="cursor-pointer">
-            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+            <q-popup-proxy
+              cover
+              transition-show="scale"
+              transition-hide="scale"
+            >
               <q-date v-model="date_end" mask="YYYY-MM-DD HH:mm">
                 <div class="row items-center justify-end">
                   <q-btn v-close-popup label="Close" color="primary" flat />
@@ -57,7 +56,11 @@
 
         <template v-slot:append>
           <q-icon name="access_time" class="cursor-pointer">
-            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+            <q-popup-proxy
+              cover
+              transition-show="scale"
+              transition-hide="scale"
+            >
               <q-time v-model="date" mask="YYYY-MM-DD HH:mm" format24h>
                 <div class="row items-center justify-end">
                   <q-btn v-close-popup label="Close" color="primary" flat />
@@ -92,8 +95,31 @@
     </q-form>
   </div>
 
-  <div>
-    {{payload}}
+  <div class="q-pa-md">
+    <div class="q-pa-md">
+      <q-btn label="Click me" color="primary" @click="reserve = true" />
+
+      <q-dialog v-model="reserve">
+        <q-card>
+          <q-card-section>
+            <div class="text-h6">Inception</div>
+          </q-card-section>
+
+          <q-card-section class="q-pt-none">
+            {{ payload }}
+          </q-card-section>
+
+          <q-card-actions align="right" class="text-primary">
+            <q-btn
+              flat
+              label="Open another dialog"
+              @click="secondDialog = true"
+            />
+            <q-btn flat label="Close" v-close-popup />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
+    </div>
   </div>
 </template>
 
@@ -106,14 +132,16 @@ const date_end = ref();
 const eventType = ref();
 const reservedFor = ref();
 
+const reserve = ref(false);
+
 const payload = computed(() => {
   return {
     date_start: date_start.value,
     date_end: date_end.value,
     eventType: eventType.value,
-    reservedFor: reservedFor.value
-  }
-})
+    reservedFor: reservedFor.value,
+  };
+});
 
 const eventTypes = ref([]);
 const eventTypeIds = computed(() =>
@@ -162,7 +190,7 @@ function retrieveReservedForFromAPI() {
       reservedFors.value = response.data.data.map((reservedFor) => {
         return {
           id: reservedFor.id,
-          name: reservedFor.attributes.name
+          name: reservedFor.attributes.name,
         };
       });
     })

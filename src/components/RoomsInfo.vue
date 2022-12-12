@@ -16,7 +16,7 @@
             animated
             v-model="slide"
             navigation
-            infinite
+            infinite  
             :autoplay="autoplay"
             arrows
             transition-prev="slide-right"
