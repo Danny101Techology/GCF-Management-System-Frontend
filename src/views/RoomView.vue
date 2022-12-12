@@ -1,10 +1,10 @@
 <template>
   <div class="fit row wrap items-start content-start">
-    <div class="col-9" style="overflow: auto;">
+    <div class="col-8" style="overflow: auto;">
       <RoomsInfo :room="room" />
     </div>
-    <div class="col-3" style="overflow: auto;">
-      <RoomsReservation />
+    <div class="col-4" style="overflow: auto;">
+      <RoomsBooking />
     </div>
   </div>
 </template>
@@ -14,7 +14,7 @@ import axios from "axios";
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 
-import RoomsReservation from "@/components/RoomsReservation.vue";
+import RoomsBooking from "@/components/RoomsBooking.vue";
 import RoomsInfo from "@/components/RoomsInfo.vue";
 
 const room = ref([]);
@@ -33,7 +33,13 @@ function retrieveFromAPI() {
       let id = response.data.data.id;
       let attributes = response.data.data.attributes;
       let images = response.data.data.attributes.images.data.map(
-        (img) => `${process.env.VUE_APP_API_URI}${img.attributes.url}`
+        (img) => {
+          let data = {
+            name: img.attributes.name,
+            url: `${process.env.VUE_APP_API_URI}${img.attributes.url}`
+          }
+          return data;
+        }
       );
 
       room.value = {

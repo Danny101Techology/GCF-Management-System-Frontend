@@ -1,0 +1,179 @@
+<template>
+  <div class="q-pa-md">
+    <div class="title">Create booking</div>
+
+    <q-form
+      @submit="onSubmit"
+      @reset="onReset"
+      class="q-gutter-md"
+    >
+
+      <q-input 
+        v-model="date_start"
+        label="Starting Date"
+        filled
+      >
+        <template v-slot:prepend>
+          <q-icon name="event" class="cursor-pointer">
+            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+              <q-date v-model="date_start" mask="YYYY-MM-DD HH:mm">
+                <div class="row items-center justify-end">
+                  <q-btn v-close-popup label="Close" color="primary" flat />
+                </div>
+              </q-date>
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+
+        <template v-slot:append>
+          <q-icon name="access_time" class="cursor-pointer">
+            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+              <q-time v-model="date" mask="YYYY-MM-DD HH:mm" format24h>
+                <div class="row items-center justify-end">
+                  <q-btn v-close-popup label="Close" color="primary" flat />
+                </div>
+              </q-time>
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+      </q-input>
+
+      <q-input 
+        v-model="date_end"
+        label="Ending Date"
+        filled
+      >
+        <template v-slot:prepend>
+          <q-icon name="event" class="cursor-pointer">
+            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+              <q-date v-model="date_end" mask="YYYY-MM-DD HH:mm">
+                <div class="row items-center justify-end">
+                  <q-btn v-close-popup label="Close" color="primary" flat />
+                </div>
+              </q-date>
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+
+        <template v-slot:append>
+          <q-icon name="access_time" class="cursor-pointer">
+            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+              <q-time v-model="date" mask="YYYY-MM-DD HH:mm" format24h>
+                <div class="row items-center justify-end">
+                  <q-btn v-close-popup label="Close" color="primary" flat />
+                </div>
+              </q-time>
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+      </q-input>
+
+      <q-select
+        color="green-12"
+        v-model="eventType"
+        :options="eventTypeNames"
+        label="Type of Event"
+      >
+        <template v-slot:prepend>
+          <q-icon name="event" />
+        </template>
+      </q-select>
+
+      <q-select
+        color="green-12"
+        v-model="reservedFor"
+        :options="reservedForNames"
+        label="Reserved for"
+      >
+        <template v-slot:prepend>
+          <q-icon name="event" />
+        </template>
+      </q-select>
+    </q-form>
+  </div>
+
+  <div>
+    {{payload}}
+  </div>
+</template>
+
+<script setup>
+import axios from "axios";
+import { ref, computed, onMounted } from "vue";
+
+const date_start = ref();
+const date_end = ref();
+const eventType = ref();
+const reservedFor = ref();
+
+const payload = computed(() => {
+  return {
+    date_start: date_start.value,
+    date_end: date_end.value,
+    eventType: eventType.value,
+    reservedFor: reservedFor.value
+  }
+})
+
+const eventTypes = ref([]);
+const eventTypeIds = computed(() =>
+  eventTypes.value.map((eventType) => eventType.id)
+);
+const eventTypeNames = computed(() =>
+  eventTypes.value.map((eventType) => eventType.name)
+);
+
+function retrieveEventTypesFromAPI() {
+  axios.defaults.baseURL = process.env.VUE_APP_API_URI;
+  axios.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${process.env.VUE_APP_API_TOKEN}`;
+  axios
+    .get(`api/event-types`)
+    .then((response) => {
+      eventTypes.value = response.data.data.map((eventType) => {
+        return {
+          id: eventType.id,
+          name: eventType.attributes.name,
+          reserved: eventType.attributes.reserved,
+        };
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+const reservedFors = ref([]);
+const reservedForIds = computed(() =>
+  reservedFors.value.map((reservedFor) => reservedFor.id)
+);
+const reservedForNames = computed(() =>
+  reservedFors.value.map((reservedFor) => reservedFor.name)
+);
+function retrieveReservedForFromAPI() {
+  axios.defaults.baseURL = process.env.VUE_APP_API_URI;
+  axios.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${process.env.VUE_APP_API_TOKEN}`;
+  axios
+    .get(`api/reserved-fors`)
+    .then((response) => {
+      reservedFors.value = response.data.data.map((reservedFor) => {
+        return {
+          id: reservedFor.id,
+          name: reservedFor.attributes.name
+        };
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+onMounted(() => {
+  console.log("RoomsBooking.vue have been mounted!");
+  retrieveEventTypesFromAPI();
+  retrieveReservedForFromAPI();
+});
+</script>

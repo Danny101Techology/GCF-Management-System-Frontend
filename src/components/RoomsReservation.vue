@@ -163,8 +163,7 @@ function retrieveEventTypesFromAPI() {
 }
 
 onMounted(() => {
-  console.log("RoomsDialog.vue have been mounted!");
-  console.log(props.room);
+  console.log("RoomsRservation.vue have been mounted!");
   retrieveEventTypesFromAPI();
 });
 </script>
