@@ -1,15 +1,13 @@
 <template>
   <!--Date-->
   <div class="q-pa-md">
-    
-      <div class="q-gutter-md row items-start">
-        <q-date v-model="date" range />
-      </div>
-    
+    <div class="q-gutter-md row items-start">
+      <q-date v-model="date" range />
+    </div>
 
     <!--Time-->
     <div class="q-pa-md">
-      <div class="q-gutter-sm row">
+      <div class="q-pa-sm row">
         <q-input filled v-model="timefrom" mask="time" :rules="['time']">
           <template v-slot:append>
             <q-icon name="access_time" class="cursor-pointer">
@@ -48,12 +46,11 @@
       </div>
     </div>
 
-
     <!--Event-->
     <div class="q-pa-md">
       <div class="q-gutter-y-md column" style="max-width: 300px">
         <q-select
-          color="purple-12"
+          color="green-12"
           v-model="model"
           :options="eventTypeNames"
           label="Type of Event"
@@ -68,7 +65,7 @@
     <div class="q-pa-md">
       <div class="q-gutter-y-md column" style="max-width: 300px">
         <q-select
-          color="purple-12"
+          color="green-12"
           v-model="model"
           :options="eventTypeReserveds"
           label="Reserved for"
@@ -81,9 +78,24 @@
     </div>
 
 
-
-  
+    <!-- Input textfields -->
+    <div class="q-pa-md column" style="max-width: 300px">
+      <q-input color="purple-12" v-model="email" label="Email">
+        <template v-slot:prepend>
+          <q-icon name="mail" />
+        </template>
+      </q-input>
+    </div>
   </div>
+
+
+  <div class="q-pa-md column" style="max-width: 300px">
+      <q-input color="purple-12" v-model="fullname" label="Full Name">
+        <template v-slot:prepend>
+          <q-icon name="user" />
+        </template>
+      </q-input>
+    </div>
 </template>
 
 <script setup>
@@ -104,6 +116,8 @@ const date = ref();
 const timefrom = ref();
 const timeto = ref();
 const model = ref();
+const email = ref();
+const fullname = ref();
 
 function createPayload() {
   let payload = {};
@@ -112,6 +126,9 @@ function createPayload() {
   payload.timefrom = timefrom.value;
   payload.timeto = timeto.value;
   payload.model = model.value;
+  payload.email = email.value;
+  payload.fullname = fullname.value;
+
 
   return payload;
 }

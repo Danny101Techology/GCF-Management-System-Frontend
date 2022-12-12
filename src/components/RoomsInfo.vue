@@ -57,7 +57,7 @@
         <q-dialog v-model="reserve">
           <q-card>
             <q-card-section>
-              <div class="text-h6">Reservation</div>
+              <div class="text-h6">Please confirm your reservation</div>
             </q-card-section>
 
             <q-card-section class="q-pt-none">
