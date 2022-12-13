@@ -23,6 +23,7 @@
     <template v-slot:body-cell-schedule="props" dense>
         <q-td>
           <router-link
+            style="text-decoration: none; color: inherit;"
             :to="{ name: 'room-view', params: { room: props.row.id }}"
           >
             <q-btn
