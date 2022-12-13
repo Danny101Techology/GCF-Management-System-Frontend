@@ -7,27 +7,29 @@
     row-key="id"
   >
     <template v-slot:top-right>
-      <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+      <q-input
+        borderless
+        dense
+        debounce="300"
+        v-model="filter"
+        placeholder="Search"
+      >
         <template v-slot:append>
           <q-icon name="search" />
         </template>
       </q-input>
     </template>
-    <template v-slot:body-cell-schedule dense>
-      <q-tr>
-        <q-td>
-          <q-btn
-            size="sm"
-            color="green"
-            round
-            dense
-            @click="props.expand = !props.expand"
-            :icon="props.expand ? 'remove' : 'add'"
-          />
-          <q-btn size="sm" color="green" round dense icon="event" />
-        </q-td>
-      </q-tr>
-    </template>
+
+    <!-- <template v-slot:body-cell-schedule="props" dense>
+      <q-td>
+        <router-link
+          style="text-decoration: none; color: inherit"
+          :to="{ name: 'equipment-view', params: { equipment: props.row.id } }"
+        >
+          <q-btn size="sm" color="green" icon="add" round dense />
+        </router-link>
+      </q-td>
+    </template> -->
   </q-table>
 </template>
 

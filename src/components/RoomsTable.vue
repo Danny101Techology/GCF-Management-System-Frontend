@@ -36,6 +36,7 @@
            </router-link>
         </q-td>
     </template>
+    
   </q-table>
 </template>
 

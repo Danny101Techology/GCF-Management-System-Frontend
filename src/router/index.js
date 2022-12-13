@@ -33,9 +33,9 @@ const routes = [
     // ]
   },
   {
-    path: '/equipments',
-    name: 'equipments',
-    component: Equipments
+    path: '/equipments/:equipment',
+    name: 'equipment-view',
+    component:  ()=>import('@/views/EquipmentsView.vue')
   }
 ]
 
