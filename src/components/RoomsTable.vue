@@ -21,22 +21,15 @@
     </template>
 
     <template v-slot:body-cell-schedule="props" dense>
-        <q-td>
-          <router-link
-            style="text-decoration: none; color: inherit;"
-            :to="{ name: 'room-view', params: { room: props.row.id }}"
-          >
-            <q-btn
-              size="sm"
-              color="green"
-              icon="add"
-              round
-              dense
-            />
-           </router-link>
-        </q-td>
+      <q-td>
+        <router-link
+          style="text-decoration: none; color: inherit"
+          :to="{ name: 'room-view', params: { room: props.row.id } }"
+        >
+          <q-btn size="sm" color="green" icon="add" round dense />
+        </router-link>
+      </q-td>
     </template>
-    
   </q-table>
 </template>
 

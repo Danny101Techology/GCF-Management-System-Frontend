@@ -31,12 +31,4 @@ onMounted(() => {
   console.log("Equipments.vue have been mounted!");
   retrieveFromAPI();
 });
-//
-// import { library } from "@fortawesome/fontawesome-svg-core";
-// import { faHatWizard } from "@fortawesome/free-solid-svg-icons";
-// import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-//
-
-// import ReserveDialog from "@/components/ReserveDialog.vue";
-// import Calendar from "@/components/Calendar.vue";
 </script>

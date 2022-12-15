@@ -20,7 +20,7 @@
       </q-input>
     </template>
 
-    <!-- <template v-slot:body-cell-schedule="props" dense>
+    <template v-slot:body-cell-schedule="props" dense>
       <q-td>
         <router-link
           style="text-decoration: none; color: inherit"
@@ -29,7 +29,7 @@
           <q-btn size="sm" color="green" icon="add" round dense />
         </router-link>
       </q-td>
-    </template> -->
+    </template>
   </q-table>
 </template>
 
@@ -61,10 +61,17 @@ const columns = [
     field: "equipment_type",
     sortable: true,
   },
+  {
+    name: "schedule",
+    align: "",
+    label: "",
+    field: "schedule",
+  },
 ];
 const rows = computed(() => {
   let data = props.equipments.map((equipment) => {
     return {
+      id: equipment.id,
       equipments: equipment.attributes.equipments,
       equipment_type: equipment.attributes.equipment_type,
       equipment_subtype: equipment.attributes.equipment_subtype,
