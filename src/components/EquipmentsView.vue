@@ -1,7 +1,7 @@
 <template>
     <div class="fit row wrap items-start content-start">
       <div class="col-8" style="overflow: auto;">
-        <EquipmentsInfo :room="room" />
+        <EquipmentsInfo :equipment="equipment" />
       </div>
       <div class="col-4" style="overflow: auto;">
         <EquipmentsBooking />
@@ -17,9 +17,9 @@
   import EquipmentsBooking from "@/components/EquipmentsBooking.vue";
   import EquipmentsInfo from "@/components/EquipmentsInfo.vue";
   
-  const room = ref([]);
+  const equipment = ref([]);
   const route = useRoute();
-  const room_id = route.params.room;
+  const equipment_id = route.params.equipment;
   
   function retrieveFromAPI() {
     axios.defaults.baseURL = process.env.VUE_APP_API_URI;
@@ -27,7 +27,7 @@
       "Authorization"
     ] = `Bearer ${process.env.VUE_APP_API_TOKEN}`;
     axios
-      .get(`api/rooms/${room_id}?populate=images`)
+      .get(`api/equipments/${equipment_id}?populate=images`)
       .then((response) => {
         console.log(response.data.data.attributes);
         let id = response.data.data.id;
@@ -42,13 +42,11 @@
           }
         );
   
-        room.value = {
+        equipment.value = {
           id: id,
-          code: attributes.room_code,
-          name: attributes.room_name,
-          site: attributes.site,
-          capacity: attributes.capacity,
-          available: attributes.available,
+          equipment: attributes.equipment,
+          equipmenttype: attributes.equipmenttype,
+          equipmentsubtype: attributes.equipmentsubtype,
           images: images,
         };
       })

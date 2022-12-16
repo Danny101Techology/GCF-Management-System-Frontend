@@ -56,7 +56,7 @@
     equipment: Object,
   });
 
-  const equipment = computed(() => props.equipment);
+  const equipment = computed(() => props.equipments);
   const subtype = computed(() => props.equipment.subtype);
   const type = computed(() => props.equipment.type);
   const images = computed(() => props.equipment.images);

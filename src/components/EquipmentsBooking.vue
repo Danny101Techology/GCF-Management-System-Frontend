@@ -5,7 +5,12 @@
       <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
   
         <!-- Input textfields -->
-        <q-input color="primary" v-model="fullName" label="Full name">
+        <q-input 
+         color="primary" 
+         v-model="fullName" 
+         label="Full name"
+         :rules="nameRules"
+         >
           <template v-slot:prepend>
             <q-icon name="person" />
           </template>
