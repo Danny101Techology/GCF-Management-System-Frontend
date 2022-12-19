@@ -9,6 +9,7 @@
          color="primary" 
          v-model="fullName" 
          label="Full name"
+         lazy-rules
          :rules="nameRules"
          >
           <template v-slot:prepend>

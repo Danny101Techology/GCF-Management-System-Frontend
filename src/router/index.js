@@ -6,19 +6,12 @@ import Equipments from '@/views/Equipments.vue'
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    name: 'rooms',
+    component:  ()=>import('@/views/Rooms.vue')
   },
   {
     path: '/rooms/',
     component:  ()=>import('@/views/Rooms.vue')
-    // children: [
-    //   {
-    //     path: '/Reserve',
-    //     name: 'Reserve',
-    //     component: Reserve,
-    //   }
-    // ]
   },
   {
     path: '/rooms/:room',

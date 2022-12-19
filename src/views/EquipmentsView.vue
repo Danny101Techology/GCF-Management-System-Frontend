@@ -45,8 +45,8 @@
         equipment.value = {
           id: id,
           equipment: attributes.equipment,
-          equipment: attributes.equipment_type,
-          equipment: attributes.equipment_subtype,
+          type: attributes.equipment_type,
+          subtype: attributes.equipment_subtype,
           images: images,
         };
       })

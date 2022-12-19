@@ -56,10 +56,10 @@
     equipment: Object,
   });
 
-  const equipment = computed(() => props.equipments);
-  const subtype = computed(() => props.equipment.subtype);
-  const type = computed(() => props.equipment.type);
-  const images = computed(() => props.equipment.images);
+  const equipment = computed(() => props.equipment);
+  const subtype = computed(() => props.equipmentsubtype);
+  const type = computed(() => props.equipmenttype);
+  const images = computed(() => props.images);
   
   onMounted(() => {
     console.log("EquipmentsDialog.vue have been mounted!");
