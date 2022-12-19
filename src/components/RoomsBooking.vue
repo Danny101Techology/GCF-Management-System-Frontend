@@ -148,7 +148,12 @@ import { ref, computed, onMounted } from "vue";
 
 import RoomsBookingConfirmation from "@/components/RoomsBookingConfirmation.vue";
 
-
+const fullName = ref();
+const email = ref();
+const dateStart = ref();
+const dateEnd = ref();
+const eventType = ref();
+const reservedFor = ref();
 
 const eventTypes = ref([]);
 const eventTypeIds = computed(() =>
