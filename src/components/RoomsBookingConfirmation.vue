@@ -26,13 +26,14 @@
 </template>
 
 <script setup>
-
+import { useRoute } from 'vue-router';
 import { ref, computed, onMounted } from "vue";
 
 const reserve = ref(false);
 
 const payload = computed(() => {
   return {
+    room_id: useRoute().params.name,
     fullName: fullName.value,
     email: email.value,
     dateStart: dateStart.value,

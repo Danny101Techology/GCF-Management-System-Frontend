@@ -114,7 +114,7 @@
   </div>
 
   <div class="q-pa-md">
-    <RoomBookingConfirmation />
+    <RoomsBookingConfirmation />
     <!-- <div class="q-pa-md">
       <q-btn label="Reserve" color="primary" @click="reserve = true" />
 
@@ -146,7 +146,7 @@
 import axios from "axios";
 import { ref, computed, onMounted } from "vue";
 
-import RoomBookingConfirmation from "@/components/RoomBookingConfirmation.vue";
+import RoomsBookingConfirmation from "@/components/RoomsBookingConfirmation.vue";
 
 
 
