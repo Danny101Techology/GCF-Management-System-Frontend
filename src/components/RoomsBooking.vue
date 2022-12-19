@@ -114,7 +114,8 @@
   </div>
 
   <div class="q-pa-md">
-    <div class="q-pa-md">
+    <RoomBookingConfirmation />
+    <!-- <div class="q-pa-md">
       <q-btn label="Reserve" color="primary" @click="reserve = true" />
 
       <q-dialog v-model="reserve">
@@ -137,7 +138,7 @@
           </q-card-actions>
         </q-card>
       </q-dialog>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -145,26 +146,9 @@
 import axios from "axios";
 import { ref, computed, onMounted } from "vue";
 
+import RoomBookingConfirmation from "@/components/RoomBookingConfirmation.vue";
 
-const fullName = ref();
-const email = ref();
-const dateStart = ref();
-const dateEnd = ref();
-const eventType = ref();
-const reservedFor = ref();
 
-const reserve = ref(false);
-
-const payload = computed(() => {
-  return {
-    fullName: fullName.value,
-    email: email.value,
-    dateStart: dateStart.value,
-    dateEnd: dateEnd.value,
-    eventType: eventType.value,
-    reservedFor: reservedFor.value,
-  };
-});
 
 const eventTypes = ref([]);
 const eventTypeIds = computed(() =>
