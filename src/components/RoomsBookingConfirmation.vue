@@ -12,10 +12,14 @@
           {{ payload }}
         </q-card-section>
 
+        <q-card-section class="q-pt-none">
+          {{ room_id }}
+        </q-card-section>
+
         <q-card-actions align="right" class="text-primary">
           <q-btn
             flat
-            label="Open another dialog"
+            label="Confirm Reservation"
             @click="secondDialog = true"
           />
           <q-btn flat label="Close" v-close-popup />
@@ -31,27 +35,15 @@ import { ref, computed, onMounted } from "vue";
 
 const reserve = ref(false);
 
-const payload = computed(() => {
-  return {
-    room_id: useRoute().params.name,
-    fullName: fullName.value,
-    email: email.value,
-    dateStart: dateStart.value,
-    dateEnd: dateEnd.value,
-    eventType: eventType.value,
-    reservedFor: reservedFor.value,
-  };
-});
+const room_id = computed(() => useRoute().params)
 
-const fullName = ref();
-const email = ref();
-const dateStart = ref();
-const dateEnd = ref();
-const eventType = ref();
-const reservedFor = ref();
+const props = defineProps({
+  payload: Object,
+});
 
 
 onMounted(() => {
   console.log("RoomsBookingConfirmation.vue have been mounted!");
+  console.log(useRoute().params)
 });
 </script>
