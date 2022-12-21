@@ -2,7 +2,7 @@
   <div class="q-pa-md">
     <div class="title">Create booking</div>
 
-    <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+    <q-form class="q-gutter-md">
 
       <!-- Input textfields -->
       <q-input color="primary" v-model="fullName" label="Full name">
@@ -42,7 +42,7 @@
               transition-show="scale"
               transition-hide="scale"
             >
-              <q-time v-model="date" mask="YYYY-MM-DD HH:mm" format24h>
+              <q-time v-model="dateStart" mask="YYYY-MM-DD HH:mm" format24h>
                 <div class="row items-center justify-end">
                   <q-btn v-close-popup label="Close" color="primary" flat />
                 </div>
@@ -76,7 +76,7 @@
               transition-show="scale"
               transition-hide="scale"
             >
-              <q-time v-model="date" mask="YYYY-MM-DD HH:mm" format24h>
+              <q-time v-model="dateEnd" mask="YYYY-MM-DD HH:mm" format24h>
                 <div class="row items-center justify-end">
                   <q-btn v-close-popup label="Close" color="primary" flat />
                 </div>
@@ -114,37 +114,17 @@
   </div>
 
   <div class="q-pa-md">
-    <div class="q-pa-md">
-      <q-btn label="Reserve" color="primary" @click="reserve = true" />
+    <RoomsBookingConfirmation :payload="payload" />
 
-      <q-dialog v-model="reserve">
-        <q-card>
-          <q-card-section>
-            <div class="text-h6">Confirm your reservation</div>
-          </q-card-section>
-
-          <q-card-section class="q-pt-none">
-            {{ payload }}
-          </q-card-section>
-
-          <q-card-actions align="right" class="text-primary">
-            <q-btn
-              flat
-              label="Open another dialog"
-              @click="secondDialog = true"
-            />
-            <q-btn flat label="Close" v-close-popup />
-          </q-card-actions>
-        </q-card>
-      </q-dialog>
-    </div>
   </div>
 </template>
 
 <script setup>
 import axios from "axios";
+import { useRoute } from 'vue-router';
 import { ref, computed, onMounted } from "vue";
 
+import RoomsBookingConfirmation from "@/components/RoomsBookingConfirmation.vue";
 
 const fullName = ref();
 const email = ref();
@@ -153,10 +133,9 @@ const dateEnd = ref();
 const eventType = ref();
 const reservedFor = ref();
 
-const reserve = ref(false);
-
 const payload = computed(() => {
   return {
+    room_id: useRoute().params.name,
     fullName: fullName.value,
     email: email.value,
     dateStart: dateStart.value,
