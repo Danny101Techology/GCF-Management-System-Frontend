@@ -5,7 +5,14 @@
     <q-form class="q-gutter-md">
 
       <!-- Input textfields -->
-      <q-input color="primary" v-model="fullName" label="Full name">
+      <q-input
+        ref="nameRef" 
+        color="primary" 
+        v-model="fullName" 
+        label="Full name"
+        lazy-rules
+        :rules="nameRules"
+        >
         <template v-slot:prepend>
           <q-icon name="person" />
         </template>
@@ -18,7 +25,7 @@
       </q-input>
 
       <!-- Date pickers -->
-      <q-input v-model="dateStart" label="Starting Date" filled>
+      <q-input v-model="dateStart" label="Starting Date/Time" filled>
         <template v-slot:prepend>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy
@@ -52,7 +59,7 @@
         </template>
       </q-input>
 
-      <q-input v-model="dateEnd" label="Ending Date" filled>
+      <q-input v-model="dateEnd" label="Ending Date/Time" filled>
         <template v-slot:prepend>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy
@@ -132,6 +139,12 @@ const dateStart = ref();
 const dateEnd = ref();
 const eventType = ref();
 const reservedFor = ref();
+
+const nameRef = ref();
+
+const nameRules = [val => (val && val.length > 0) || 'Please type something'];
+
+const accept = ref();
 
 const payload = computed(() => {
   return {
