@@ -214,37 +214,37 @@ function retrieveReservedForFromAPI() {
     });
 }
 
-const onSubmit = ref();
-const onReset = ref();
+// const onSubmit = ref();
+// const onReset = ref();
 
-onSubmit(() => {
-  nameRef.value.validate()
+// onSubmit(() => {
+//   nameRef.value.validate()
 
 
-  if (nameRef.value.hasError) {
-          // form has error
-  }
+//   if (nameRef.value.hasError) {
+//           // form has error
+//   }
  
-  else if (accept.value !== true) {
-    q.notify({
-      color: 'negative',
-      message: 'You need to accept the license and terms first'
-    }) 
-  }
-  else {
-    $q.notify({
-      icon: 'done',
-      color: 'positive',
-      message: 'Submitted'
-    })
-  }
-});
+//   else if (accept.value !== true) {
+//     q.notify({
+//       color: 'negative',
+//       message: 'You need to accept the license and terms first'
+//     }) 
+//   }
+//   else {
+//     $q.notify({
+//       icon: 'done',
+//       color: 'positive',
+//       message: 'Submitted'
+//     })
+//   }
+// });
 
-onReset(() => {
-  name.value = null
+// onReset(() => {
+//   name.value = null
 
-  nameRef.value.resetValidation() 
-});
+//   nameRef.value.resetValidation() 
+// });
 
 
 
