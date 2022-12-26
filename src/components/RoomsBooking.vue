@@ -8,6 +8,7 @@
       class="q-gutter-md"
       >
       <!-- Input textfields -->
+      
       <q-input
         ref="nameRef"
         color="primary"
@@ -21,7 +22,12 @@
         </template>
       </q-input>
 
-      <q-input color="primary" v-model="email" label="Email">
+      <q-input 
+        color="primary" 
+        v-model="email" 
+        label="Email"
+        :rules="[ (val, rules) => rules.email(val) || 'Please enter a valid email address' ]"
+        >
         <template v-slot:prepend>
           <q-icon name="mail" />
         </template>
@@ -131,6 +137,7 @@ import axios from "axios";
 import { useRoute } from 'vue-router';
 import { ref, computed, onMounted } from "vue";
 
+import RoomsBookingInputs from "@/components/RoomsBookingInputs.vue";
 import RoomsBookingConfirmation from "@/components/RoomsBookingConfirmation.vue";
 
 const fullName = ref();
@@ -214,37 +221,6 @@ function retrieveReservedForFromAPI() {
     });
 }
 
-// const onSubmit = ref();
-// const onReset = ref();
-
-// onSubmit(() => {
-//   nameRef.value.validate()
-
-
-//   if (nameRef.value.hasError) {
-//           // form has error
-//   }
- 
-//   else if (accept.value !== true) {
-//     q.notify({
-//       color: 'negative',
-//       message: 'You need to accept the license and terms first'
-//     }) 
-//   }
-//   else {
-//     $q.notify({
-//       icon: 'done',
-//       color: 'positive',
-//       message: 'Submitted'
-//     })
-//   }
-// });
-
-// onReset(() => {
-//   name.value = null
-
-//   nameRef.value.resetValidation() 
-// });
 
 
 
