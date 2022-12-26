@@ -2,17 +2,20 @@
   <div class="q-pa-md">
     <div class="title">Create booking</div>
 
-    <q-form class="q-gutter-md">
-
+    <q-form 
+      @submit.prevent.stop="onSubmit" 
+      @reset.prevent.stop="onReset"
+      class="q-gutter-md"
+      >
       <!-- Input textfields -->
       <q-input
-        ref="nameRef" 
-        color="primary" 
-        v-model="fullName" 
+        ref="nameRef"
+        color="primary"
+        v-model="fullName"
         label="Full name"
         lazy-rules
         :rules="nameRules"
-        >
+      >
         <template v-slot:prepend>
           <q-icon name="person" />
         </template>
@@ -93,8 +96,6 @@
         </template>
       </q-input>
 
-
-
       <!-- Select types -->
       <q-select
         color="primary"
@@ -122,7 +123,6 @@
 
   <div class="q-pa-md">
     <RoomsBookingConfirmation :payload="payload" />
-
   </div>
 </template>
 
@@ -213,6 +213,41 @@ function retrieveReservedForFromAPI() {
       console.log(error);
     });
 }
+
+const onSubmit = ref();
+const onReset = ref();
+
+onSubmit(() => {
+  nameRef.value.validate()
+
+
+  if (nameRef.value.hasError) {
+          // form has error
+  }
+ 
+  else if (accept.value !== true) {
+    q.notify({
+      color: 'negative',
+      message: 'You need to accept the license and terms first'
+    }) 
+  }
+  else {
+    $q.notify({
+      icon: 'done',
+      color: 'positive',
+      message: 'Submitted'
+    })
+  }
+});
+
+onReset(() => {
+  name.value = null
+
+  nameRef.value.resetValidation() 
+});
+
+
+
 
 onMounted(() => {
   console.log("RoomsBooking.vue have been mounted!");
