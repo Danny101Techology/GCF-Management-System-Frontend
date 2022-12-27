@@ -2,9 +2,9 @@
   <div class="q-pa-md">
     <div class="title">Create booking</div>
 
+    <!-- @submit.prevent.stop="onSubmit" -->
     <q-form 
-      @submit.prevent.stop="onSubmit" 
-      @reset.prevent.stop="onReset"
+      
       class="q-gutter-md"
       >
       <!-- Input textfields -->
@@ -137,7 +137,6 @@ import axios from "axios";
 import { useRoute } from 'vue-router';
 import { ref, computed, onMounted } from "vue";
 
-import RoomsBookingInputs from "@/components/RoomsBookingInputs.vue";
 import RoomsBookingConfirmation from "@/components/RoomsBookingConfirmation.vue";
 
 const fullName = ref();
@@ -220,6 +219,30 @@ function retrieveReservedForFromAPI() {
       console.log(error);
     });
 }
+
+// Form Validation
+
+// const onSubmit = onSubmit(() => {
+//   nameRef.value.validate()
+
+//   if (nameRef.value.hasError) {
+//           // form has error
+//   }
+
+//   else if (accept.value !== true) {
+//     q.notify({
+//       color: 'negative',
+//       message: 'You need to accept the license and terms first'
+//     })
+//   }
+//   else {
+//     $q.notify({
+//       icon: 'done',
+//       color: 'positive',
+//       message: 'Submitted'
+//     })
+//   }
+// });
 
 
 
