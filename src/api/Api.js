@@ -13,6 +13,10 @@ const getRoomById = function(id) {
   return axios.get(`api/rooms/${id}?populate=images`);
 }
 
+const getAllRoomsReservations = function() {
+  return axios.get(`api/roomsreservations`);
+}
+
 const getAllEquipments = function() {
   return axios.get(`api/equipments`);
 }
@@ -32,6 +36,7 @@ const getAllEventTypes = function() {
 export default {
   getAllRooms,
   getRoomById,
+  getAllRoomsReservations,
   getAllEquipments,
   getEquipmentById,
   getAllReservedFors,
