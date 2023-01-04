@@ -8,17 +8,13 @@
 import axios from "axios";
 import { ref, onMounted } from "vue";
 
+import Api from "@/api/Api";
 import RoomsTable from "@/components/RoomsTable.vue";
 
 const rooms = ref([]);
 
 function retrieveFromAPI() {
-  axios.defaults.baseURL = process.env.VUE_APP_API_URI;
-  axios.defaults.headers.common[
-    "Authorization"
-  ] = `Bearer ${process.env.VUE_APP_API_TOKEN}`;
-  axios
-    .get(`api/rooms`)
+  Api.getAllRooms()
     .then((response) => {
       rooms.value = response.data.data;
     })

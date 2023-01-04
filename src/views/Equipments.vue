@@ -9,16 +9,12 @@ import axios from "axios";
 import { ref, onMounted } from "vue";
 
 import EquipmentsTable from "@/components/EquipmentsTable.vue";
+import Api from "@/api/Api";
 
 const equipments = ref([]);
 
 function retrieveFromAPI() {
-  axios.defaults.baseURL = process.env.VUE_APP_API_URI;
-  axios.defaults.headers.common[
-    "Authorization"
-  ] = `Bearer ${process.env.VUE_APP_API_TOKEN}`;
-  axios
-    .get(`api/equipments`)
+  Api.getAllEquipments()
     .then((response) => {
       equipments.value = response.data.data;
     })

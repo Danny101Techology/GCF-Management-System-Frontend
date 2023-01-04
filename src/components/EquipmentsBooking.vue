@@ -138,6 +138,7 @@ import { useRoute } from 'vue-router';
 import { ref, computed, onMounted } from "vue";
 
 import EquipmentsBookingConfirmation from "@/components/EquipmentsBookingConfirmation.vue";
+import Api from "@/api/Api";
 
 const fullName = ref();
 const email = ref();
@@ -173,12 +174,7 @@ const eventTypeNames = computed(() =>
 );
 
 function retrieveEventTypesFromAPI() {
-  axios.defaults.baseURL = process.env.VUE_APP_API_URI;
-  axios.defaults.headers.common[
-    "Authorization"
-  ] = `Bearer ${process.env.VUE_APP_API_TOKEN}`;
-  axios
-    .get(`api/event-types`)
+  Api.getAllEventTypes()
     .then((response) => {
       eventTypes.value = response.data.data.map((eventType) => {
         return {
@@ -201,12 +197,7 @@ const reservedForNames = computed(() =>
   reservedFors.value.map((reservedFor) => reservedFor.name)
 );
 function retrieveReservedForFromAPI() {
-  axios.defaults.baseURL = process.env.VUE_APP_API_URI;
-  axios.defaults.headers.common[
-    "Authorization"
-  ] = `Bearer ${process.env.VUE_APP_API_TOKEN}`;
-  axios
-    .get(`api/reserved-fors`)
+  Api.getAllReservedFors()
     .then((response) => {
       reservedFors.value = response.data.data.map((reservedFor) => {
         return {
