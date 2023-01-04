@@ -1,6 +1,6 @@
 <template>
     <div class="q-pa-md">
-      <RoomsTable :rooms="rooms" />
+      <RoomsTableReservation :rooms="rooms" />
     </div>
   </template>
   
@@ -8,7 +8,7 @@
   import axios from "axios";
   import { ref, onMounted } from "vue";
   
-  import RoomsTable from "@/components/RoomsTable.vue";
+  import RoomsTableReservation from "@/components/RoomsTableReservaton.vue";
   
   const rooms = ref([]);
   
@@ -18,7 +18,7 @@
       "Authorization"
     ] = `Bearer ${process.env.VUE_APP_API_TOKEN}`;
     axios
-      .get(`api/rooms`)
+      .get(`api/roomsreservations`)
       .then((response) => {
         rooms.value = response.data.data;
       })
@@ -28,7 +28,7 @@
   }
   
   onMounted(() => {
-    console.log("Rooms.vue have been mounted!");
+    console.log("RoomsReservation.vue have been mounted!");
     retrieveFromAPI();
   });
   
