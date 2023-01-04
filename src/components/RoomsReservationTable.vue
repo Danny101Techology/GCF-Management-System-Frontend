@@ -26,7 +26,7 @@
             style="text-decoration: none; color: inherit"
             :to="{ name: 'room-view', params: { room: props.row.id } }"
           > -->
-            <q-btn size="sm" color="green" icon="add" round dense />
+            <q-btn size="sm" color="green" label="Cancel" dense />
           <!-- </router-link> -->
         </q-td>
       </template>
@@ -80,6 +80,12 @@
       align: "left",
       label: "Ending Date Time",
       field: "endingdatetime",
+    },
+    {
+      name: "schedule",
+      align: "left",
+      label: "",
+      field: "schedule",
     },
   ];
   
