@@ -1,7 +1,12 @@
 <template>
-    <div class="q-pa-md">
+  <div class="fit row wrap items-start content-start">
+    <div class="col-8 q-pa-md">
       <RoomsReservationTable :roomsreservations="roomsreservations" />
     </div>
+    <div class="col-4" style="overflow: auto;">
+        <RoomsReservationCalendar />
+    </div>
+  </div>
 </template>
   
   <script setup>
@@ -9,7 +14,8 @@
   
   import Api from "@/api/Api";
   import RoomsReservationTable from "@/components/RoomsReservationTable.vue";
-  
+  import RoomsReservationCalendar from "@/components/RoomsReservationCalendar.vue";
+
   const roomsreservations = ref([]);
   
   function retrieveFromAPI() {
