@@ -2,7 +2,7 @@
     <div class="q-pa-md">
       <RoomsReservationTable :roomsreservations="roomsreservations" />
     </div>
-  </template>
+</template>
   
   <script setup>
   import { ref, onMounted } from "vue";
