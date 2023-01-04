@@ -133,7 +133,6 @@
 </template>
 
 <script setup>
-import axios from "axios";
 import { useRoute } from 'vue-router';
 import { ref, computed, onMounted } from "vue";
 
