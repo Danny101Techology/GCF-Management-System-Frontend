@@ -87,6 +87,7 @@
     let data = props.roomsreservations.map((roomsreservation) => {
       return {
         id: roomsreservation.id,
+        fullname: roomsreservation.attributes.fullname,
         room_code: roomsreservation.attributes.room_code,
         reservation_type: roomsreservation.attributes.reservation_type,
         event_type: roomsreservation.attributes.event_type,
