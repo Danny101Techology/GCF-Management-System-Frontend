@@ -14,7 +14,7 @@ const getRoomById = function(id) {
 }
 
 const getAllRoomsReservations = function() {
-  return axios.get(`api/roomsreservations`);
+  return axios.get(`api/room-reservations`);
 }
 
 const getAllEquipments = function() {
