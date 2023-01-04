@@ -37,7 +37,7 @@
   import { ref, computed, onMounted } from "vue";
   
   const props = defineProps({
-    rooms: Array,
+    roomsreservations: Array,
   });
   const filter = ref("");
   const columns = [
@@ -100,6 +100,6 @@
   
   onMounted(() => {
     console.log("RoomsReservationTable.vue have been mounted!");
-    console.log(props.roomsreservation);
+    console.log(props.roomsreservations);
   });
   </script>
