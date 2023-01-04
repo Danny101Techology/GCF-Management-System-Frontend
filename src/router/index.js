@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import Equipments from '@/views/Equipments.vue'
 import Rooms from '@/views/Rooms.vue'
+import RoomsReservation from '@/views/RoomsReservation.vue'
 
 const routes = [
   {
@@ -24,6 +25,10 @@ const routes = [
     //     component: Reserve,
     //   }
     // ]
+  },
+  {
+    path: '/reservation/',
+    component:  ()=>import('@/views/RoomsReservation.vue')
   },
   {
     path: '/equipments/',
