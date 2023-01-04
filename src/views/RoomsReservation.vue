@@ -8,7 +8,7 @@
   import { ref, onMounted } from "vue";
   
   import Api from "@/api/Api";
-  import RoomsReservationTable from "@/components/RoomsReservatonTable.vue";
+  import RoomsReservationTable from "@/components/RoomsReservationTable.vue";
   
   const roomsreservations = ref([]);
   
