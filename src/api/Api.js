@@ -45,7 +45,7 @@ const getAllEventTypes = function() {
   return axios.get(`api/event-types`);
 }
 
-const removeReservations = function() {
+const removeReservations = function(room_id) {
   return axios.delete(`api/rooms-reservation/${room_id}`);
 }
 
