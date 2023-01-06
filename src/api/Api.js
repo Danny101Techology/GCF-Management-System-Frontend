@@ -1,11 +1,23 @@
 import axios from "axios";
+import store from "@/store/index.js"
 
 axios.defaults.baseURL = process.env.VUE_APP_API_URI;
-axios.defaults.headers.common[
-  "Authorization"
-] = `Bearer ${process.env.VUE_APP_API_TOKEN}`;
+// axios.defaults.headers.common[
+//   "Authorization"
+// ] = `Bearer ${process.env.VUE_APP_API_TOKEN}`;
+
+const login = function(email, password) {
+  return axios.post(`api/auth/local`, {
+    identifier: email,
+    password: password
+  })
+};
 
 const getAllRooms = function() {
+  console.log("token", store.state.token)
+  axios.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${store.state.token}`;
   return axios.get(`api/rooms`);
 }
 
@@ -38,6 +50,7 @@ const removeReservations = function() {
 }
 
 export default {
+  login,
   getAllRooms,
   getRoomById,
   getAllRoomsReservations,
