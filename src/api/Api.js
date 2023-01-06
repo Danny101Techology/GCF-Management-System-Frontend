@@ -46,7 +46,7 @@ const getAllEventTypes = function() {
 }
 
 const removeReservations = function(room_id) {
-  return axios.delete(`api/rooms-reservation/${room_id}`);
+  return axios.delete(`api/room-reservation/${room_id}`);
 }
 
 export default {
