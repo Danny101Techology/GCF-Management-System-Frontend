@@ -34,7 +34,7 @@ const getAllEventTypes = function() {
 }
 
 const removeReservations = function() {
-  return axios.delete(`api/rooms-reservation`);
+  return axios.delete(`api/rooms-reservation/${room_id}`);
 }
 
 export default {
@@ -44,5 +44,6 @@ export default {
   getAllEquipments,
   getEquipmentById,
   getAllReservedFors,
-  getAllEventTypes
+  getAllEventTypes,
+  removeReservations
 }
