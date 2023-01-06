@@ -40,7 +40,7 @@ import { ref, computed, onMounted } from "vue";
 import Api from "@/api/Api";
 
 const props = defineProps({
-  roomsreservations: Array,
+  roomreservations: Array,
 });
 const filter = ref("");
 const columns = [
@@ -105,15 +105,15 @@ function removeReservationsFromAPI() {
 }
 
 const rows = computed(() => {
-  let data = props.roomsreservations.map((roomsreservation) => {
+  let data = props.roomreservations.map((roomreservation) => {
     return {
-      id: roomsreservation.id,
-      fullname: roomsreservation.attributes.fullname,
-      room_code: roomsreservation.attributes.room_code,
-      reservation_type: roomsreservation.attributes.reservation_type,
-      event_type: roomsreservation.attributes.event_type,
-      startingdatetime: roomsreservation.attributes.startingdatetime,
-      endingdatetime: roomsreservation.attributes.endingdatetime,
+      id: roomreservation.id,
+      fullname: roomreservation.attributes.fullname,
+      room_code: roomreservation.attributes.room_code,
+      reservation_type: roomreservation.attributes.reservation_type,
+      event_type: roomreservation.attributes.event_type,
+      startingdatetime: roomreservation.attributes.startingdatetime,
+      endingdatetime: roomreservation.attributes.endingdatetime,
     };
   });
   console.log(data);
