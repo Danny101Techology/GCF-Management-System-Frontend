@@ -34,7 +34,10 @@
   </template>
   
   <script setup>
+  import { useRoute } from 'vue-router';
   import { ref, computed, onMounted } from "vue";
+  
+  import Api from "@/api/Api";
   
   const props = defineProps({
     roomsreservations: Array,
@@ -88,6 +91,15 @@
       field: "schedule",
     },
   ];
+  
+  const removeReservations = ref();
+
+  function removeReservationsFromAPI() {
+    Api.removeReservations()
+      .then((response) => {
+        
+      });
+  }
   
   const rows = computed(() => {
     let data = props.roomsreservations.map((roomsreservation) => {

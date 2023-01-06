@@ -10,7 +10,7 @@
 <script setup>
 import { ref } from 'vue'
 
-const date = ref("2019/02/01");
+const date = ref();
 const event = [ "2019/02/01", "2019/02/05", "2019/02/06", "2019/02/09", "2019/02/23" ];
 
 

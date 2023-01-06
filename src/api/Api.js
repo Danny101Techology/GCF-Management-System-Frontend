@@ -33,6 +33,10 @@ const getAllEventTypes = function() {
   return axios.get(`api/event-types`);
 }
 
+const removeReservations = function() {
+  return axios.delete(`api/rooms-reservation`);
+}
+
 export default {
   getAllRooms,
   getRoomById,
