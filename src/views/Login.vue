@@ -1,5 +1,4 @@
 <template>
-  {{store.state}}
   <q-form
     @submit="onSubmit"
   >
@@ -20,24 +19,33 @@
 
     <div>
       <q-btn label="Login" type="submit" color="primary"/>
+      <div v-if="loginFailed">Login credentials incorrect. Please try again.</div>
     </div>
+
   </q-form>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router';
 
 const store = useStore();
+const router = useRouter();
 
 const email = ref("");
 const password = ref("");
+const loginFailed = ref();
 
 const onSubmit = function() {
   store.dispatch('login', {
     email: email.value, 
     password: password.value
   })
+    .then((success) => {
+      loginFailed.value = !success;
+      router.push('/')
+    })
 }
 
 </script>

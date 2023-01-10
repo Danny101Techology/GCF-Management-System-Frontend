@@ -8,8 +8,7 @@ import RoomsReservation from '@/views/RoomsReservation.vue'
 const routes = [
   {
     path: '/',
-    name: 'rooms',
-    component:  ()=>import('@/views/Rooms.vue')
+    redirect: '/rooms'
   },
   {
     path: '/login',
@@ -70,6 +69,10 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach(async (to) => {
+  if (!store.state.isAuthenticated && to.name != 'login') return { name: 'login' };
 })
 
 export default router

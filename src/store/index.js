@@ -47,10 +47,12 @@ export default createStore({
             user: user,
             token: jwt
           });
+          return true
         })
         .catch((error) => {
           console.log(error.response)
           commit('loginFailure')
+          return false
         });
     },
     logout({commit}) {
