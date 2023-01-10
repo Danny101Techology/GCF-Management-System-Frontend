@@ -93,6 +93,7 @@ const columns = [
   },
 ];
 
+const room_id = ref();
 const removeReservations = ref();
 
 const $q = useQuasar();
