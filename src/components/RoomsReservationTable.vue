@@ -26,7 +26,7 @@
             style="text-decoration: none; color: inherit"
             :to="{ name: 'room-view', params: { room: props.row.id } }"
           > -->
-        <q-btn size="sm" color="green" label="Cancel" @click="removeReservations(room_id)" dense />
+        <q-btn size="sm" color="green" label="Cancel" @click="removeReservationsFromAPI (room_id)" dense />
         <!-- </router-link> -->
       </q-td>
     </template>
@@ -34,13 +34,14 @@
 </template>
 
 <script setup>
+import { useQuasar } from "quasar";
 import { useRoute } from "vue-router";
 import { ref, computed, onMounted } from "vue";
 
 import Api from "@/api/Api";
 
 const props = defineProps({
-  roomreservations: Array,
+  roomsreservations: Array,
 });
 const filter = ref("");
 const columns = [
@@ -94,7 +95,14 @@ const columns = [
 
 const removeReservations = ref();
 
+const $q = useQuasar();
+
 function removeReservationsFromAPI() {
+  $q.notify({
+    message: "Room Reserved!",
+    color: "teal",
+  });
+
   Api.removeReservations(room_id)
     .then((response) => {
       console.log(response);
@@ -102,18 +110,19 @@ function removeReservationsFromAPI() {
     .catch(function (error) {
       console.log(error.response);
     });
+    
 }
 
 const rows = computed(() => {
-  let data = props.roomreservations.map((roomreservation) => {
+  let data = props.roomsreservations.map((roomsreservation) => {
     return {
-      id: roomreservation.id,
-      fullname: roomreservation.attributes.fullname,
-      room_code: roomreservation.attributes.room_code,
-      reservation_type: roomreservation.attributes.reservation_type,
-      event_type: roomreservation.attributes.event_type,
-      startingdatetime: roomreservation.attributes.startingdatetime,
-      endingdatetime: roomreservation.attributes.endingdatetime,
+      id: roomsreservation.id,
+      fullname: roomsreservation.attributes.fullname,
+      room_code: roomsreservation.attributes.room_code,
+      reservation_type: roomsreservation.attributes.reservation_type,
+      event_type: roomsreservation.attributes.event_type,
+      startingdatetime: roomsreservation.attributes.startingdatetime,
+      endingdatetime: roomsreservation.attributes.endingdatetime,
     };
   });
   console.log(data);

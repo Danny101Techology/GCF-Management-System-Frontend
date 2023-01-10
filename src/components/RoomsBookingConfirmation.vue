@@ -12,15 +12,12 @@
           {{ payload }}
         </q-card-section>
 
-        <q-card-section class="q-pt-none">
-          {{ room_id }}
-        </q-card-section>
-
         <q-card-actions align="right" class="text-primary">
           <q-btn
             flat
-            label="Confirm Reservation"
-            @click="secondDialog = true"
+            label="Reserve"
+            @click="secondDialog()"
+            v-close-popup
           />
           <q-btn flat label="Close" v-close-popup />
         </q-card-actions>
@@ -30,20 +27,41 @@
 </template>
 
 <script setup>
-import { useRoute } from 'vue-router';
+import { useQuasar } from "quasar";
+import { useRoute } from "vue-router";
 import { ref, computed, onMounted } from "vue";
+
+const $q = useQuasar();
+
+function secondDialog() {
+  $q.notify({
+    message: "Room Reserved!",
+    color: "teal",
+  });
+};
 
 const reserve = ref(false);
 
-const room_id = computed(() => useRoute().params)
+const fullName = ref();
+const email = ref();
+const dateStart = ref();
+const dateEnd = ref();
+const eventType = ref();
+const reservedFor = ref();
 
-const props = defineProps({
-  payload: Object,
+const payload = computed(() => {
+  return {
+    room_id: useRoute().params.name,
+    fullName: fullName.value,
+    email: email.value,
+    dateStart: dateStart.value,
+    dateEnd: dateEnd.value,
+    eventType: eventType.value,
+    reservedFor: reservedFor.value,
+  };
 });
-
 
 onMounted(() => {
   console.log("RoomsBookingConfirmation.vue have been mounted!");
-  console.log(useRoute().params)
 });
 </script>
