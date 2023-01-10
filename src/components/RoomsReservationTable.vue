@@ -99,7 +99,7 @@ const $q = useQuasar();
 
 function removeReservationsFromAPI() {
   $q.notify({
-    message: "Room Reserved!",
+    message: "Cancelled!",
     color: "teal",
   });
 
