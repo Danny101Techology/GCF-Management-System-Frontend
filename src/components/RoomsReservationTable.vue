@@ -26,7 +26,7 @@
             style="text-decoration: none; color: inherit"
             :to="{ name: 'room-view', params: { room: props.row.id } }"
           > -->
-        <q-btn size="sm" color="green" label="Cancel" @click="removeReservations(room_id)" dense />
+        <q-btn size="sm" color="green" label="Cancel" @click="removeReservation(props.row.id)" dense />
         <!-- </router-link> -->
       </q-td>
     </template>
@@ -92,9 +92,7 @@ const columns = [
   },
 ];
 
-const removeReservations = ref();
-
-function removeReservationsFromAPI() {
+function removeReservation(room_id) {
   Api.removeReservations(room_id)
     .then((response) => {
       console.log(response);

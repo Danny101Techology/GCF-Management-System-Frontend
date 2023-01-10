@@ -2,9 +2,6 @@ import axios from "axios";
 import store from "@/store/index.js"
 
 axios.defaults.baseURL = process.env.VUE_APP_API_URI;
-// axios.defaults.headers.common[
-//   "Authorization"
-// ] = `Bearer ${process.env.VUE_APP_API_TOKEN}`;
 
 const login = function(email, password) {
   return axios.post(`api/auth/local`, {
@@ -22,31 +19,52 @@ const getAllRooms = function() {
 }
 
 const getRoomById = function(id) {
+  axios.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${store.state.token}`;
   return axios.get(`api/rooms/${id}?populate=images`);
 }
 
 const getAllRoomsReservations = function() {
+  axios.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${store.state.token}`;
   return axios.get(`api/room-reservations`);
 }
 
 const getAllEquipments = function() {
+  axios.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${store.state.token}`;
   return axios.get(`api/equipments`);
 }
 
 const getEquipmentById = function(id) {
+  axios.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${store.state.token}`;
   return axios.get(`api/equipments/${id}?populate=images`);
 }
 
 const getAllReservedFors = function() {
+  axios.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${store.state.token}`;
   return axios.get(`api/reserved-fors`);
 }
 
 const getAllEventTypes = function() {
+  axios.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${store.state.token}`;
   return axios.get(`api/event-types`);
 }
 
-const removeReservations = function() {
-  return axios.delete(`api/rooms-reservation/${room_id}`);
+const removeReservations = function(room_id) {
+  axios.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${store.state.token}`;
+  return axios.delete(`api/room-reservations/${room_id}`);
 }
 
 export default {
