@@ -20,7 +20,8 @@
           <q-btn
             flat
             label="Confirm Reservation"
-            @click="secondDialog = true"
+            @click="createRoomsReservations()"
+            v-close-popup
           />
           <q-btn flat label="Close" v-close-popup />
         </q-card-actions>
@@ -30,8 +31,34 @@
 </template>
 
 <script setup>
+import { useQuasar } from "quasar";
 import { useRoute } from 'vue-router';
 import { ref, computed, onMounted } from "vue";
+
+const $q = useQuasar();
+function createRoomsReservations() {
+  let reservation = {
+    room_id: useRoute().params.name,
+    fullName: fullName.value,
+    email: email.value,
+    dateStart: dateStart.value,
+    dateEnd: dateEnd.value,
+    eventType: eventType.value,
+    reservedFor: reservedFor.value,
+  }
+  $q.notify({
+    message: "Room Reserved!",
+    color: "teal",
+  });
+  Api.createRoomsReservations(reservation)
+}; 
+
+// function secondDialog() {
+//   $q.notify({
+//     message: "Room Reserved!",
+//     color: "teal",
+//   });
+// };
 
 const reserve = ref(false);
 

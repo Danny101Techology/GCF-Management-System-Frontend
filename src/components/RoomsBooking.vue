@@ -133,11 +133,11 @@
 </template>
 
 <script setup>
+import axios from "axios";
 import { useRoute } from 'vue-router';
 import { ref, computed, onMounted } from "vue";
 
 import RoomsBookingConfirmation from "@/components/RoomsBookingConfirmation.vue";
-import Api from "@/api/Api";
 
 const fullName = ref();
 const email = ref();
@@ -163,6 +163,8 @@ const payload = computed(() => {
     reservedFor: reservedFor.value,
   };
 });
+console.log("PAYLOAD CHECK", payload)
+
 
 const eventTypes = ref([]);
 const eventTypeIds = computed(() =>
@@ -172,8 +174,16 @@ const eventTypeNames = computed(() =>
   eventTypes.value.map((eventType) => eventType.name)
 );
 
+
+
+
 function retrieveEventTypesFromAPI() {
-  Api.getAllEventTypes()
+  axios.defaults.baseURL = process.env.VUE_APP_API_URI;
+  axios.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${process.env.VUE_APP_API_TOKEN}`;
+  axios
+    .get(`api/event-types`)
     .then((response) => {
       eventTypes.value = response.data.data.map((eventType) => {
         return {
@@ -196,7 +206,12 @@ const reservedForNames = computed(() =>
   reservedFors.value.map((reservedFor) => reservedFor.name)
 );
 function retrieveReservedForFromAPI() {
-  Api.getAllReservedFors()
+  axios.defaults.baseURL = process.env.VUE_APP_API_URI;
+  axios.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${process.env.VUE_APP_API_TOKEN}`;
+  axios
+    .get(`api/reserved-fors`)
     .then((response) => {
       reservedFors.value = response.data.data.map((reservedFor) => {
         return {
@@ -209,6 +224,20 @@ function retrieveReservedForFromAPI() {
       console.log(error);
     });
 }
+
+function createRoomsReservations() {
+  let reservation = {
+    room_id: useRoute().params.name,
+    fullName: fullName.value,
+    email: email.value,
+    dateStart: dateStart.value,
+    dateEnd: dateEnd.value,
+    eventType: eventType.value,
+    reservedFor: reservedFor.value,
+  }
+  Api.createRoomsReservations(reservation)
+}
+
 
 // Form Validation
 
@@ -229,7 +258,7 @@ function retrieveReservedForFromAPI() {
 //     $q.notify({
 //       icon: 'done',
 //       color: 'positive',
-//       message: 'Submitted'
+//       message: 'Submitted'dz
 //     })
 //   }
 // });

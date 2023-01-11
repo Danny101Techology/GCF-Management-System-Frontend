@@ -67,11 +67,11 @@ const removeReservations = function(room_id) {
   return axios.delete(`api/room-reservations/${room_id}`);
 }
 
-const createRoomsReservations = function(room_id) {
+const createRoomsReservations = function(payload) {
   axios.defaults.headers.common[
     "Authorization"
   ] = `Bearer ${store.state.token}`;
-  return axios.delete(`api/rooms/${room_id}`);
+  return axios.post(`api/room-reservations`, payload);
 }
 
 export default {
