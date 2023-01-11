@@ -7,13 +7,7 @@
     row-key="id"
   >
     <template v-slot:top-right>
-      <q-input
-        borderless
-        dense
-        debounce="300"
-        v-model="filter"
-        placeholder="Search"
-      >
+      <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
         <template v-slot:append>
           <q-icon name="search" />
         </template>
@@ -26,7 +20,13 @@
             style="text-decoration: none; color: inherit"
             :to="{ name: 'room-view', params: { room: props.row.id } }"
           > -->
-        <q-btn size="sm" color="green" label="Cancel" @click="removeReservation(props.row.id)" dense />
+        <q-btn
+          size="sm"
+          color="green"
+          label="Cancel"
+          @click="removeReservation(props.row.id)"
+          dense
+        />
         <!-- </router-link> -->
       </q-td>
     </template>
@@ -100,6 +100,11 @@ function removeReservation(room_id) {
     .catch(function (error) {
       console.log(error.response);
     });
+  window.location.reload();
+  $q.notify({
+    message: "Room Reserved!",
+    color: "teal",
+  });
 }
 
 const rows = computed(() => {

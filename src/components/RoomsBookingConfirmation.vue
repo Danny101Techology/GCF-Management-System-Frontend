@@ -45,6 +45,11 @@ const $q = useQuasar();
 
 const confirmReservation = function() {
   emit('create-reservation');
+  window.location.reload();
+  $q.notify({
+    message: "Room Reserved!",
+    color: "teal",
+  });
 }
 
 // function secondDialog() {
