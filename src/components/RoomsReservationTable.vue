@@ -45,10 +45,10 @@ const props = defineProps({
 const filter = ref("");
 const columns = [
   {
-    name: "fullname",
+    name: "fullName",
     align: "left",
     label: "Full Name",
-    field: "fullname",
+    field: "fullName",
     sortable: true,
   },
   {
@@ -59,30 +59,30 @@ const columns = [
     sortable: true,
   },
   {
-    name: "reservation_type",
+    name: "reservedFor",
     align: "left",
     label: "Reservation Type",
-    field: "reservation_type",
+    field: "reservedFor",
     sortable: true,
   },
   {
-    name: "event_type",
+    name: "eventType",
     align: "left",
     label: "Event Type",
-    field: "event_type",
+    field: "eventType",
     sortable: true,
   },
   {
-    name: "startingdatetime",
+    name: "dateStart",
     align: "left",
     label: "Starting Date Time",
-    field: "startingdatetime",
+    field: "dateStart",
   },
   {
-    name: "endingdatetime",
+    name: "dateEnd",
     align: "left",
     label: "Ending Date Time",
-    field: "endingdatetime",
+    field: "dateEnd",
   },
   {
     name: "schedule",
@@ -106,12 +106,12 @@ const rows = computed(() => {
   let data = props.roomsreservations.map((roomsreservation) => {
     return {
       id: roomsreservation.id,
-      fullname: roomsreservation.attributes.fullname,
+      fullName: roomsreservation.attributes.fullName,
       room_code: roomsreservation.attributes.room_code,
-      reservation_type: roomsreservation.attributes.reservation_type,
-      event_type: roomsreservation.attributes.event_type,
-      startingdatetime: roomsreservation.attributes.startingdatetime,
-      endingdatetime: roomsreservation.attributes.endingdatetime,
+      reservedFor: roomsreservation.attributes.reservedFor,
+      eventType: roomsreservation.attributes.eventType,
+      dateStart: roomsreservation.attributes.dateStart,
+      dateEnd: roomsreservation.attributes.dateEnd,
     };
   });
   console.log(data);
