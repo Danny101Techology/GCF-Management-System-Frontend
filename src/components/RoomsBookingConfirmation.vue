@@ -20,7 +20,7 @@
           <q-btn
             flat
             label="Confirm Reservation"
-            @click="createRoomsReservations()"
+            @click="confirmReservation()"
             v-close-popup
           />
           <q-btn flat label="Close" v-close-popup />
@@ -35,23 +35,17 @@ import { useQuasar } from "quasar";
 import { useRoute } from 'vue-router';
 import { ref, computed, onMounted } from "vue";
 
+const props = defineProps({
+  payload: Object,
+});
+
+const emit = defineEmits(['createReservation'])
+
 const $q = useQuasar();
-function createRoomsReservations() {
-  let reservation = {
-    room_id: useRoute().params.name,
-    fullName: fullName.value,
-    email: email.value,
-    dateStart: dateStart.value,
-    dateEnd: dateEnd.value,
-    eventType: eventType.value,
-    reservedFor: reservedFor.value,
-  }
-  $q.notify({
-    message: "Room Reserved!",
-    color: "teal",
-  });
-  Api.createRoomsReservations(reservation)
-}; 
+
+const confirmReservation = function() {
+  emit('create-reservation');
+}
 
 // function secondDialog() {
 //   $q.notify({
@@ -63,11 +57,6 @@ function createRoomsReservations() {
 const reserve = ref(false);
 
 const room_id = computed(() => useRoute().params)
-
-const props = defineProps({
-  payload: Object,
-});
-
 
 onMounted(() => {
   console.log("RoomsBookingConfirmation.vue have been mounted!");

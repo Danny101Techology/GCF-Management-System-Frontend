@@ -128,7 +128,7 @@
   </div>
 
   <div class="q-pa-md">
-    <RoomsBookingConfirmation :payload="payload" />
+    <RoomsBookingConfirmation :payload="payload" @create-reservation="createRoomReservation()" />
   </div>
 </template>
 
@@ -137,7 +137,10 @@ import axios from "axios";
 import { useRoute } from 'vue-router';
 import { ref, computed, onMounted } from "vue";
 
+import Api from "@/api/Api.js";
 import RoomsBookingConfirmation from "@/components/RoomsBookingConfirmation.vue";
+
+const route = useRoute();
 
 const fullName = ref();
 const email = ref();
@@ -154,7 +157,7 @@ const accept = ref();
 
 const payload = computed(() => {
   return {
-    room_id: useRoute().params.name,
+    room_id: route.params.room,
     fullName: fullName.value,
     email: email.value,
     dateStart: dateStart.value,
@@ -174,16 +177,8 @@ const eventTypeNames = computed(() =>
   eventTypes.value.map((eventType) => eventType.name)
 );
 
-
-
-
 function retrieveEventTypesFromAPI() {
-  axios.defaults.baseURL = process.env.VUE_APP_API_URI;
-  axios.defaults.headers.common[
-    "Authorization"
-  ] = `Bearer ${process.env.VUE_APP_API_TOKEN}`;
-  axios
-    .get(`api/event-types`)
+  Api.getAllEventTypes()
     .then((response) => {
       eventTypes.value = response.data.data.map((eventType) => {
         return {
@@ -206,12 +201,7 @@ const reservedForNames = computed(() =>
   reservedFors.value.map((reservedFor) => reservedFor.name)
 );
 function retrieveReservedForFromAPI() {
-  axios.defaults.baseURL = process.env.VUE_APP_API_URI;
-  axios.defaults.headers.common[
-    "Authorization"
-  ] = `Bearer ${process.env.VUE_APP_API_TOKEN}`;
-  axios
-    .get(`api/reserved-fors`)
+  Api.getAllReservedFors()
     .then((response) => {
       reservedFors.value = response.data.data.map((reservedFor) => {
         return {
@@ -225,17 +215,25 @@ function retrieveReservedForFromAPI() {
     });
 }
 
-function createRoomsReservations() {
+function createRoomReservation() {
   let reservation = {
-    room_id: useRoute().params.name,
-    fullName: fullName.value,
-    email: email.value,
-    dateStart: dateStart.value,
-    dateEnd: dateEnd.value,
-    eventType: eventType.value,
-    reservedFor: reservedFor.value,
-  }
+    data: {
+      room_id: route.params.room,
+      fullName: fullName.value,
+      email: email.value,
+      dateStart: dateStart.value,
+      dateEnd: dateEnd.value,
+      eventType: eventType.value,
+      reservedFor: reservedFor.value,
+    }
+  };
   Api.createRoomsReservations(reservation)
+    .then((response) => {
+      // PUT CODE HERE FOR ALERTING SUCCESSFUL RESERVATION
+    })
+    .catch((error) => {
+      console.log(error);
+    })
 }
 
 
