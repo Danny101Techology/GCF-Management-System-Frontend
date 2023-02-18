@@ -9,11 +9,9 @@
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          {{ payload }}
-        </q-card-section>
-
-        <q-card-section class="q-pt-none">
-          {{ room_id }}
+          <ul>
+            <li v-for="room in formattedPayload" :key="room.id">{{ room }}</li>
+          </ul>
         </q-card-section>
 
         <q-card-actions align="right" class="text-primary">
@@ -32,39 +30,37 @@
 
 <script setup>
 import { useQuasar } from "quasar";
-import { useRoute } from 'vue-router';
-import { ref, computed, onMounted } from "vue";
+import { useRoute } from "vue-router";
+import { ref, computed, onMounted, defineProps } from "vue";
 
 const props = defineProps({
   payload: Object,
 });
 
-const emit = defineEmits(['createReservation'])
+const emit = defineEmits(["createReservation"]);
 
 const $q = useQuasar();
 
-const confirmReservation = function() {
-  emit('create-reservation');
+const confirmReservation = function () {
+  emit("create-reservation");
   window.location.reload();
   $q.notify({
     message: "Room Reserved!",
     color: "teal",
   });
-}
-
-// function secondDialog() {
-//   $q.notify({
-//     message: "Room Reserved!",
-//     color: "teal",
-//   });
-// };
+};
 
 const reserve = ref(false);
 
-const room_id = computed(() => useRoute().params)
+const room_id = computed(() => useRoute().params);
+
+const formattedPayload = computed(() => {
+  return this.payload.map(room => `Room ${room.id} - ${room.name} - ${room.description}`);
+});
 
 onMounted(() => {
   console.log("RoomsBookingConfirmation.vue have been mounted!");
-  console.log(useRoute().params)
+  console.log(useRoute().params);
+  console.log(payload);
 });
 </script>
