@@ -11,6 +11,7 @@
     <q-tabs align="left">
       <q-route-tab to="/rooms" label="Rooms" exact />
       <q-route-tab to="/equipments" label="Equipments" exact />
+      <q-route-tab to="/reservation" label="Reservations" exact />
     </q-tabs>
   </q-header>
 

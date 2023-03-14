@@ -1,0 +1,17 @@
+<template>
+  <div class="q-pa-md">
+    <div class="q-gutter-md">
+      <q-date v-model="date" :events="events" />
+
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+
+const date = ref();
+const event = [ "2019/02/01", "2019/02/05", "2019/02/06", "2019/02/09", "2019/02/23" ];
+
+
+</script>

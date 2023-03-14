@@ -65,14 +65,14 @@ const columns = [
   {
     name: "Available",
     align: "left",
-    label: "Available",
+    label: "Availability",
     field: "available",
     sortable: true,
   },
   {
     name: "schedule",
-    align: "",
-    label: "",
+    align: "left",
+    label: "Book",
     field: "schedule",
   },
 ];
