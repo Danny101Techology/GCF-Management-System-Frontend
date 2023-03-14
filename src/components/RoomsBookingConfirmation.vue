@@ -1,4 +1,4 @@
-<template>
+  <template>
   <div class="q-pa-md">
     <q-btn label="Reserve" color="primary" @click="reserve = true" />
 
@@ -9,11 +9,12 @@
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          {{ payload }}
-        </q-card-section>
-
-        <q-card-section class="q-pt-none">
-          {{ room_id }}
+          <q-list>
+            <q-item v-for="(value, key) in filteredPayload" :key="key">
+              <q-item-label>{{ key }}:</q-item-label>
+              <q-item-label caption>{{ value }}</q-item-label>
+            </q-item>
+          </q-list>
         </q-card-section>
 
         <q-card-actions align="right" class="text-primary">
@@ -52,16 +53,19 @@ const confirmReservation = function() {
   });
 }
 
-// function secondDialog() {
-//   $q.notify({
-//     message: "Room Reserved!",
-//     color: "teal",
-//   });
-// };
-
 const reserve = ref(false);
 
 const room_id = computed(() => useRoute().params)
+
+const filteredPayload = computed(() => {
+  const filtered = {};
+  for (const [key, value] of Object.entries(props.payload)) {
+    if (key !== 'room_id') {
+      filtered[key] = value;
+    }
+  }
+  return filtered;
+});
 
 onMounted(() => {
   console.log("RoomsBookingConfirmation.vue have been mounted!");
