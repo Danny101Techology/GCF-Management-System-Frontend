@@ -3,12 +3,9 @@
     <div class="title">Create booking</div>
 
     <!-- @submit.prevent.stop="onSubmit" -->
-    <q-form 
-      
-      class="q-gutter-md"
-      >
+    <q-form class="q-gutter-md" @submit.prevent.stop="onSubmit">
       <!-- Input textfields -->
-      
+
       <q-input
         ref="nameRef"
         color="primary"
@@ -22,12 +19,15 @@
         </template>
       </q-input>
 
-      <q-input 
-        color="primary" 
-        v-model="email" 
+      <q-input
+        color="primary"
+        v-model="email"
         label="Email"
-        :rules="[ (val, rules) => rules.email(val) || 'Please enter a valid email address' ]"
-        >
+        :rules="[
+          (val, rules) =>
+            rules.email(val) || 'Please enter a valid email address',
+        ]"
+      >
         <template v-slot:prepend>
           <q-icon name="mail" />
         </template>
@@ -124,11 +124,16 @@
           <q-icon name="group" />
         </template>
       </q-select>
+      <RoomsBookingCheckboxes />
+
     </q-form>
   </div>
 
   <div class="q-pa-md">
-    <RoomsBookingConfirmation :payload="payload" @create-reservation="createRoomReservation()" />
+    <RoomsBookingConfirmation
+      :payload="payload"
+      @create-reservation="createRoomReservation()"
+    />
   </div>
 </template>
 
@@ -136,9 +141,11 @@
 import axios from "axios";
 import { useRoute } from 'vue-router';
 import { ref, computed, onMounted } from "vue";
-
+import store from "../store/index.js";
+import { useStore } from "vuex";
 import Api from "@/api/Api.js";
 import RoomsBookingConfirmation from "@/components/RoomsBookingConfirmation.vue";
+import RoomsBookingCheckboxes from "@/components/RoomsBookingCheckboxes.vue";
 
 const route = useRoute();
 
@@ -262,6 +269,9 @@ function createRoomReservation() {
 // });
 
 
+const allLazyRulesTriggered = computed(() => {
+  return Object.values($refs).every(ref => ref.validateLazy())
+})
 
 
 

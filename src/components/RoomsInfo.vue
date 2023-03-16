@@ -12,11 +12,21 @@
 
       <q-card-section vertical>
         <div>
+          <q-linear-progress
+            v-if="!imageLoaded"
+            class="buffer-progress"
+            color="green"
+            indeterminate
+            rounded
+            track-color="white"
+            size="4px"
+            :min-height="2"
+          />
           <q-carousel
             animated
             v-model="slide"
             navigation
-            infinite  
+            infinite
             :autoplay="autoplay"
             arrows
             transition-prev="slide-right"
@@ -28,6 +38,7 @@
               <q-carousel-slide
                 :name="img.name"
                 :img-src="img.url"
+                @load="imageLoaded = true"
               />
             </template>
           </q-carousel>
@@ -41,8 +52,17 @@
 .my-card
   width: 100%
   max-width: 950px
-</style>
 
+.carousel-container
+  position: relative
+
+.buffer-progress
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  z-index: 2
+</style>
 <script setup>
 import { ref, computed, onMounted } from "vue";
 
