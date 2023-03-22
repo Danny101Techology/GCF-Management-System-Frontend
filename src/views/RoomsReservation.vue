@@ -3,9 +3,6 @@
     <div class="col-8 q-pa-md">
       <RoomsReservationTable :roomsreservations="roomsreservations" />
     </div>
-    <div class="col-4" style="overflow: auto;">
-        <RoomsReservationCalendar />
-    </div>
   </div>
 </template>
   
@@ -14,7 +11,7 @@
   
   import Api from "@/api/Api";
   import RoomsReservationTable from "@/components/RoomsReservationTable.vue";
-  import RoomsReservationCalendar from "@/components/RoomsReservationCalendar.vue";
+
 
   const roomsreservations = ref([]);
   
