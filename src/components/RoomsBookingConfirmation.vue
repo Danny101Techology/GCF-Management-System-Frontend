@@ -5,7 +5,6 @@
       label="Reserve"
       color="primary"
       @click="reserve = true"
-      :disabled="!allLazyRulesTriggered"
     />
 
     <q-dialog v-model="reserve">

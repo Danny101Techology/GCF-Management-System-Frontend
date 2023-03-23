@@ -1,34 +1,35 @@
 <template>
-  <div class="fit row wrap items-start content-start">
+  <div v-if="isAuthenticated" class="fit row wrap items-start content-start">
     <div class="col-8 q-pa-md">
       <RoomsReservationTable :roomsreservations="roomsreservations" />
     </div>
   </div>
+  <q-alert v-else color="negative">403 Forbidden</q-alert>
 </template>
-  
-  <script setup>
+
+<script setup>
   import { ref, onMounted } from "vue";
-  
   import Api from "@/api/Api";
   import RoomsReservationTable from "@/components/RoomsReservationTable.vue";
-
-
+  
   const roomsreservations = ref([]);
+  const isAuthenticated = localStorage.getItem("isAuthenticated");
   
   function retrieveFromAPI() {
-  Api.getAllRoomsReservations()
-    .then((response) => {
-      roomsreservations.value = response.data.data;
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}
+    Api.getAllRoomsReservations()
+      .then((response) => {
+        roomsreservations.value = response.data.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   
   onMounted(() => {
-    console.log("RoomsReservation.vue have been mounted!");
+    console.log("RoomsReservation.vue has been mounted!");
+    if (!isAuthenticated) {
+      return new Response("Forbidden", { status: 403 });
+    }
     retrieveFromAPI();
   });
-  
-    
-  </script>
+</script>
