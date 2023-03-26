@@ -1,134 +1,11 @@
 <template>
-  <div class="q-pa-md">
-    <div class="title">Create booking</div>
-
-    <!-- @submit.prevent.stop="onSubmit" -->
-    <q-form 
-      
-      class="q-gutter-md"
-      >
-      <!-- Input textfields -->
-      
-      <q-input
-        ref="nameRef"
-        color="primary"
-        v-model="fullName"
-        label="Full name"
-        lazy-rules
-        :rules="nameRules"
-      >
-        <template v-slot:prepend>
-          <q-icon name="person" />
-        </template>
-      </q-input>
-
-      <q-input 
-        color="primary" 
-        v-model="email" 
-        label="Email"
-        :rules="[ (val, rules) => rules.email(val) || 'Please enter a valid email address' ]"
-        >
-        <template v-slot:prepend>
-          <q-icon name="mail" />
-        </template>
-      </q-input>
-
-      <!-- Date pickers -->
-      <q-input v-model="dateStart" label="Starting Date/Time" filled>
-        <template v-slot:prepend>
-          <q-icon name="event" class="cursor-pointer">
-            <q-popup-proxy
-              cover
-              transition-show="scale"
-              transition-hide="scale"
-            >
-              <q-date v-model="dateStart" mask="YYYY-MM-DD HH:mm">
-                <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="primary" flat />
-                </div>
-              </q-date>
-            </q-popup-proxy>
-          </q-icon>
-        </template>
-
-        <template v-slot:append>
-          <q-icon name="access_time" class="cursor-pointer">
-            <q-popup-proxy
-              cover
-              transition-show="scale"
-              transition-hide="scale"
-            >
-              <q-time v-model="dateStart" mask="YYYY-MM-DD HH:mm" format24h>
-                <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="primary" flat />
-                </div>
-              </q-time>
-            </q-popup-proxy>
-          </q-icon>
-        </template>
-      </q-input>
-
-      <q-input v-model="dateEnd" label="Ending Date/Time" filled>
-        <template v-slot:prepend>
-          <q-icon name="event" class="cursor-pointer">
-            <q-popup-proxy
-              cover
-              transition-show="scale"
-              transition-hide="scale"
-            >
-              <q-date v-model="dateEnd" mask="YYYY-MM-DD HH:mm">
-                <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="primary" flat />
-                </div>
-              </q-date>
-            </q-popup-proxy>
-          </q-icon>
-        </template>
-
-        <template v-slot:append>
-          <q-icon name="access_time" class="cursor-pointer">
-            <q-popup-proxy
-              cover
-              transition-show="scale"
-              transition-hide="scale"
-            >
-              <q-time v-model="dateEnd" mask="YYYY-MM-DD HH:mm" format24h>
-                <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="primary" flat />
-                </div>
-              </q-time>
-            </q-popup-proxy>
-          </q-icon>
-        </template>
-      </q-input>
-
-      <!-- Select types -->
-      <q-select
-        color="primary"
-        v-model="eventType"
-        :options="eventTypeNames"
-        label="Type of Event"
-      >
-        <template v-slot:prepend>
-          <q-icon name="event" />
-        </template>
-      </q-select>
-
-      <q-select
-        color="primary"
-        v-model="reservedFor"
-        :options="reservedForNames"
-        label="Reserved for"
-      >
-        <template v-slot:prepend>
-          <q-icon name="group" />
-        </template>
-      </q-select>
-    </q-form>
-  </div>
+  <RoomsBookingFields />
 
   <div class="q-pa-md">
-    <RoomsBookingConfirmation :payload="payload" @create-reservation="createRoomReservation()" />
+    <RoomsBookingConfirmation
+      :payload="payload"
+      @create-reservation="createRoomReservation()"
+    />
   </div>
 </template>
 
@@ -136,9 +13,13 @@
 import axios from "axios";
 import { useRoute } from 'vue-router';
 import { ref, computed, onMounted } from "vue";
-
+import store from "../store/index.js";
+import { useStore } from "vuex";
 import Api from "@/api/Api.js";
+
+import RoomsBookingFields from "@/components/RoomsBookingFields.vue";
 import RoomsBookingConfirmation from "@/components/RoomsBookingConfirmation.vue";
+import RoomsBookingCheckboxes from "@/components/RoomsBookingCheckboxes.vue";
 
 const route = useRoute();
 
@@ -237,29 +118,7 @@ function createRoomReservation() {
 }
 
 
-// Form Validation
 
-// const onSubmit = onSubmit(() => {
-//   nameRef.value.validate()
-
-//   if (nameRef.value.hasError) {
-//           // form has error
-//   }
-
-//   else if (accept.value !== true) {
-//     q.notify({
-//       color: 'negative',
-//       message: 'You need to accept the license and terms first'
-//     })
-//   }
-//   else {
-//     $q.notify({
-//       icon: 'done',
-//       color: 'positive',
-//       message: 'Submitted'dz
-//     })
-//   }
-// });
 
 
 
