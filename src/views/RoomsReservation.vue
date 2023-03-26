@@ -3,6 +3,9 @@
     <div class="col-8 q-pa-md">
       <RoomsReservationTable :roomsreservations="roomsreservations" />
     </div>
+    <div class="col-4" style="overflow: auto;">
+        <RoomsReservationCalendar />
+    </div>
   </div>
   <q-alert v-else color="negative">403 Forbidden</q-alert>
 </template>

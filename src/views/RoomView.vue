@@ -8,7 +8,8 @@
   >
     <q-step
       :name="1"
-      title="Select campaign settings"
+      :title="`${site} > ${name}`"
+      :caption="`${capacity} pax`"
       icon="settings"
       :done="step > 1"
     >
@@ -28,22 +29,87 @@
     </q-step>
     <q-step
       :name="2"
-      title="Create an ad group"
-      caption="Optional"
+      title="Specify your reservation details"
       icon="create_new_folder"
       :done="step > 2"
     >
       <q-splitter v-model="splitterModel" :limits="[50, 100]">
-        <template v-slot:before>
+        <template v-slot:after>
           <div>
-            <RoomsBookingConfirmation
+            <div class="q-pa-md">
+              <q-card>
+                <q-card-section>
+                  <div class="text-h6">Confirm your reservation</div>
+                </q-card-section>
+
+                <q-card-section class="q-pt-none">
+                  <q-list>
+                    <q-item>
+                      <q-item-label>Full Name</q-item-label>
+                      <q-item-section>
+                        <q-input v-model="payload.fullName.value" />
+                      </q-item-section>
+                    </q-item>
+                    <q-item>
+                      <q-item-label>Email</q-item-label>
+                      <q-item-section>
+                        <q-input v-model="payload.email.value" />
+                      </q-item-section>
+                    </q-item>
+                    <q-item>
+                      <q-item-label>Date Start</q-item-label>
+                      <q-item-section>
+                        <q-input v-model="payload.dateStart.value" />
+                      </q-item-section>
+                    </q-item>
+                    <q-item>
+                      <q-item-label>Date End</q-item-label>
+                      <q-item-section>
+                        <q-input v-model="payload.dateEnd.value" />
+                      </q-item-section>
+                    </q-item>
+                    <q-item>
+                      <q-item-label>Event Type</q-item-label>
+                      <q-item-section>
+                        <q-select
+                          v-model="payload.eventType.value"
+                          :options="eventTypes"
+                        />
+                      </q-item-section>
+                    </q-item>
+                    <q-item>
+                      <q-item-label>Reserved For</q-item-label>
+                      <q-item-section>
+                        <q-input v-model="payload.reservedFor.value" />
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
+
+                  <!-- <q-item v-for="(value, key) in filteredPayload" :key="key">
+        <q-item-label>{{ key }}:</q-item-label>
+        <q-item-label caption>{{ value }}</q-item-label>
+      </q-item> -->
+                </q-card-section>
+
+                <q-card-actions align="right" class="text-primary">
+                  <q-btn
+                    flat
+                    label="Confirm Reservation"
+                    @click="confirmReservation()"
+                    v-close-popup
+                  />
+                  <q-btn flat label="Close" v-close-popup />
+                </q-card-actions>
+              </q-card>
+            </div>
+            <!-- <RoomsBookingConfirmation
               :payload="payload"
               @create-reservation="createRoomReservation()"
-            />
+            /> -->
           </div>
         </template>
 
-        <template v-slot:after>
+        <template v-slot:before>
           <div>
             <RoomsBookingCheckboxes />
           </div>
@@ -99,7 +165,9 @@ const room_id = route.params.room;
 const step = ref(1);
 const splitterModel = ref(50);
 
-
+const name = computed(() => room.value.name);
+const capacity = computed(() => room.value.capacity);
+const site = computed(() => room.value.site);
 
 const fullName = ref();
 const email = ref();
@@ -110,7 +178,7 @@ const reservedFor = ref();
 
 const nameRef = ref();
 
-const nameRules = [val => (val && val.length > 0) || 'Please type something'];
+const nameRules = [(val) => (val && val.length > 0) || "Please type something"];
 
 const accept = ref();
 
@@ -125,8 +193,7 @@ const payload = computed(() => {
     reservedFor: reservedFor.value,
   };
 });
-console.log("PAYLOAD CHECK", payload)
-
+console.log("PAYLOAD CHECK", payload);
 
 const eventTypes = ref([]);
 const eventTypeIds = computed(() =>
@@ -184,7 +251,7 @@ function createRoomReservation() {
       dateEnd: dateEnd.value,
       eventType: eventType.value,
       reservedFor: reservedFor.value,
-    }
+    },
   };
   Api.createRoomsReservations(reservation)
     .then((response) => {
@@ -192,15 +259,8 @@ function createRoomReservation() {
     })
     .catch((error) => {
       console.log(error);
-    })
+    });
 }
-
-
-
-
-
-
-
 
 onMounted(() => {
   console.log("RoomsBooking.vue have been mounted!");
