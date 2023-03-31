@@ -40,6 +40,9 @@ const onSubmit = function () {
     .then((success) => {
       loginFailed.value = !success;
       router.push("/");
+      if (success) {
+        window.location.reload();
+      }
     });
 };
 </script>

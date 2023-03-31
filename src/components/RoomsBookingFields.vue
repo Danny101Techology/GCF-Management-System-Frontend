@@ -1,7 +1,6 @@
 <template>
   <div class="q-pa-md">
     <div class="title">Create booking</div>
-    <q-form class="q-gutter-md" @submit.prevent.stop="onSubmit">
       <q-input
         ref="nameRef"
         color="primary"
@@ -120,7 +119,7 @@
           <q-icon name="group" />
         </template>
       </q-select>
-    </q-form>
+
   </div>
 </template>
 <script setup>
@@ -129,6 +128,9 @@ import { useRoute } from "vue-router";
 import { ref, computed, onMounted } from "vue";
 import { useStore } from "vuex";
 import Api from "@/api/Api.js";
+
+
+
 
 const fullName = ref();
 const email = ref();
@@ -155,6 +157,9 @@ const payload = computed(() => {
   };
 });
 console.log("PAYLOAD CHECK", payload);
+
+// localStorage.setItem('bookingPayload', JSON.stringify(payload.value));
+
 
 const eventTypes = ref([]);
 const eventTypeIds = computed(() =>

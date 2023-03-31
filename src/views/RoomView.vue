@@ -22,7 +22,7 @@
 
         <template v-slot:after>
           <div style="width: 100%; overflow: auto">
-            <RoomsBooking />
+            <RoomsBookingFields />
           </div>
         </template>
       </q-splitter>
@@ -152,10 +152,12 @@ import Api from "@/api/Api";
 import store from "../store/index.js";
 import { useStore } from "vuex";
 
-import RoomsBooking from "@/components/RoomsBooking.vue";
+import RoomsBookingFields from "@/components/RoomsBookingFields.vue";
 import RoomsBookingCarousel from "@/components/RoomsBookingCarousel.vue";
 import RoomsBookingConfirmation from "@/components/RoomsBookingConfirmation.vue";
 import RoomsBookingCheckboxes from "@/components/RoomsBookingCheckboxes.vue";
+
+
 
 //General Stuff
 const room = ref([]);
@@ -182,18 +184,20 @@ const nameRules = [(val) => (val && val.length > 0) || "Please type something"];
 
 const accept = ref();
 
-const payload = computed(() => {
-  return {
-    room_id: route.params.room,
-    fullName: fullName.value,
-    email: email.value,
-    dateStart: dateStart.value,
-    dateEnd: dateEnd.value,
-    eventType: eventType.value,
-    reservedFor: reservedFor.value,
-  };
-});
-console.log("PAYLOAD CHECK", payload);
+// const payload = computed(() => {
+//   return {
+//     room_id: route.params.room,
+//     fullName: fullName.value,
+//     email: email.value,
+//     dateStart: dateStart.value,
+//     dateEnd: dateEnd.value,
+//     eventType: eventType.value,
+//     reservedFor: reservedFor.value,
+//   };
+// });
+// console.log("PAYLOAD CHECK", payload);
+
+
 
 const eventTypes = ref([]);
 const eventTypeIds = computed(() =>
