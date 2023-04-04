@@ -43,47 +43,42 @@
                 </q-card-section>
 
                 <q-card-section class="q-pt-none">
-                  <q-list>
+                  <!-- <q-list>
                     <q-item>
                       <q-item-label>Full Name</q-item-label>
                       <q-item-section>
-                        <q-input v-model="payload.fullName.value" />
+                        <q-item-label caption>{{ value }}</q-item-label>
                       </q-item-section>
                     </q-item>
                     <q-item>
                       <q-item-label>Email</q-item-label>
                       <q-item-section>
-                        <q-input v-model="payload.email.value" />
+                        <q-item-label caption>{{ value }}</q-item-label>
                       </q-item-section>
                     </q-item>
                     <q-item>
                       <q-item-label>Date Start</q-item-label>
                       <q-item-section>
-                        <q-input v-model="payload.dateStart.value" />
+                        <q-item-label caption>{{ value }}</q-item-label>
                       </q-item-section>
                     </q-item>
                     <q-item>
                       <q-item-label>Date End</q-item-label>
                       <q-item-section>
-                        <q-input v-model="payload.dateEnd.value" />
+                        <q-item-label caption>{{ value }}</q-item-label>
                       </q-item-section>
                     </q-item>
                     <q-item>
                       <q-item-label>Event Type</q-item-label>
                       <q-item-section>
-                        <q-select
-                          v-model="payload.eventType.value"
-                          :options="eventTypes"
-                        />
+                        <q-item-label caption>{{ value }}</q-item-label>
                       </q-item-section>
                     </q-item>
                     <q-item>
                       <q-item-label>Reserved For</q-item-label>
-                      <q-item-section>
-                        <q-input v-model="payload.reservedFor.value" />
-                      </q-item-section>
+                      <q-item-label caption>{{ value }}</q-item-label>
                     </q-item>
-                  </q-list>
+                  </q-list> -->
 
                   <!-- <q-item v-for="(value, key) in filteredPayload" :key="key">
         <q-item-label>{{ key }}:</q-item-label>
@@ -157,8 +152,6 @@ import RoomsBookingCarousel from "@/components/RoomsBookingCarousel.vue";
 import RoomsBookingConfirmation from "@/components/RoomsBookingConfirmation.vue";
 import RoomsBookingCheckboxes from "@/components/RoomsBookingCheckboxes.vue";
 
-
-
 //General Stuff
 const room = ref([]);
 const route = useRoute();
@@ -184,20 +177,18 @@ const nameRules = [(val) => (val && val.length > 0) || "Please type something"];
 
 const accept = ref();
 
-// const payload = computed(() => {
-//   return {
-//     room_id: route.params.room,
-//     fullName: fullName.value,
-//     email: email.value,
-//     dateStart: dateStart.value,
-//     dateEnd: dateEnd.value,
-//     eventType: eventType.value,
-//     reservedFor: reservedFor.value,
-//   };
-// });
-// console.log("PAYLOAD CHECK", payload);
-
-
+const payload = computed(() => {
+  return {
+    room_id: route.params.room,
+    fullName: fullName.value,
+    email: email.value,
+    dateStart: dateStart.value,
+    dateEnd: dateEnd.value,
+    eventType: eventType.value,
+    reservedFor: reservedFor.value,
+  };
+});
+console.log("PAYLOAD CHECK", payload);
 
 const eventTypes = ref([]);
 const eventTypeIds = computed(() =>

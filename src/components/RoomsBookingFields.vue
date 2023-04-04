@@ -125,19 +125,25 @@
 <script setup>
 import axios from "axios";
 import { useRoute } from "vue-router";
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, watchEffect } from "vue";
 import { useStore } from "vuex";
 import Api from "@/api/Api.js";
 
 
+// const fullName = ref();
+// const email = ref();
+// const dateStart = ref();
+// const dateEnd = ref();
+// const eventType = ref();
+// const reservedFor = ref();
 
+const fullName = ref(localStorage.getItem('fullName') || '');
+const email = ref(localStorage.getItem('email') || '');
+const dateStart = ref(localStorage.getItem('dateStart') || '');
+const dateEnd = ref(localStorage.getItem('dateEnd') || '');
+const eventType = ref(localStorage.getItem('eventType') || '');
+const reservedFor = ref(localStorage.getItem('reservedFor') || '');
 
-const fullName = ref();
-const email = ref();
-const dateStart = ref();
-const dateEnd = ref();
-const eventType = ref();
-const reservedFor = ref();
 
 const nameRef = ref();
 
@@ -228,6 +234,14 @@ function createRoomReservation() {
     });
 }
 
+watchEffect(() => {
+  localStorage.setItem('fullName', fullName.value);
+  localStorage.setItem('email', email.value);
+  localStorage.setItem('dateStart', dateStart.value);
+  localStorage.setItem('dateEnd', dateEnd.value);
+  localStorage.setItem('eventType', eventType.value);
+  localStorage.setItem('reservedFor', reservedFor.value);
+});
 
 onMounted(() => {
   console.log("RoomsBooking.vue have been mounted!");

@@ -23,6 +23,7 @@
       tick-strategy="leaf"
       v-model:ticked="ticked"
       v-model:expanded="expanded"
+      :node="{ render: renderNode }"
     />
     <div class="col-12 col-sm-6 q-gutter-sm">
       <div class="text-h6">Ticked</div>
@@ -30,6 +31,23 @@
         <div v-for="tick in ticked" :key="`ticked-${tick}`">
           {{ tick }}
         </div>
+      </div>
+      <!-- Food Arrangements Input -->
+      <div v-if="ticked.includes('Food Arrangements')">
+        <q-input
+          filled
+          v-model="specialRequests"
+          label="Special Requests"
+          placeholder="Enter special requests"
+          class="q-mt-md"
+        />
+        <q-input
+          filled
+          v-model="foodArrangement"
+          label="Food Arrangements"
+          placeholder="Enter food arrangement"
+          class="q-mt-md"
+        />
       </div>
 
       <q-separator spaced />
@@ -40,13 +58,21 @@
 <script>
 import { ref } from "vue";
 
+const showFoodArrangementInput = ref(false);
+
 export default {
   setup() {
     const filter = ref("");
     const filterRef = ref(null);
+
+    const specialRequests = ref("");
+    const foodArrangement = ref("");
+
     return {
       filter,
       filterRef,
+      specialRequests,
+      foodArrangement,
       selected: ref([]),
       ticked: ref([]),
       expanded: ref([
@@ -164,6 +190,35 @@ export default {
             },
           ],
         },
+        {
+          label: "Food Arrangements",
+          children: [
+            {
+              label: "Packed Food",
+              disabled: false,
+            },
+            {
+              label: "Catered Buffet",
+              disabled: false,
+            },
+            {
+              label: "Pot-blessed",
+              disabled: false,
+            },
+            {
+              label: "Special Requests",
+
+              children: [
+                {
+                  label:
+                    "Please specify any special requests or dietary restrictions:",
+                  input: true,
+                  model: "",
+                },
+              ],
+            },
+          ],
+        },
       ],
     };
   },
@@ -183,4 +238,3 @@ export default {
   },
 };
 </script>
-//Pogi si Eruel 
