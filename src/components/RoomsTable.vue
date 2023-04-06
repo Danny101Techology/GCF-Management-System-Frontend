@@ -5,6 +5,7 @@
     :columns="columns"
     :filter="filter"
     row-key="id"
+    :loading="isLoading"
   >
     <template v-slot:top-right>
       <q-input
@@ -35,6 +36,10 @@
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
+
+const store = useStore();
 
 const props = defineProps({
   rooms: Array,
@@ -90,6 +95,12 @@ const rows = computed(() => {
   console.log(data);
   return data;
 });
+
+const loadData = async () => {
+  isLoading.value = true;
+  await store.dispatch("rooms/fetchRooms");
+  isLoading.value = false;
+};
 
 onMounted(() => {
   console.log("Rooms.vue have been mounted!");
