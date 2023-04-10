@@ -1,7 +1,7 @@
 <template>
   <div v-if="isAuthenticated" class="fit row wrap items-start content-start">
     <div class="q-pa-md">
-      <RoomsReservationTable :roomsreservations="roomsreservations" />
+      <RoomsApprovedTable :rows="approvedRows" />
     </div>
   </div>
   <q-alert v-else color="negative">403 Forbidden</q-alert>
@@ -10,7 +10,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import Api from "@/api/Api";
-import RoomsReservationTable from "@/components/RoomsReservationTable.vue";
+import RoomsApprovedTable from "@/components/RoomsApprovedTable.vue";
 
 const roomsreservations = ref([]);
 const isAuthenticated = localStorage.getItem("isAuthenticated");

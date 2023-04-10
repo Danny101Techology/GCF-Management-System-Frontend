@@ -1,58 +1,31 @@
 <template>
-  <div>
-    <q-table
-      title="Rooms Reservation"
-      :rows="rows"
-      :columns="columns"
-      :filter="filter"
-      row-key="id"
-    >
-      <template v-slot:top-right>
-        <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
-          <template v-slot:append>
-            <q-icon name="search" />
-          </template>
-        </q-input>
-      </template>
-      php Copy code
-      <template v-slot:body-cell-schedule="props" dense>
-        <q-td>
-          <q-btn
-            size="sm"
-            color="green"
-            label="Approve"
-            @click="approveReservation(props.row)"
-            dense
-          />
-        </q-td>
-        <q-td>
-          <q-btn
-            size="sm"
-            color="red"
-            label="Cancel"
-            @click="removeReservation(props.row.id)"
-            dense
-          />
-        </q-td>
-      </template>
-    </q-table>
-
-
-  </div>
+  <q-table
+    title="Approved Reservations"
+    :rows="rows"
+    :columns="columns"
+    :filter="filter"
+    row-key="id"
+  >
+    <template v-slot:top-right>
+      <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+        <template v-slot:append>
+          <q-icon name="search" />
+        </template>
+      </q-input>
+    </template>
+  </q-table>
 </template>
+
 <script setup>
 import { useRoute } from "vue-router";
 import { ref, computed, onMounted } from "vue";
 
 import Api from "@/api/Api";
-import RoomsApprovedTable from "@/components/RoomsApprovedTable.vue";
 
 const props = defineProps({
   roomsreservations: Array,
 });
-
 const filter = ref("");
-
 const columns = [
   {
     name: "fullName",
@@ -104,6 +77,9 @@ const columns = [
   },
 ];
 
+
+const approvedRows = ref([]);
+
 const rows = computed(() => {
   let data = props.roomsreservations.map((roomsreservation) => {
     return {
@@ -114,29 +90,30 @@ const rows = computed(() => {
       eventType: roomsreservation.attributes.eventType,
       dateStart: roomsreservation.attributes.dateStart,
       dateEnd: roomsreservation.attributes.dateEnd,
+      schedule: true,
     };
   });
+  data = data.concat(
+    approvedRows.value.map((reservation) => {
+      return {
+        id: reservation.id,
+        fullName: reservation.attributes.fullName,
+        room_code: reservation.attributes.room_code,
+        reservedFor: reservation.attributes.reservedFor,
+        eventType: reservation.attributes.eventType,
+        dateStart: reservation.attributes.dateStart,
+        dateEnd: reservation.attributes.dateEnd,
+        schedule: false,
+      };
+    })
+  );
   console.log(data);
   return data;
 });
 
-const approvedRows = ref([]);
-
-function removeReservation(room_id) {
-  Api.removeReservations(room_id);
-}
-
-function approveReservation(row) {
-  const { id, ...reservation } = row;
-  Api.approveReservation(id, reservation).then((response) => {
-    approvedRows.value.push(row);
-    const index = rows.value.indexOf(row);
-    rows.value.splice(index, 1);
-  });
-}
 
 onMounted(() => {
-  console.log("RoomsReservationTable.vue have been mounted!");
-  console.log(props.roomsreservations);
+  console.log("RoomsApprovedTable.vue have been mounted!");
+  console.log(props.approvedRows);
 });
 </script>
