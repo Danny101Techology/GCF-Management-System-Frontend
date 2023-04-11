@@ -9,11 +9,18 @@
         :rules="[(val) => (val && val.length > 0) || 'Please type something']"
       />
 
-      <q-input filled type="password" v-model="password" label="Your password" />
+      <q-input
+        filled
+        type="password"
+        v-model="password"
+        label="Your password"
+      />
 
       <div class="q-pa-md">
         <q-btn label="Login" type="submit" color="primary" />
-        <div v-if="loginFailed">Login credentials incorrect. Please try again.</div>
+        <div v-if="loginFailed">
+          Login credentials incorrect. Please try again.
+        </div>
       </div>
     </q-form>
   </div>
@@ -38,10 +45,13 @@ const onSubmit = function () {
       password: password.value,
     })
     .then((success) => {
-      loginFailed.value = !success;
-      router.push("/");s
       if (success) {
-        window.location.reload();
+        onMounted(() => {
+          window.location.reload();
+        });
+      } else {
+        loginFailed.value = !success;
+        router.push("/");
       }
     });
 };

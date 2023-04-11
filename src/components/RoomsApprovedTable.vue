@@ -1,7 +1,7 @@
 <template>
   <q-table
     title="Approved Reservations"
-    :rows="approvedRows"
+    :rows="rows"
     :columns="columns"
     :filter="filter"
     row-key="id"
@@ -23,8 +23,9 @@ import { ref, computed, onMounted } from "vue";
 import Api from "@/api/Api";
 
 const props = defineProps({
-  roomsreservations: Array,
+  roomsapproved: Array,
 });
+
 const filter = ref("");
 const columns = [
   {
@@ -97,51 +98,30 @@ const columns = [
       return date.toLocaleString("en-US", options);
     },
   },
-  {
-    name: "schedule",
-    align: "left",
-    label: "",
-    field: "schedule",
-  },
 ];
 
-
-const approvedRows = ref([]);
-
 const rows = computed(() => {
-  let data = props.roomsreservations.map((roomsreservation) => {
-    return {
-      id: roomsreservation.id,
-      fullName: roomsreservation.attributes.fullName,
-      room_code: roomsreservation.attributes.room_code,
-      reservedFor: roomsreservation.attributes.reservedFor,
-      eventType: roomsreservation.attributes.eventType,
-      dateStart: roomsreservation.attributes.dateStart,
-      dateEnd: roomsreservation.attributes.dateEnd,
-      schedule: true,
-    };
-  });
-  data = data.concat(
-    approvedRows.value.map((reservation) => {
+  let data = [];
+  if (props.roomsapproved) {
+    data = props.roomsapproved.map((roomsapproved) => {
       return {
-        id: reservation.id,
-        fullName: reservation.attributes.fullName,
-        room_code: reservation.attributes.room_code,
-        reservedFor: reservation.attributes.reservedFor,
-        eventType: reservation.attributes.eventType,
-        dateStart: reservation.attributes.dateStart,
-        dateEnd: reservation.attributes.dateEnd,
-        schedule: false,
+        id: roomsapproved.id,
+        fullName: roomsapproved.attributes.fullName,
+        room_code: roomsapproved.attributes.room_code,
+        reservedFor: roomsapproved.attributes.reservedFor,
+        eventType: roomsapproved.attributes.eventType,
+        dateStart: roomsapproved.attributes.dateStart,
+        dateEnd: roomsapproved.attributes.dateEnd,
+        schedule: true,
       };
-    })
-  );
+    });
+  }
   console.log(data);
   return data;
 });
 
-
 onMounted(() => {
-  console.log("RoomsApprovedTable.vue have been mounted!");
-  console.log(props.approvedRows);
+  console.log("RoomsApprovedTable.vue has been mounted!");
+  console.log(props.roomsapproved);
 });
 </script>

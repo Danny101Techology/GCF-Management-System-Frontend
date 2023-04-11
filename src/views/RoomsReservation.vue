@@ -1,6 +1,6 @@
 <template>
-  <div v-if="isAuthenticated" class="fit row wrap items-start content-start">
-    <div class="q-pa-md">
+  <div v-if="isAuthenticated" class="q-pa-md">
+    <div>
       <RoomsReservationTable :roomsreservations="roomsreservations" />
     </div>
   </div>
