@@ -91,11 +91,13 @@ const createRoomsReservations = function (payload) {
   return axios.post(`api/room-reservations`, payload);
 };
 
+
+
 const approveReservation = function (room_id) {
   axios.defaults.headers.common[
     "Authorization"
   ] = `Bearer ${store.state.token}`;
-  return axios.post(`api/room-approveds`, room_id);
+  return axios.post(`api/room-approveds/${room_id}`);
 };
 
 export default {
