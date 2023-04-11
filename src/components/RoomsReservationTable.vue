@@ -27,7 +27,7 @@
             size="sm"
             color="green"
             label="Approve"
-            @click="approveReservation(props.row)"
+            @click="approveReservation(props.row.id)"
             dense
           />
         </q-td>
@@ -161,7 +161,6 @@ const rows = computed(() => {
 });
 
 
-const approvedRows = ref([]);
 
 function removeReservation(room_id) {
   Api.removeReservations(room_id);

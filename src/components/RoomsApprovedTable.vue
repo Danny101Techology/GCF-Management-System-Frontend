@@ -7,7 +7,13 @@
     row-key="id"
   >
     <template v-slot:top-right>
-      <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+      <q-input
+        borderless
+        dense
+        debounce="300"
+        v-model="filter"
+        placeholder="Search"
+      >
         <template v-slot:append>
           <q-icon name="search" />
         </template>
@@ -18,7 +24,7 @@
 
 <script setup>
 import { useRoute } from "vue-router";
-import { ref, computed, onMounted } from "vue";
+import { ref, defineProps, computed, onMounted } from "vue";
 
 import Api from "@/api/Api";
 
@@ -100,25 +106,8 @@ const columns = [
   },
 ];
 
-const rows = computed(() => {
-  let data = [];
-  if (props.roomsapproved) {
-    data = props.roomsapproved.map((roomsapproved) => {
-      return {
-        id: roomsapproved.id,
-        fullName: roomsapproved.attributes.fullName,
-        room_code: roomsapproved.attributes.room_code,
-        reservedFor: roomsapproved.attributes.reservedFor,
-        eventType: roomsapproved.attributes.eventType,
-        dateStart: roomsapproved.attributes.dateStart,
-        dateEnd: roomsapproved.attributes.dateEnd,
-        schedule: true,
-      };
-    });
-  }
-  console.log(data);
-  return data;
-});
+const rows = ref(props.approvedRooms);
+
 
 onMounted(() => {
   console.log("RoomsApprovedTable.vue has been mounted!");
