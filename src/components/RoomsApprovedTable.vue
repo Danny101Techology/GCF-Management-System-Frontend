@@ -61,6 +61,20 @@ const columns = [
     label: "Starting Date Time",
     field: "dateStart",
     sortable: true,
+    format: (val) => {
+      if (!val) return "N/A";
+      const date = new Date(val);
+      const options = {
+        weekday: "long",
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+      };
+      return date.toLocaleString("en-US", options);
+    },
   },
   {
     name: "dateEnd",
@@ -68,6 +82,20 @@ const columns = [
     label: "Ending Date Time",
     field: "dateEnd",
     sortable: true,
+    format: (val) => {
+      if (!val) return "N/A";
+      const date = new Date(val);
+      const options = {
+        weekday: "long",
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+      };
+      return date.toLocaleString("en-US", options);
+    },
   },
   {
     name: "schedule",
