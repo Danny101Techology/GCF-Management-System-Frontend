@@ -8,7 +8,13 @@
       row-key="id"
     >
       <template v-slot:top-right>
-        <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+        <q-input
+          borderless
+          dense
+          debounce="300"
+          v-model="filter"
+          placeholder="Search"
+        >
           <template v-slot:append>
             <q-icon name="search" />
           </template>
@@ -36,8 +42,6 @@
         </q-td>
       </template>
     </q-table>
-
-
   </div>
 </template>
 <script setup>
@@ -88,6 +92,20 @@ const columns = [
     label: "Starting Date Time",
     field: "dateStart",
     sortable: true,
+    format: (val) => {
+      if (!val) return "N/A";
+      const date = new Date(val);
+      const options = {
+        weekday: "long",
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+      };
+      return date.toLocaleString("en-US", options);
+    },
   },
   {
     name: "dateEnd",
@@ -95,7 +113,22 @@ const columns = [
     label: "Ending Date Time",
     field: "dateEnd",
     sortable: true,
+    format: (val) => {
+      if (!val) return "N/A";
+      const date = new Date(val);
+      const options = {
+        weekday: "long",
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+      };
+      return date.toLocaleString("en-US", options);
+    },
   },
+
   {
     name: "schedule",
     align: "left",
@@ -104,21 +137,29 @@ const columns = [
   },
 ];
 
+
 const rows = computed(() => {
   let data = props.roomsreservations.map((roomsreservation) => {
+    const dateStart = roomsreservation.attributes.dateStart
+      ? new Date(roomsreservation.attributes.dateStart).toLocaleString()
+      : null;
+    const dateEnd = roomsreservation.attributes.dateEnd
+      ? new Date(roomsreservation.attributes.dateEnd).toLocaleString()
+      : null;
     return {
       id: roomsreservation.id,
       fullName: roomsreservation.attributes.fullName,
       room_code: roomsreservation.attributes.room_code,
       reservedFor: roomsreservation.attributes.reservedFor,
       eventType: roomsreservation.attributes.eventType,
-      dateStart: roomsreservation.attributes.dateStart,
-      dateEnd: roomsreservation.attributes.dateEnd,
+      dateStart: dateStart,
+      dateEnd: dateEnd,
     };
   });
   console.log(data);
   return data;
 });
+
 
 const approvedRows = ref([]);
 

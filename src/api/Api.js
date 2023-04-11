@@ -32,6 +32,13 @@ const getAllRoomsReservations = function () {
   return axios.get(`api/room-reservations`);
 };
 
+const getAllRoomsApproved = function () {
+  axios.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${store.state.token}`;
+  return axios.get(`api/room-approveds`);
+};
+
 const getAllEquipments = function () {
   axios.defaults.headers.common[
     "Authorization"
@@ -61,6 +68,7 @@ const getAllReservedFors = function () {
   ] = `Bearer ${store.state.token}`;
   return axios.get(`api/reserved-fors`);
 };
+
 
 const getAllEventTypes = function () {
   axios.defaults.headers.common[
@@ -92,6 +100,7 @@ export default {
   getEquipmentById,
   onFileAdded,
   getAllReservedFors,
+  getAllRoomsApproved,
   getAllEventTypes,
   removeReservations,
   createRoomsReservations,

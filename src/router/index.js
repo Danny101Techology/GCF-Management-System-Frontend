@@ -56,6 +56,10 @@ const routes = [
     component:  ()=>import('@/views/RoomsReservation.vue')
   },
   {
+    path: '/approved/',
+    component:  ()=>import('@/views/RoomsApproved.vue')
+  },
+  {
     path: '/equipments/',
     component:  ()=>import('@/views/Equipments.vue')
   },

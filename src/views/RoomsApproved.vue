@@ -16,7 +16,7 @@ const roomsreservations = ref([]);
 const isAuthenticated = localStorage.getItem("isAuthenticated");
 
 function retrieveFromAPI() {
-  Api.getAllRoomsReservations()
+  Api.getAllRoomsApproved()
     .then((response) => {
       roomsreservations.value = response.data.data;
     })
@@ -26,7 +26,7 @@ function retrieveFromAPI() {
 }
 
 onMounted(() => {
-  console.log("RoomsReservation.vue has been mounted!");
+  console.log("RoomsApproved.vue has been mounted!");
   if (!isAuthenticated) {
     return new Response("Forbidden", { status: 403 });
   }

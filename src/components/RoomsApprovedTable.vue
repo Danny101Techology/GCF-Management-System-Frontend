@@ -1,7 +1,7 @@
 <template>
   <q-table
     title="Approved Reservations"
-    :rows="rows"
+    :rows="approvedRows"
     :columns="columns"
     :filter="filter"
     row-key="id"
