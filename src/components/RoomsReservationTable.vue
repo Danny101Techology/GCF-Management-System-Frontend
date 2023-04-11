@@ -49,7 +49,7 @@ import { useRoute } from "vue-router";
 import { ref, computed, onMounted } from "vue";
 
 import Api from "@/api/Api";
-import RoomsApprovedTable from "@/components/RoomsApprovedTable.vue";
+
 
 const props = defineProps({
   roomsreservations: Array,
@@ -167,13 +167,8 @@ function removeReservation(room_id) {
   Api.removeReservations(room_id);
 }
 
-function approveReservation(row) {
-  const { id, ...reservation } = row;
-  Api.approveReservation(id, reservation).then((response) => {
-    approvedRows.value.push(row);
-    const index = rows.value.indexOf(row);
-    rows.value.splice(index, 1);
-  });
+function approveReservation(room_id) {
+  Api.approveReservation(room_id);
 }
 
 onMounted(() => {
