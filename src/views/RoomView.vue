@@ -22,7 +22,7 @@
 
         <template v-slot:after>
           <div style="width: 100%; overflow: auto">
-            <RoomsBookingFields />
+            <RoomsBookingFields :payload="payload" />
           </div>
         </template>
       </q-splitter>
@@ -37,13 +37,8 @@
         <template v-slot:after>
           <div>
             <div class="q-pa-md">
-              <q-card>
-                <q-card-section>
-                  <div class="text-h6">Confirm your reservation</div>
-                </q-card-section>
-
-                <q-card-section class="q-pt-none">
-                  <!-- <q-list>
+              <RoomsBookingConfirmation :payload="payloadData" />
+              <!-- <q-list>
                     <q-item>
                       <q-item-label>Full Name</q-item-label>
                       <q-item-section>
@@ -80,13 +75,12 @@
                     </q-item>
                   </q-list> -->
 
-                  <!-- <q-item v-for="(value, key) in filteredPayload" :key="key">
+              <!-- <q-item v-for="(value, key) in filteredPayload" :key="key">
         <q-item-label>{{ key }}:</q-item-label>
         <q-item-label caption>{{ value }}</q-item-label>
       </q-item> -->
-                </q-card-section>
 
-                <q-card-actions align="right" class="text-primary">
+              <!-- <q-card-actions align="right" class="text-primary">
                   <q-btn
                     flat
                     label="Confirm Reservation"
@@ -94,8 +88,7 @@
                     v-close-popup
                   />
                   <q-btn flat label="Close" v-close-popup />
-                </q-card-actions>
-              </q-card>
+                </q-card-actions> -->
             </div>
             <!-- <RoomsBookingConfirmation
               :payload="payload"
@@ -139,13 +132,12 @@
 </template>
 
 <script setup>
-import axios from "axios";
 import { ref, onMounted, computed } from "vue";
 import { useRoute } from "vue-router";
 import Api from "@/api/Api";
 
-import store from "../store/index.js";
-import { useStore } from "vuex";
+// import store from "../store/index.js";
+// import { useStore } from "vuex";
 
 import RoomsBookingFields from "@/components/RoomsBookingFields.vue";
 import RoomsBookingCarousel from "@/components/RoomsBookingCarousel.vue";
@@ -171,12 +163,6 @@ const dateEnd = ref();
 const eventType = ref();
 const reservedFor = ref();
 
-const nameRef = ref();
-
-const nameRules = [(val) => (val && val.length > 0) || "Please type something"];
-
-const accept = ref();
-
 const payload = computed(() => {
   return {
     room_id: route.params.room,
@@ -188,7 +174,27 @@ const payload = computed(() => {
     reservedFor: reservedFor.value,
   };
 });
-console.log("PAYLOAD CHECK", payload);
+console.log("PAYLOAD CHECK SA ROOMS VIEW", payload.value);
+
+// define the required keys for payloadData
+const payloadDataKeys = [
+  "full_name",
+  "email",
+  "date_start",
+  "date_end",
+  "event_type",
+  "reserved_for"
+];
+
+// create the computed property
+const payloadData = computed(() => {
+  const mappedData = {};
+  for (const key of payloadDataKeys) {
+    mappedData[key] = payload[key] || "";
+  }
+  return mappedData;
+});
+
 
 const eventTypes = ref([]);
 const eventTypeIds = computed(() =>
