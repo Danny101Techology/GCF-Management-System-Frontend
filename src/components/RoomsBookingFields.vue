@@ -129,14 +129,6 @@ import { ref, computed, onMounted, watchEffect } from "vue";
 import { useStore } from "vuex";
 import Api from "@/api/Api.js";
 
-
-// const fullName = ref();
-// const email = ref();
-// const dateStart = ref();
-// const dateEnd = ref();
-// const eventType = ref();
-// const reservedFor = ref();
-
 const fullName = ref(localStorage.getItem('fullName') || '');
 const email = ref(localStorage.getItem('email') || '');
 const dateStart = ref(localStorage.getItem('dateStart') || '');
@@ -144,12 +136,13 @@ const dateEnd = ref(localStorage.getItem('dateEnd') || '');
 const eventType = ref(localStorage.getItem('eventType') || '');
 const reservedFor = ref(localStorage.getItem('reservedFor') || '');
 
+const route = useRoute();
 
 const nameRef = ref();
 
 const nameRules = [(val) => (val && val.length > 0) || "Please type something"];
 
-const accept = ref();
+// const accept = ref();
 
 const payload = computed(() => {
   return {
@@ -162,7 +155,8 @@ const payload = computed(() => {
     reservedFor: reservedFor.value,
   };
 });
-console.log("PAYLOAD CHECK", payload);
+
+console.log("PAYLOAD CHECK SA FIELDS TO", payload.value);
 
 // localStorage.setItem('bookingPayload', JSON.stringify(payload.value));
 
@@ -192,9 +186,7 @@ function retrieveEventTypesFromAPI() {
 }
 
 const reservedFors = ref([]);
-const reservedForIds = computed(() =>
-  reservedFors.value.map((reservedFor) => reservedFor.id)
-);
+
 const reservedForNames = computed(() =>
   reservedFors.value.map((reservedFor) => reservedFor.name)
 );
@@ -213,28 +205,29 @@ function retrieveReservedForFromAPI() {
     });
 }
 
-function createRoomReservation() {
-  let reservation = {
-    data: {
-      room_id: route.params.room,
-      fullName: fullName.value,
-      email: email.value,
-      dateStart: dateStart.value,
-      dateEnd: dateEnd.value,
-      eventType: eventType.value,
-      reservedFor: reservedFor.value,
-    },
-  };
-  Api.createRoomsReservations(reservation)
-    .then((response) => {
-      // PUT CODE HERE FOR ALERTING SUCCESSFUL RESERVATION
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}
+// function createRoomReservation() {
+//   let reservation = {
+//     data: {
+//       room_id: route.params.room,
+//       fullName: fullName.value,
+//       email: email.value,
+//       dateStart: dateStart.value,
+//       dateEnd: dateEnd.value,
+//       eventType: eventType.value,
+//       reservedFor: reservedFor.value,
+//     },
+//   };
+//   Api.createRoomsReservations(reservation)
+//     .then((response) => {
+//       // PUT CODE HERE FOR ALERTING SUCCESSFUL RESERVATION
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//     });
+// }
 
 watchEffect(() => {
+  console.log("PAYLOAD CHECK", payload.value);
   localStorage.setItem('fullName', fullName.value);
   localStorage.setItem('email', email.value);
   localStorage.setItem('dateStart', dateStart.value);
@@ -248,4 +241,7 @@ onMounted(() => {
   retrieveEventTypesFromAPI();
   retrieveReservedForFromAPI();
 });
+
+
+
 </script>
