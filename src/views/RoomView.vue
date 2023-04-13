@@ -76,7 +76,7 @@
   </q-stepper>
 </template>
 
-<script setup props="payload">
+<script setup>
 import { ref, onMounted, computed } from "vue";
 import { useRoute } from "vue-router";
 import Api from "@/api/Api";

@@ -26,12 +26,11 @@
 import { useRoute } from "vue-router";
 import { ref, defineProps, computed, onMounted } from "vue";
 
-import Api from "@/api/Api";
 
 const props = defineProps({
   roomsapproved: Array,
 });
-console.log (props.roomsapproved);
+
 
 const filter = ref("");
 const columns = [

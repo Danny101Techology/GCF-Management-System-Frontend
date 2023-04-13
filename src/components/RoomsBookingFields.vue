@@ -125,7 +125,7 @@
 <script setup props="bookingData">
 import axios from "axios";
 import { useRoute } from "vue-router";
-import { ref, computed, onMounted, watchEffect } from "vue";
+import { ref, computed, onMounted, watchEffect, defineEmits } from "vue";
 import { useStore } from "vuex";
 import Api from "@/api/Api.js";
 
@@ -155,7 +155,6 @@ const bookingData = computed(() => {
     reservedFor: reservedFor.value,
   };
 });
-
 
 // localStorage.setItem('bookingPayload', JSON.stringify(payload.value));
 
