@@ -1,11 +1,5 @@
 <template>
-  <q-stepper
-    v-model="step"
-    ref="stepper"
-    alternative-labels
-    color="primary"
-    animated
-  >
+  <q-stepper v-model="step" ref="stepper" alternative-labels color="primary" animated>
     <q-step
       :name="1"
       :title="`${site} > ${name}`"
@@ -22,7 +16,10 @@
 
         <template v-slot:after>
           <div style="width: 100%; overflow: auto">
-            <RoomsBookingFields :bookingData="bookingData" />
+            <RoomsBookingFields
+              @booking-data-updated="onBookingDataUpdated"
+              :bookingData="bookingData"
+            />
           </div>
         </template>
       </q-splitter>
@@ -50,10 +47,10 @@
       </q-splitter>
     </q-step>
     <q-step :name="3" title="Create an ad" icon="add_comment">
-      Try out different ad text to see what brings in the most customers, and
-      learn how to enhance your ads using features like ad extensions. If you
-      run into any problems with your ads, find out how to tell if they're
-      running and how to resolve approval issues.
+      Try out different ad text to see what brings in the most customers, and learn how to
+      enhance your ads using features like ad extensions. If you run into any problems
+      with your ads, find out how to tell if they're running and how to resolve approval
+      issues.
     </q-step>
 
     <template v-slot:navigation>
@@ -108,6 +105,17 @@ const dateEnd = ref();
 const eventType = ref();
 const reservedFor = ref();
 
+
+const onBookingDataUpdated = function(i){
+  console.log("ON BOOKING DATA UPDATED", i);
+  fullName.value = i.fullName;
+  email.value = i.email;
+  dateStart.value = i.dateStart;
+  dateEnd.value = i.dateEnd;
+  eventType.value = i.eventType;
+  reservedFor.value = i.reservedFor;
+};
+
 const payload = computed(() => {
   return {
     room_id: route.params.room,
@@ -128,7 +136,7 @@ const payloadDataKeys = [
   "date_start",
   "date_end",
   "event_type",
-  "reserved_for"
+  "reserved_for",
 ];
 
 // create the computed property
@@ -140,11 +148,8 @@ const payloadData = computed(() => {
   return mappedData;
 });
 
-
 const eventTypes = ref([]);
-const eventTypeIds = computed(() =>
-  eventTypes.value.map((eventType) => eventType.id)
-);
+const eventTypeIds = computed(() => eventTypes.value.map((eventType) => eventType.id));
 const eventTypeNames = computed(() =>
   eventTypes.value.map((eventType) => eventType.name)
 );
