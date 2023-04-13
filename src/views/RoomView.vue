@@ -34,7 +34,7 @@
         <template v-slot:after>
           <div>
             <div class="q-pa-md">
-              <RoomsBookingConfirmation :payload="payloadData" />
+              <RoomsBookingConfirmation :payload="payload" />
             </div>
           </div>
         </template>
@@ -105,8 +105,7 @@ const dateEnd = ref();
 const eventType = ref();
 const reservedFor = ref();
 
-
-const onBookingDataUpdated = function(i){
+const onBookingDataUpdated = function (i) {
   console.log("ON BOOKING DATA UPDATED", i);
   fullName.value = i.fullName;
   email.value = i.email;

@@ -7,9 +7,23 @@
 
       <q-card-section class="q-pt-none">
         <q-list>
-          <q-item v-for="(value, key) in filteredPayload" :key="key">
-            <q-item-label>{{ key }}:</q-item-label>
-            <q-item-label caption>{{ value }}</q-item-label>
+          <q-item>
+            <q-item-section>Full Name</q-item-section>
+            <q-item-section side>
+              <q-item-label caption>{{ payload.fullName }}</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item>
+            <q-item-label>Email:</q-item-label>
+            <q-item-label>{{ payload.email }}</q-item-label>
+          </q-item>
+          <q-item>
+            <q-item-label>Date start:</q-item-label>
+            <q-item-label caption>{{ payload.dateStart }}</q-item-label>
+          </q-item>
+          <q-item>
+            <q-item-label>Date End:</q-item-label>
+            <q-item-label>{{ payload.email }}</q-item-label>
           </q-item>
         </q-list>
       </q-card-section>
@@ -22,14 +36,7 @@ import store from "../store/index.js";
 import { useQuasar } from "quasar";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
-import {
-  ref,
-  computed,
-  defineProps,
-  defineEmits,
-  onMounted,
-  reactive,
-} from "vue";
+import { ref, computed, defineProps, defineEmits, onMounted, reactive } from "vue";
 
 const route = useRoute();
 
@@ -55,7 +62,6 @@ const confirmReservation = function () {
     color: "teal",
   });
 };
-
 
 const reactivePayload = reactive(props.payload);
 

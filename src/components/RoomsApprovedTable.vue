@@ -1,7 +1,8 @@
 <template>
+  {{ roomsapproved }} }}
   <q-table
     title="Approved Reservations"
-    :rows="rows"
+    :rows="roomsapproved"
     :columns="columns"
     :filter="filter"
     row-key="id"
@@ -106,7 +107,6 @@ const columns = [
   },
 ];
 
-const rows = ref(props.approvedRooms);
 
 
 onMounted(() => {
