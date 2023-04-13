@@ -3,8 +3,6 @@ import Api from "@/api/Api";
 
 export default createStore({
   state: {
-    lazyRules: [],
-    allLazyRulesTriggered: false,
     user: localStorage.getItem("user"),
     isAuthenticated: localStorage.getItem("isAuthenticated"),
     token: localStorage.getItem("token"),
@@ -34,14 +32,6 @@ export default createStore({
     },
     loginFailure(state) {
       state.isAuthenticated = false;
-    },
-    setLazyRules(state, lazyRules) {
-      console.log('Setting lazy rules:', lazyRules);
-      state.lazyRules = lazyRules;
-    },
-    setAllLazyRulesTriggered(state, allLazyRulesTriggered) {
-      console.log('Setting allLazyRulesTriggered:', allLazyRulesTriggered);
-      state.allLazyRulesTriggered = allLazyRulesTriggered;
     },
   },
   actions: {
