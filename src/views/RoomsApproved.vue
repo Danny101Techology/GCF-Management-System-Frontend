@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import Api from "@/api/Api";
 import RoomsApprovedTable from "@/components/RoomsApprovedTable.vue";
 

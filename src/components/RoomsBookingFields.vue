@@ -122,7 +122,7 @@
 
   </div>
 </template>
-<script setup>
+<script setup props="bookingData">
 import axios from "axios";
 import { useRoute } from "vue-router";
 import { ref, computed, onMounted, watchEffect } from "vue";
@@ -144,7 +144,7 @@ const nameRules = [(val) => (val && val.length > 0) || "Please type something"];
 
 // const accept = ref();
 
-const payload = computed(() => {
+const bookingData = computed(() => {
   return {
     room_id: route.params.room,
     fullName: fullName.value,
@@ -156,7 +156,6 @@ const payload = computed(() => {
   };
 });
 
-console.log("PAYLOAD CHECK SA FIELDS TO", payload.value);
 
 // localStorage.setItem('bookingPayload', JSON.stringify(payload.value));
 
@@ -227,7 +226,7 @@ function retrieveReservedForFromAPI() {
 // }
 
 watchEffect(() => {
-  console.log("PAYLOAD CHECK", payload.value);
+  console.log("bookingData CHECK", bookingData.value);
   localStorage.setItem('fullName', fullName.value);
   localStorage.setItem('email', email.value);
   localStorage.setItem('dateStart', dateStart.value);
