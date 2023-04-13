@@ -27,7 +27,7 @@
             size="sm"
             color="green"
             label="Approve"
-            @click="approveReservation(props.row.id)"
+            @click="$emit(moveReservationToApproved, props.row.id)"
             dense
           />
         </q-td>
@@ -49,7 +49,6 @@ import { useRoute } from "vue-router";
 import { ref, computed, onMounted } from "vue";
 
 import Api from "@/api/Api";
-
 
 const props = defineProps({
   roomsreservations: Array,
@@ -137,7 +136,6 @@ const columns = [
   },
 ];
 
-
 const rows = computed(() => {
   let data = props.roomsreservations.map((roomsreservation) => {
     const dateStart = roomsreservation.attributes.dateStart
@@ -160,14 +158,16 @@ const rows = computed(() => {
   return data;
 });
 
-
-
 function removeReservation(room_id) {
   Api.removeReservations(room_id);
+  window.location.reload();
 }
 
-function approveReservation(room_id) {
-  Api.approveReservation(room_id);
+async function moveReservationToApproved(room_id) {
+  await Api.approveReservation(room_id);
+  props.roomsreservations = props.roomsreservations.filter(
+    (r) => r.id !== room_id
+  );
 }
 
 onMounted(() => {

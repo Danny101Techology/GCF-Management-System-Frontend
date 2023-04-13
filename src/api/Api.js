@@ -69,7 +69,6 @@ const getAllReservedFors = function () {
   return axios.get(`api/reserved-fors`);
 };
 
-
 const getAllEventTypes = function () {
   axios.defaults.headers.common[
     "Authorization"
@@ -91,12 +90,11 @@ const createRoomsReservations = function (payload) {
   return axios.post(`api/room-reservations`, payload);
 };
 
-
-
-const approveReservation = function (room_id) {
+const moveReservationToApproved = async function (room_id) {
   axios.defaults.headers.common[
     "Authorization"
   ] = `Bearer ${store.state.token}`;
+  await approveReservations(room_id);
   return axios.post(`api/room-approveds/${room_id}`);
 };
 
@@ -113,5 +111,5 @@ export default {
   getAllEventTypes,
   removeReservations,
   createRoomsReservations,
-  approveReservation,
+  moveReservationToApproved,
 };

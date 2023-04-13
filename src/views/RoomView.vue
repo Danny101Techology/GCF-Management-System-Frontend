@@ -22,7 +22,7 @@
 
         <template v-slot:after>
           <div style="width: 100%; overflow: auto">
-            <RoomsBookingFields :payload="payload" />
+            <RoomsBookingFields :bookingData="bookingData" />
           </div>
         </template>
       </q-splitter>
@@ -38,62 +38,7 @@
           <div>
             <div class="q-pa-md">
               <RoomsBookingConfirmation :payload="payloadData" />
-              <!-- <q-list>
-                    <q-item>
-                      <q-item-label>Full Name</q-item-label>
-                      <q-item-section>
-                        <q-item-label caption>{{ value }}</q-item-label>
-                      </q-item-section>
-                    </q-item>
-                    <q-item>
-                      <q-item-label>Email</q-item-label>
-                      <q-item-section>
-                        <q-item-label caption>{{ value }}</q-item-label>
-                      </q-item-section>
-                    </q-item>
-                    <q-item>
-                      <q-item-label>Date Start</q-item-label>
-                      <q-item-section>
-                        <q-item-label caption>{{ value }}</q-item-label>
-                      </q-item-section>
-                    </q-item>
-                    <q-item>
-                      <q-item-label>Date End</q-item-label>
-                      <q-item-section>
-                        <q-item-label caption>{{ value }}</q-item-label>
-                      </q-item-section>
-                    </q-item>
-                    <q-item>
-                      <q-item-label>Event Type</q-item-label>
-                      <q-item-section>
-                        <q-item-label caption>{{ value }}</q-item-label>
-                      </q-item-section>
-                    </q-item>
-                    <q-item>
-                      <q-item-label>Reserved For</q-item-label>
-                      <q-item-label caption>{{ value }}</q-item-label>
-                    </q-item>
-                  </q-list> -->
-
-              <!-- <q-item v-for="(value, key) in filteredPayload" :key="key">
-        <q-item-label>{{ key }}:</q-item-label>
-        <q-item-label caption>{{ value }}</q-item-label>
-      </q-item> -->
-
-              <!-- <q-card-actions align="right" class="text-primary">
-                  <q-btn
-                    flat
-                    label="Confirm Reservation"
-                    @click="confirmReservation()"
-                    v-close-popup
-                  />
-                  <q-btn flat label="Close" v-close-popup />
-                </q-card-actions> -->
             </div>
-            <!-- <RoomsBookingConfirmation
-              :payload="payload"
-              @create-reservation="createRoomReservation()"
-            /> -->
           </div>
         </template>
 
@@ -131,7 +76,7 @@
   </q-stepper>
 </template>
 
-<script setup>
+<script setup props="payload">
 import { ref, onMounted, computed } from "vue";
 import { useRoute } from "vue-router";
 import Api from "@/api/Api";
