@@ -53,13 +53,31 @@ export default {
       },
       {
         to: "/reservation",
-        label: "Reservations",
+        label: "Rooms Reservations",
+        exact: true,
+        hidden: false,
+      },
+      {
+        to: "/equipmentsreservation",
+        label: "Equipments Reservations",
         exact: true,
         hidden: false,
       },
       {
         to: "/approved",
-        label: "Approved Reservations",
+        label: "Approved Rooms Reservations",
+        exact: true,
+        hidden: false,
+      },
+      {
+        to: "/equipmentsapproved",
+        label: "Approved Equipments Reservations",
+        exact: true,
+        hidden: false,
+      },
+      {
+        to: "/equipmentsstatus",
+        label: "Equipments Status",
         exact: true,
         hidden: false,
       },

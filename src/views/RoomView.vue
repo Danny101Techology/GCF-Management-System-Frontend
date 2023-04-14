@@ -46,17 +46,14 @@
         </template>
       </q-splitter>
     </q-step>
-    <q-step :name="3" title="Create an ad" icon="add_comment">
-      Try out different ad text to see what brings in the most customers, and learn how to
-      enhance your ads using features like ad extensions. If you run into any problems
-      with your ads, find out how to tell if they're running and how to resolve approval
-      issues.
+    <q-step :name="3" title="Finish Booking" icon="add_comment">
+      <RoomsBookingFinished />
     </q-step>
 
     <template v-slot:navigation>
       <q-stepper-navigation>
         <q-btn
-          @click="$refs.stepper.next()"
+          @click="step === 3 ? $router.push('/rooms') : $refs.stepper.next()"
           color="primary"
           :label="step === 3 ? 'Finish' : 'Continue'"
         />
@@ -85,6 +82,7 @@ import RoomsBookingFields from "@/components/RoomsBookingFields.vue";
 import RoomsBookingCarousel from "@/components/RoomsBookingCarousel.vue";
 import RoomsBookingConfirmation from "@/components/RoomsBookingConfirmation.vue";
 import RoomsBookingCheckboxes from "@/components/RoomsBookingCheckboxes.vue";
+import RoomsBookingFinished from "@/components/RoomsBookingFinished.vue";
 
 //General Stuff
 const room = ref([]);
@@ -127,25 +125,6 @@ const payload = computed(() => {
   };
 });
 console.log("PAYLOAD CHECK SA ROOMS VIEW", payload.value);
-
-// define the required keys for payloadData
-const payloadDataKeys = [
-  "full_name",
-  "email",
-  "date_start",
-  "date_end",
-  "event_type",
-  "reserved_for",
-];
-
-// create the computed property
-const payloadData = computed(() => {
-  const mappedData = {};
-  for (const key of payloadDataKeys) {
-    mappedData[key] = payload[key] || "";
-  }
-  return mappedData;
-});
 
 const eventTypes = ref([]);
 const eventTypeIds = computed(() => eventTypes.value.map((eventType) => eventType.id));
