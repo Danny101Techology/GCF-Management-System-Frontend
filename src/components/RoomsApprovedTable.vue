@@ -107,7 +107,27 @@ const columns = [
   },
 ];
 
-
+const rows = computed(() => {
+  let data = props.roomsapproveds.map((roomsapproveds) => {
+    const dateStart = roomsapproveds.attributes.dateStart
+      ? new Date(roomsapproveds.attributes.dateStart).toLocaleString()
+      : null;
+    const dateEnd = roomsapproveds.attributes.dateEnd
+      ? new Date(roomsapproveds.attributes.dateEnd).toLocaleString()
+      : null;
+    return {
+      id: roomsapproveds.id,
+      fullName: roomsapproveds.attributes.fullName,
+      room_code: roomsapproveds.attributes.room_code,
+      reservedFor: roomsapproveds.attributes.reservedFor,
+      eventType: roomsapproveds.attributes.eventType,
+      dateStart: dateStart,
+      dateEnd: dateEnd,
+    };
+  });
+  console.log(data);
+  return data;
+});
 
 onMounted(() => {
   console.log("RoomsApprovedTable.vue has been mounted!");
