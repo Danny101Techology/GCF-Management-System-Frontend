@@ -1,42 +1,66 @@
 <template>
-    <q-card class="q-ma-sm">
-      <div class="q-pa-sm">
-        <div class="text-h6 q-mb-sm">Download File</div>
-        <div class="row q-gutter-md">
-          <div class="col-auto">
-            <i class="material-icons" style="font-size: 300px">file_download</i>
-          </div>
-          <div class="col">
-            <a href="https://drive.google.com/" class="text-primary">Click here to download</a>
-          </div>
+  <q-card class="q-ma-sm">
+    <div class="q-pa-sm">
+      <div class="text-h6 q-mb-sm">Download File</div>
+      <div class="row q-gutter-md">
+        <div class="q-pa-sm">
+          <q-btn
+            size="85px"
+            round
+            color="primary"
+            icon="download"
+            @click="downloadFile"
+          />
         </div>
       </div>
-    </q-card>
-  </template>
-  
-  <script>
-  export default {
-    name: 'DownloadFileCard'
-  }
-  </script>
-  
-  <style scoped>
-  .material-icons {
-    font-family: 'Material Icons';
-    font-weight: normal;
-    font-style: normal;
-    font-size: 24px;
-    line-height: 1;
-    letter-spacing: normal;
-    text-transform: none;
-    display: inline-block;
-    white-space: nowrap;
-    word-wrap: normal;
-    direction: ltr;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    -moz-osx-font-smoothing: grayscale;
-    font-feature-settings: 'liga';
-  }
-  </style>
-  
+    </div>
+  </q-card>
+</template>
+
+<script>
+import axios from "axios";
+import store from "@/store/index.js";
+
+export default {
+  name: "DownloadFileCard",
+  data() {
+    return {
+      fileId: null,
+      downloadUrl: null,
+    };
+  },
+  methods: {
+    async fetchDownloadUrl() {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${store.state.token}`;
+      try {
+        const response = await axios.get(`/api/equipment-downloads/${this.fileId}`);
+        const fileData = response.data;
+        const downloadUrl = URL.createObjectURL(
+          new Blob([fileData], {
+            type:
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+          })
+        );
+        const fileName = `${fileData.filename}.docx`;
+        const link = document.createElement("a");
+        link.href = downloadUrl;
+        link.setAttribute("download", fileName);
+        document.body.appendChild(link);
+        link.click();
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    downloadFile() {
+      const link = document.createElement("a");
+      link.href = this.downloadUrl;
+      link.download = "filename.ext"; // specify the filename for the downloaded file
+      link.click();
+    },
+  },
+  created() {
+    this.fileId = "1"; // set the ID of the file you want to download
+    this.fetchDownloadUrl();
+  },
+};
+</script>
