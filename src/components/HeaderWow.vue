@@ -9,7 +9,7 @@
 
     <q-tabs align="left">
       <q-route-tab
-        v-for="route in routes"
+        v-for="route in filteredRoutes"
         :key="route.to"
         :to="route.to"
         :label="route.label"
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { ref, computed } from "vue";
+import { ref, computed, watchEffect } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 
@@ -29,38 +29,52 @@ export default {
     const leftDrawerOpen = ref(false);
     const store = useStore();
     const router = useRouter();
-    const isLoggedIn = computed(() => {
-      return store.state.isLoggedIn;
-    });
+    const isAuthenticated = computed(() => store.getters.isAuthenticated);
 
     function logout() {
+      window.location.reload();
       store.dispatch("logout");
       router.push("/login");
     }
 
+    // Define all the routes, hidden or not
+    const routes = [
+      {
+        to: "/rooms",
+        label: "Rooms",
+        exact: true,
+        hidden: false,
+      },
+      {
+        to: "/equipments",
+        label: "Equipments",
+        exact: true,
+        hidden: false,
+      },
+      {
+        to: "/reservation",
+        label: "Reservations",
+        exact: true,
+        hidden: false,
+      },
+      {
+        to: "/approved",
+        label: "Approved Reservations",
+        exact: true,
+        hidden: false,
+      },
+    ];
+
     // Filter routes based on authentication state
-    const routes = computed(() => {
-      const isAuthenticated = store.getters.isAuthenticated;
-      return [
-        {
-          to: "/rooms",
-          label: "Rooms",
-          exact: true,
-          hidden: !isAuthenticated,
-        },
-        {
-          to: "/equipments",
-          label: "Equipments",
-          exact: true,
-          hidden: !isAuthenticated,
-        },
-        {
-          to: "/reservation",
-          label: "Reservations",
-          exact: true,
-          hidden: !isAuthenticated,
-        },
-      ].filter((route) => !route.hidden);
+    const filteredRoutes = computed(() =>
+      routes.filter((route) => !route.hidden || isAuthenticated.value)
+    );
+
+    // Watch for changes to isAuthenticated and recompute the filtered routes
+    watchEffect(() => {
+      filteredRoutes.value = routes.filter(
+        (route) => !route.hidden || isAuthenticated.value
+      );
     });
 
     return {
@@ -69,7 +83,7 @@ export default {
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },
       logout,
-      routes,
+      filteredRoutes,
     };
   },
 };

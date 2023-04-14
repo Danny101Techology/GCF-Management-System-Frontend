@@ -16,7 +16,7 @@
     <!-- Tree -->
     <q-tree
       class="col-12 col-sm-6"
-      :nodes="simple"
+      :nodes="checkboxes"
       :filter="filter"
       :filter-method="myfilterMethod"
       node-key="label"
@@ -32,7 +32,7 @@
           {{ tick }}
         </div>
       </div>
-      <!-- Food Arrangements Input -->
+      <!-- Food Arrangements Input
       <div v-if="ticked.includes('Food Arrangements')">
         <q-input
           filled
@@ -48,7 +48,7 @@
           placeholder="Enter food arrangement"
           class="q-mt-md"
         />
-      </div>
+      </div> -->
 
       <q-separator spaced />
     </div>
@@ -58,28 +58,30 @@
 <script>
 import { ref } from "vue";
 
-const showFoodArrangementInput = ref(false);
+// const showFoodArrangementInput = ref(false);
 
 export default {
   setup() {
     const filter = ref("");
     const filterRef = ref(null);
 
-    const specialRequests = ref("");
-    const foodArrangement = ref("");
+    // const specialRequests = ref("");
+    // const foodArrangement = ref("");
 
     return {
       filter,
       filterRef,
-      specialRequests,
-      foodArrangement,
+      // specialRequests,
+      // foodArrangement,
       selected: ref([]),
       ticked: ref([]),
       expanded: ref([
         "Things Needed",
         "Physical Arrangements / Layout (with tables and chairs)",
+        "Food Arrangements",
+        "Cafeteria Supplies Needed",
       ]),
-      simple: [
+      checkboxes: [
         {
           label: "Things Needed",
           children: [
@@ -205,17 +207,62 @@ export default {
               label: "Pot-blessed",
               disabled: false,
             },
+          ],
+        },
+        {
+          label: "Cafeteria Supplies Needed",
+          children: [
             {
-              label: "Special Requests",
-
-              children: [
-                {
-                  label:
-                    "Please specify any special requests or dietary restrictions:",
-                  input: true,
-                  model: "",
-                },
-              ],
+              label: "Brewed Coffee",
+              disabled: false,
+            },
+            {
+              label: "Creamer",
+              disabled: false,
+            },
+            {
+              label: "Sugar",
+              disabled: false,
+            },
+            {
+              label: "Coffee Stirrer",
+              disabled: false,
+            },
+            {
+              label: "Table Napkins",
+              disabled: false,
+            },
+            {
+              label: "Percolator",
+              disabled: false,
+            },
+            {
+              label: "Coffee Maker",
+              disabled: false,
+            },
+            {
+              label: "Paper Plates",
+              disabled: false,
+            },
+            {
+              label: "Paper Cups",
+              disabled: false,
+            },
+            {
+              label: "Plastic Spoons",
+              disabled: false,
+            },
+            {
+              label: "Plastic Fork",
+              disabled: false,
+            },
+            {
+              label: "Cutlery/Breakable Tablewares",
+              disabled: false,
+            },
+            {
+              label: "Water Dispenser",
+              disabled: false,
             },
           ],
         },
@@ -238,5 +285,3 @@ export default {
   },
 };
 </script>
-//Pogi si Eruel
-//Rescue me
