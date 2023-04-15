@@ -65,6 +65,10 @@ const routes = [
     path: '/equipmentsreservation/',
     component:  ()=>import('@/views/EquipmentsReservation.vue')
   },
+  {
+    path: '/equipmentsstatus/',
+    component:  ()=>import('@/views/EquipmentStatus.vue')
+  },
 ]
 
 const router = createRouter({
