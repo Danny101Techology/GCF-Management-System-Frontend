@@ -29,7 +29,7 @@
       <div class="text-h6">Ticked</div>
       <div>
         <div v-for="tick in ticked" :key="`ticked-${tick}`">
-          {{ tick }}
+        {{ tick }}
         </div>
       </div>
       <!-- Food Arrangements Input
