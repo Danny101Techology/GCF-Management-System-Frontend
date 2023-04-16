@@ -4,7 +4,77 @@
       <q-avatar class="q-mr-sm">
         <img src="@/assets/logo.svg" />
       </q-avatar>
+      <div class="q-pa-md">
+        <q-btn-dropdown
+          split
+          color="orange"
+          push
+          no-caps
+          icon="folder"
+          label="Rooms Reservation"
+          @click="onMainClick"
+        >
+          <q-item clickable v-close-popup @click="onItemClick">
+            <q-item-section avatar>
+              <q-avatar
+                icon="assignment"
+                color="secondary"
+                text-color="white"
+              />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Approved Rooms Reservations</q-item-label>
+            </q-item-section>
+            <q-item-section side>
+              <q-icon name="info" color="amber" />
+            </q-item-section>
+          </q-item>
+        </q-btn-dropdown>
+      </div>
+      <div class="q-pa-md">
+        <q-btn-dropdown
+          split
+          color="orange"
+          push
+          no-caps
+          icon="folder"
+          label="Equipments Reservation"
+          @click="onMainClick"
+        >
+          <q-item clickable v-close-popup @click="onItemClick">
+            <q-item-section avatar>
+              <q-avatar
+                icon="assignment"
+                color="secondary"
+                text-color="white"
+              />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Approved Equipments Reservation</q-item-label>
+            </q-item-section>
+            <q-item-section side>
+              <q-icon name="info" color="amber" />
+            </q-item-section>
+          </q-item>
+          <q-item clickable v-close-popup @click="onItemClick">
+            <q-item-section avatar>
+              <q-avatar
+                icon="assignment"
+                color="secondary"
+                text-color="white"
+              />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Equipments Status</q-item-label>
+            </q-item-section>
+            <q-item-section side>
+              <q-icon name="info" color="amber" />
+            </q-item-section>
+          </q-item>
+        </q-btn-dropdown>
+      </div>
       <q-btn flat round dense icon="logout" @click="logout" class="q-mr-sm" />
+      <div class="q-pa-md"></div>
     </q-toolbar>
 
     <q-tabs align="left">
@@ -52,8 +122,14 @@ export default {
         hidden: false,
       },
       {
-        to: "/reservation",
+        to: "/roomsreservation",
         label: "Rooms Reservations",
+        exact: true,
+        hidden: false,
+      },
+      {
+        to: "/approvedroomsreservation",
+        label: "Approved Rooms Reservations",
         exact: true,
         hidden: false,
       },
@@ -64,20 +140,8 @@ export default {
         hidden: false,
       },
       {
-        to: "/approved",
-        label: "Approved Rooms Reservations",
-        exact: true,
-        hidden: false,
-      },
-      {
-        to: "/equipmentsapproved",
+        to: "/approvedequipmentsreservation",
         label: "Approved Equipments Reservations",
-        exact: true,
-        hidden: false,
-      },
-      {
-        to: "/equipmentsstatus",
-        label: "Equipments Status",
         exact: true,
         hidden: false,
       },
