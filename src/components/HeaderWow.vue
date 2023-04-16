@@ -5,73 +5,77 @@
         <img src="@/assets/logo.svg" />
       </q-avatar>
       <div class="q-pa-md">
-        <q-btn-dropdown
-          split
-          color="orange"
-          push
-          no-caps
-          icon="folder"
-          label="Rooms Reservation"
-          @click="onMainClick"
-        >
-          <q-item clickable v-close-popup @click="onItemClick">
-            <q-item-section avatar>
-              <q-avatar
-                icon="assignment"
-                color="secondary"
-                text-color="white"
-              />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>Approved Rooms Reservations</q-item-label>
-            </q-item-section>
-            <q-item-section side>
-              <q-icon name="info" color="amber" />
-            </q-item-section>
-          </q-item>
-        </q-btn-dropdown>
+        <template v-if="isAuthenticated">
+          <q-btn-dropdown
+            split
+            color="orange"
+            push
+            no-caps
+            icon="folder"
+            label="Rooms Reservation"
+            @click="onRoomsReservationClick"
+          >
+            <q-item clickable v-close-popup @click="onApprovedRoomsClick">
+              <q-item-section avatar>
+                <q-avatar
+                  icon="assignment"
+                  color="secondary"
+                  text-color="white"
+                />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Approved Rooms Reservations</q-item-label>
+              </q-item-section>
+              <q-item-section side>
+                <q-icon name="info" color="amber" />
+              </q-item-section>
+            </q-item>
+          </q-btn-dropdown>
+        </template>
       </div>
       <div class="q-pa-md">
-        <q-btn-dropdown
-          split
-          color="orange"
-          push
-          no-caps
-          icon="folder"
-          label="Equipments Reservation"
-          @click="onMainClick"
-        >
-          <q-item clickable v-close-popup @click="onItemClick">
-            <q-item-section avatar>
-              <q-avatar
-                icon="assignment"
-                color="secondary"
-                text-color="white"
-              />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>Approved Equipments Reservation</q-item-label>
-            </q-item-section>
-            <q-item-section side>
-              <q-icon name="info" color="amber" />
-            </q-item-section>
-          </q-item>
-          <q-item clickable v-close-popup @click="onItemClick">
-            <q-item-section avatar>
-              <q-avatar
-                icon="assignment"
-                color="secondary"
-                text-color="white"
-              />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>Equipments Status</q-item-label>
-            </q-item-section>
-            <q-item-section side>
-              <q-icon name="info" color="amber" />
-            </q-item-section>
-          </q-item>
-        </q-btn-dropdown>
+        <template v-if="isAuthenticated">
+          <q-btn-dropdown
+            split
+            color="orange"
+            push
+            no-caps
+            icon="folder"
+            label="Equipments Reservation"
+            @click="onEquipmentsReservationClick"
+          >
+            <q-item clickable v-close-popup @click="onApprovedEquipmentsClick">
+              <q-item-section avatar>
+                <q-avatar
+                  icon="assignment"
+                  color="secondary"
+                  text-color="white"
+                />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Approved Equipments Reservation</q-item-label>
+              </q-item-section>
+              <q-item-section side>
+                <q-icon name="info" color="amber" />
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-close-popup @click="onEquipmentStatusClick">
+              <q-item-section avatar>
+                <q-avatar
+                  icon="assignment"
+                  color="secondary"
+                  text-color="white"
+                />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Equipments Status</q-item-label>
+              </q-item-section>
+              <q-item-section side>
+                <q-icon name="info" color="amber" />
+              </q-item-section>
+            </q-item>
+          </q-btn-dropdown>
+        </template>
       </div>
       <q-btn flat round dense icon="logout" @click="logout" class="q-mr-sm" />
       <div class="q-pa-md"></div>
@@ -101,49 +105,47 @@ export default {
     const router = useRouter();
     const isAuthenticated = computed(() => store.getters.isAuthenticated);
 
+    function onRoomsReservationClick(event) {
+      const route = event.target.dataset.route;
+      router.push("/roomsreservation");
+    }
+
+    function onApprovedRoomsClick(event) {
+      const route = event.target.dataset.route;
+      router.push("/approvedroomsreservation");
+    }
+
+    function onEquipmentsReservationClick(event) {
+      const route = event.target.dataset.route;
+      router.push("/equipmentsreservation");
+    }
+
+    function onApprovedEquipmentsClick(event) {
+      const route = event.target.dataset.route;
+      router.push("/approvedequipmentsreservation");
+    }
+
+    function onEquipmentStatusClick(event) {
+      const route = event.target.dataset.route;
+      router.push("/equipmentsstatus");
+    }
+
     function logout() {
       window.location.reload();
       store.dispatch("logout");
       router.push("/login");
     }
 
-    // Define all the routes, hidden or not
     const routes = [
       {
         to: "/rooms",
         label: "Rooms",
         exact: true,
-        hidden: false,
       },
       {
         to: "/equipments",
         label: "Equipments",
         exact: true,
-        hidden: false,
-      },
-      {
-        to: "/roomsreservation",
-        label: "Rooms Reservations",
-        exact: true,
-        hidden: false,
-      },
-      {
-        to: "/approvedroomsreservation",
-        label: "Approved Rooms Reservations",
-        exact: true,
-        hidden: false,
-      },
-      {
-        to: "/equipmentsreservation",
-        label: "Equipments Reservations",
-        exact: true,
-        hidden: false,
-      },
-      {
-        to: "/approvedequipmentsreservation",
-        label: "Approved Equipments Reservations",
-        exact: true,
-        hidden: false,
       },
     ];
 
@@ -166,6 +168,11 @@ export default {
       },
       logout,
       filteredRoutes,
+      onRoomsReservationClick,
+      onApprovedRoomsClick,
+      onEquipmentsReservationClick,
+      onApprovedEquipmentsClick,
+      onEquipmentStatusClick,
     };
   },
 };
