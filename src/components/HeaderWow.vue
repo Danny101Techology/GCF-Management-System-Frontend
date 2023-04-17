@@ -5,7 +5,7 @@
         <img src="@/assets/logo.svg" />
       </q-avatar>
       <div class="q-pa-md">
-        <template v-if="isAuthenticated">
+       
           <q-btn-dropdown
             split
             color="orange"
@@ -31,10 +31,10 @@
               </q-item-section>
             </q-item>
           </q-btn-dropdown>
-        </template>
+       
       </div>
       <div class="q-pa-md">
-        <template v-if="isAuthenticated">
+        
           <q-btn-dropdown
             split
             color="orange"
@@ -75,7 +75,7 @@
               </q-item-section>
             </q-item>
           </q-btn-dropdown>
-        </template>
+      
       </div>
       <q-btn flat round dense icon="logout" @click="logout" class="q-mr-sm" />
       <div class="q-pa-md"></div>
@@ -122,7 +122,7 @@ export default {
 
     function onApprovedEquipmentsClick(event) {
       const route = event.target.dataset.route;
-      router.push("/approvedequipmentsreservation");
+      router.push("/equipmentsapprovedreservation");
     }
 
     function onEquipmentStatusClick(event) {

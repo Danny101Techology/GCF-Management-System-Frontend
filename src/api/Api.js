@@ -32,6 +32,13 @@ const getAllEquipmentsReservations = function () {
   return axios.get(`api/equipment-reservations`);
 };
 
+const getAllEquipmentApproved = function () {
+  axios.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${store.state.token}`;
+  return axios.get(`api/equipment-approveds`);
+};
+
 const getAllRoomsReservations = function () {
   axios.defaults.headers.common[
     "Authorization"
@@ -118,6 +125,7 @@ export default {
   getRoomById,
   getAllRoomsReservations,
   getAllEquipmentsReservations,
+  getAllEquipmentApproved,
   getAllEquipmentStatus,
   getAllEquipments,
   getEquipmentById,

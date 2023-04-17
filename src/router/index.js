@@ -43,14 +43,29 @@ const routes = [
     path: '/rooms/:room',
     name: 'room-view',
     component:  ()=>import('@/views/RoomView.vue')
+    // children: [
+    //   {
+    //     path: '/Reserve',
+    //     name: 'Reserve',
+    //     component: Reserve,
+    //   }
+    // ]
   },
   {
-    path: '/reservation/',
+    path: '/roomsreservation/',
     component:  ()=>import('@/views/RoomsReservation.vue')
   },
   {
-    path: '/approved/',
+    path: '/approvedroomsreservation/',
     component:  ()=>import('@/views/RoomsApproved.vue')
+  },
+  {
+    path: '/equipmentsreservation/',
+    component:  ()=>import('@/views/EquipmentsReservation.vue')
+  },
+  {
+    path: '/equipmentsapprovedreservation/',
+    component:  ()=>import('@/views/EquipmentsApproved.vue')
   },
   {
     path: '/equipments/',
@@ -60,10 +75,6 @@ const routes = [
     path: '/equipments/:equipment',
     name: 'equipment-view',
     component:  ()=>import('@/views/EquipmentsView.vue')
-  },
-  {
-    path: '/equipmentsreservation/',
-    component:  ()=>import('@/views/EquipmentsReservation.vue')
   },
   {
     path: '/equipmentsstatus/',
