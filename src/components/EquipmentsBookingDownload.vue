@@ -54,7 +54,7 @@ export default {
     downloadFile() {
       const link = document.createElement("a");
       link.href = this.downloadUrl;
-      link.download = "filename.ext"; // specify the filename for the downloaded file
+      link.download = "GCF.pptx"; // specify the filename for the downloaded file
       link.click();
     },
   },

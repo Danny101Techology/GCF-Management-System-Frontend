@@ -119,7 +119,6 @@ export default {
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },
       watchEffect,
-      isAuthenticated,
       logout,
       onRoomsReservationClick,
       onApprovedRoomsClick,

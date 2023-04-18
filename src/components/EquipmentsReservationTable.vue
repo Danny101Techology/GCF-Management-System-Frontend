@@ -44,10 +44,10 @@ const columns = [
     sortable: true,
   },
   {
-    name: "equipmentName",
+    name: "equipment_name",
     align: "left",
     label: "Equipment Name",
-    field: "equipmentName",
+    field: "equipment_name",
     sortable: true,
   },
   {
@@ -117,7 +117,7 @@ const rows = computed(() => {
     return {
       id: equipmentsreservations.id,
       fullName: equipmentsreservations.fullName,
-      equipmentName: equipmentsreservations.equipmentName,
+      equipment_name: equipmentsreservations.attributes.equipment_name,
       equipment_type: equipmentsreservations.attributes.equipment_type,
       equipment_subtype: equipmentsreservations.attributes.equipment_subtype,
       date_borrowed: date_borrowed,
