@@ -8,7 +8,13 @@
       row-key="id"
     >
       <template v-slot:top-right>
-        <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+        <q-input
+          borderless
+          dense
+          debounce="300"
+          v-model="filter"
+          placeholder="Search"
+        >
           <template v-slot:append>
             <q-icon name="search" />
           </template>
@@ -30,6 +36,13 @@ const props = defineProps({
 const filter = ref("");
 
 const columns = [
+  {
+    name: "fullName",
+    align: "left",
+    label: "Borrower's Name",
+    field: "fullName",
+    sortable: true,
+  },
   {
     name: "equipmentName",
     align: "left",
@@ -103,6 +116,7 @@ const rows = computed(() => {
       : null;
     return {
       id: equipmentsreservations.id,
+      fullName: equipmentsreservations.fullName,
       equipmentName: equipmentsreservations.equipmentName,
       equipment_type: equipmentsreservations.attributes.equipment_type,
       equipment_subtype: equipmentsreservations.attributes.equipment_subtype,

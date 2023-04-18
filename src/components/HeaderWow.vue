@@ -59,21 +59,6 @@
                 <q-icon name="info" color="amber" />
               </q-item-section>
             </q-item>
-            <q-item clickable v-close-popup @click="onEquipmentStatusClick">
-              <q-item-section avatar>
-                <q-avatar
-                  icon="assignment"
-                  color="secondary"
-                  text-color="white"
-                />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>Equipments Status</q-item-label>
-              </q-item-section>
-              <q-item-section side>
-                <q-icon name="info" color="amber" />
-              </q-item-section>
-            </q-item>
           </q-btn-dropdown>
       
       </div>
@@ -125,10 +110,7 @@ export default {
       router.push("/equipmentsapprovedreservation");
     }
 
-    function onEquipmentStatusClick(event) {
-      const route = event.target.dataset.route;
-      router.push("/equipmentsstatus");
-    }
+
 
     function logout() {
       window.location.reload();
@@ -172,7 +154,7 @@ export default {
       onApprovedRoomsClick,
       onEquipmentsReservationClick,
       onApprovedEquipmentsClick,
-      onEquipmentStatusClick,
+      
     };
   },
 };
