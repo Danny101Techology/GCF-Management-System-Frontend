@@ -76,10 +76,6 @@ const routes = [
     name: 'equipment-view',
     component:  ()=>import('@/views/EquipmentsView.vue')
   },
-  {
-    path: '/equipmentsstatus/',
-    component:  ()=>import('@/views/EquipmentStatus.vue')
-  },
 ]
 
 const router = createRouter({
