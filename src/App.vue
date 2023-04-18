@@ -11,10 +11,10 @@
 
 <script>
 import { ref, onMounted } from "vue";
-import axios from "axios";
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faHatWizard } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+// import axios from "axios";
+// import { library } from '@fortawesome/fontawesome-svg-core'
+// import { faHatWizard } from '@fortawesome/free-solid-svg-icons'
+// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import PageLoader from "@/components/PageLoader.vue";
 import HeaderWow from "@/components/HeaderWow.vue";

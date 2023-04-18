@@ -35,22 +35,11 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
-
-const isLoading = ref(true);
-
-const store = useStore();
-
-const loadData = async () => {
-  isLoading.value = true;
-  await store.dispatch("rooms/fetchRooms");
-  isLoading.value = false;
-};
+import { ref, computed } from "vue";
 
 const props = defineProps({
   rooms: Array,
+  isLoading: Boolean
 });
 const filter = ref("");
 const columns = [
@@ -100,13 +89,6 @@ const rows = computed(() => {
       site: room.attributes.site,
     };
   });
-  console.log(data);
   return data;
-});
-
-onMounted(async () => {
-  console.log("Rooms.vue have been mounted!");
-  console.log(props.rooms);
-  await loadData();
 });
 </script>

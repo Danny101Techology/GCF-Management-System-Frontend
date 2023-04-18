@@ -1,10 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import store from "@/store/index"
 
-import Equipments from '@/views/Equipments.vue'
-import Rooms from '@/views/Rooms.vue'
-import RoomsReservation from '@/views/RoomsReservation.vue'
-
 const routes = [
   {
     path: '/',
