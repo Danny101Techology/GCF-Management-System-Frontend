@@ -20,7 +20,7 @@
   >
     <q-step
       :name="1"
-      :title="`${equipments} > ${type}`"
+      :title="`${equipment_name} > ${type}`"
       :caption="`${subtype} pax`"
       icon="settings"
       :done="step > 1"
@@ -69,10 +69,6 @@
                 </q-card-actions>
               </q-card>
             </div>
-            <!-- <RoomsBookingConfirmation
-                :payload="payload"
-                @create-reservation="createRoomReservation()"
-              /> -->
           </div>
         </template>
 
@@ -126,7 +122,7 @@ const equipment_id = route.params.equipment;
 const step = ref(1);
 const splitterModel = ref(50);
 
-const equipments = computed(() => equipment.value.equipment);
+const equipment_name = computed(() => equipment.value.equipment_name);
 const subtype = computed(() => equipment.value.subtype);
 const type = computed(() => equipment.value.type);
 
@@ -150,7 +146,7 @@ function retrieveFromAPI() {
 
       equipment.value = {
         id: id,
-        equipment: attributes.equipment,
+        equipment_name: attributes.equipment_name,
         type: attributes.equipment_type,
         subtype: attributes.equipment_subtype,
         images: images,
