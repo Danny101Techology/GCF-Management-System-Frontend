@@ -5,8 +5,8 @@ axios.defaults.baseURL = process.env.VUE_APP_API_URI;
 
 // interceptor to add Auth token to request config
 axios.interceptors.request.use((req) => {
-  // do not add Auth to api/login
-  if (req.url == `api/login`) return req;
+  // do not add Auth to api/auth/local
+  if (req.url == `api/auth/local`) return req;
 
   // add Auth bearer token from state
   req.headers["Authorization"] = `Bearer ${store.state.token}`;
