@@ -1,5 +1,11 @@
 <template>
-  <q-stepper v-model="step" ref="stepper" alternative-labels color="primary" animated>
+  <q-stepper
+    v-model="step"
+    ref="stepper"
+    alternative-labels
+    color="primary"
+    animated
+  >
     <q-step
       :name="1"
       :title="`${site} > ${name}`"
@@ -34,7 +40,10 @@
         <template v-slot:after>
           <div>
             <div class="q-pa-md">
-              <RoomsBookingConfirmation :payload="payload" />
+              <RoomsBookingConfirmation
+                :payload="payload"
+                @update-ticks="updateThingsNeeded"
+              />
             </div>
           </div>
         </template>
@@ -112,6 +121,7 @@ const onBookingDataUpdated = function (i) {
   eventType.value = i.eventType;
   reservedFor.value = i.reservedFor;
 };
+const checkboxes = ref([]);
 
 const payload = computed(() => {
   return {
@@ -127,7 +137,9 @@ const payload = computed(() => {
 console.log("PAYLOAD CHECK SA ROOMS VIEW", payload.value);
 
 const eventTypes = ref([]);
-const eventTypeIds = computed(() => eventTypes.value.map((eventType) => eventType.id));
+const eventTypeIds = computed(() =>
+  eventTypes.value.map((eventType) => eventType.id)
+);
 const eventTypeNames = computed(() =>
   eventTypes.value.map((eventType) => eventType.name)
 );
