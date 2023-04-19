@@ -62,6 +62,13 @@ const columns = [
     sortable: true,
   },
   {
+    name: "available",
+    align: "left",
+    label: "Available",
+    field: "available",
+    sortable: true,
+  },
+  {
     name: "schedule",
     align: "",
     label: "",
@@ -75,6 +82,7 @@ const rows = computed(() => {
       equipments: equipment.attributes.equipments,
       equipment_type: equipment.attributes.equipment_type,
       equipment_subtype: equipment.attributes.equipment_subtype,
+      available: equipment.attributes.available,
     };
   });
   console.log(data);

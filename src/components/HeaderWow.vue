@@ -5,8 +5,7 @@
         <img src="@/assets/logo.svg" />
       </q-avatar>
       <div class="q-pa-md">
-        <q-btn-dropdown
-          v-if="isAuthenticated"
+        <q-btn-dropdown mmmmmmmmmmmmmmmmm
           split
           color="orange"
           push
@@ -34,7 +33,6 @@
       </div>
       <div class="q-pa-md">
         <q-btn-dropdown
-          v-if="isAuthenticated"
           split
           color="orange"
           push
